@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Question {
+  id              String           @id @default(cuid())
+  type            String
+  subtype         String
+  difficulty      String
+  prompt          String
+  optionsJson     String
+  answer          String
+  explanationZh   String
+  tagsJson        String
+  listeningScript String?
+  grammarPoint    String?
+  imageUrl        String?
+  imagePrompt     String?
+  source          String
+  createdAt       DateTime         @default(now())
+  practiceRecords PracticeRecord[]
+  mistake         Mistake?
+
+  @@index([type])
+  @@index([difficulty])
+  @@index([createdAt])
+}
+
+model PracticeRecord {
+  id               String   @id @default(cuid())
+  questionId       String
+  practiceType     String
+  userAnswer       String
+  isCorrect        Boolean
+  timeSpentSeconds Int      @default(0)
+  practicedAt      DateTime @default(now())
+  question         Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+  @@index([practiceType])
+  @@index([practicedAt])
+  @@index([isCorrect])
+}
+
+model Mistake {
+  id          String    @id @default(cuid())
+  questionId  String    @unique
+  wrongCount  Int       @default(1)
+  lastWrongAt DateTime  @default(now())
+  status      String    @default("new")
+  note        String?
+  masteredAt  DateTime?
+  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([lastWrongAt])
+}
+
+model UserSetting {
+  id                   String   @id @default(cuid())
+  defaultDifficulty    String   @default("medium")
+  defaultQuestionCount Int      @default(5)
+  speechRate           Float    @default(1.0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}

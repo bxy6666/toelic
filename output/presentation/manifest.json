@@ -1,0 +1,30 @@
+{
+  "deckPath": "E:\\托业\\output\\presentation\\toeic-practice-studio-final-report.pptx",
+  "previewDir": "E:\\托业\\output\\presentation\\previews",
+  "notesPath": "E:\\托业\\output\\presentation\\speaker-notes.md",
+  "assetDir": "E:\\托业\\output\\presentation\\assets",
+  "slideCount": 19,
+  "animationPatch": {
+    "transitionNodesInjected": 19,
+    "timingNodesInjected": 19,
+    "note": "PPTX XML includes slide transition/timing nodes; complex object animation playback should be verified in desktop PowerPoint."
+  },
+  "engineeringEvidence": {
+    "modelingImages": "UML diagrams are GPT-generated images copied into output/presentation/assets.",
+    "generatedUmlAssets": [
+      "E:\\托业\\output\\presentation\\assets\\uml-use-case.png",
+      "E:\\托业\\output\\presentation\\assets\\uml-activity-flow.png",
+      "E:\\托业\\output\\presentation\\assets\\uml-class-model.png",
+      "E:\\托业\\output\\presentation\\assets\\uml-sequence-ai-generation.png"
+    ],
+    "generatedArchitectureAsset": "E:\\托业\\output\\presentation\\assets\\architecture-gpt-generated.png",
+    "documentEvidenceAssets": [
+      "E:\\托业\\output\\presentation\\assets\\doc-spec-driven-spec.png",
+      "E:\\托业\\output\\presentation\\assets\\doc-design-architecture.png",
+      "E:\\托业\\output\\presentation\\assets\\doc-tasks-progress.png",
+      "E:\\托业\\output\\presentation\\assets\\doc-acceptance-proof.png"
+    ]
+  },
+  "imagePolicy": "All screenshots use PowerPoint image sizing contain/cover and keep source aspect ratio.",
+  "generatedAt": "2026-05-10T06:57:05.079Z"
+}

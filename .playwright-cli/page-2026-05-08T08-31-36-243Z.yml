@@ -1,0 +1,864 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - paragraph [ref=e5]:
+      - generic [ref=e6]:
+        - text: 诚邀您对“大模型开发平台 ModelArts Studio”进行产品满意度评价。
+        - generic [ref=e7] [cursor=pointer]: 开始评价
+      - generic [ref=e8]: 
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic "打开服务列表" [ref=e14] [cursor=pointer]:
+            - img [ref=e16]
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic [ref=e18]:
+                    - list [ref=e19]:
+                      - listitem [ref=e20] [cursor=pointer]:
+                        - img [ref=e22]
+                        - text: 收藏和访问
+                      - listitem [ref=e24] [cursor=pointer]:
+                        - img [ref=e26]
+                        - text: 精选推荐
+                      - listitem [ref=e30] [cursor=pointer]:
+                        - img [ref=e32]
+                        - text: 所有服务
+                    - list [ref=e41]:
+                      - listitem "Flexus云服务" [ref=e42]:
+                        - generic "Flexus云服务" [ref=e43] [cursor=pointer]:
+                          - generic [ref=e44]: Flexus云服务
+                      - listitem "计算" [ref=e45]:
+                        - generic "计算" [ref=e46] [cursor=pointer]:
+                          - generic [ref=e47]: 计算
+                      - listitem "存储" [ref=e48]:
+                        - generic "存储" [ref=e49] [cursor=pointer]:
+                          - generic [ref=e50]: 存储
+                      - listitem "网络" [ref=e51]:
+                        - generic "网络" [ref=e52] [cursor=pointer]:
+                          - generic [ref=e53]: 网络
+                      - listitem "数据库" [ref=e54]:
+                        - generic "数据库" [ref=e55] [cursor=pointer]:
+                          - generic [ref=e56]: 数据库
+                      - listitem "安全与合规" [ref=e57]:
+                        - generic "安全与合规" [ref=e58] [cursor=pointer]:
+                          - generic [ref=e59]: 安全与合规
+                      - listitem "容器" [ref=e60]:
+                        - generic "容器" [ref=e61] [cursor=pointer]:
+                          - generic [ref=e62]: 容器
+                      - listitem "应用中间件" [ref=e63]:
+                        - generic "应用中间件" [ref=e64] [cursor=pointer]:
+                          - generic [ref=e65]: 应用中间件
+                      - listitem "管理与监管" [ref=e66]:
+                        - generic "管理与监管" [ref=e67] [cursor=pointer]:
+                          - generic [ref=e68]: 管理与监管
+                      - listitem "迁移" [ref=e69]:
+                        - generic "迁移" [ref=e70] [cursor=pointer]:
+                          - generic [ref=e71]: 迁移
+                      - listitem "人工智能" [ref=e72]:
+                        - generic "人工智能" [ref=e73] [cursor=pointer]:
+                          - generic [ref=e74]: 人工智能
+                      - listitem "开发与运维" [ref=e75]:
+                        - generic "开发与运维" [ref=e76] [cursor=pointer]:
+                          - generic [ref=e77]: 开发与运维
+                      - listitem "企业应用" [ref=e78]:
+                        - generic "企业应用" [ref=e79] [cursor=pointer]:
+                          - generic [ref=e80]: 企业应用
+                      - listitem "云通信" [ref=e81]:
+                        - generic "云通信" [ref=e82] [cursor=pointer]:
+                          - generic [ref=e83]: 云通信
+                      - listitem "视频" [ref=e84]:
+                        - generic "视频" [ref=e85] [cursor=pointer]:
+                          - generic [ref=e86]: 视频
+                      - listitem "IoT物联网" [ref=e87]:
+                        - generic "IoT物联网" [ref=e88] [cursor=pointer]:
+                          - generic [ref=e89]: IoT物联网
+                      - listitem "域名与网站" [ref=e90]:
+                        - generic "域名与网站" [ref=e91] [cursor=pointer]:
+                          - generic [ref=e92]: 域名与网站
+                      - listitem "云商店" [ref=e93]:
+                        - generic "云商店" [ref=e94] [cursor=pointer]:
+                          - generic [ref=e95]: 云商店
+                      - listitem "企业网络" [ref=e96]:
+                        - generic "企业网络" [ref=e97] [cursor=pointer]:
+                          - generic [ref=e98]: 企业网络
+                      - listitem "企业协同" [ref=e99]:
+                        - generic "企业协同" [ref=e100] [cursor=pointer]:
+                          - generic [ref=e101]: 企业协同
+                      - listitem "CDN与智能边缘" [ref=e102]:
+                        - generic "CDN与智能边缘" [ref=e103] [cursor=pointer]:
+                          - generic [ref=e104]: CDN与智能边缘
+                      - listitem "大数据" [ref=e105]:
+                        - generic "大数据" [ref=e106] [cursor=pointer]:
+                          - generic [ref=e107]: 大数据
+                      - listitem "区块链" [ref=e108]:
+                        - generic "区块链" [ref=e109] [cursor=pointer]:
+                          - generic [ref=e110]: 区块链
+                      - listitem "开天aPaaS" [ref=e111]:
+                        - generic "开天aPaaS" [ref=e112] [cursor=pointer]:
+                          - generic [ref=e113]: 开天aPaaS
+                      - listitem "工业软件" [ref=e114]:
+                        - generic "工业软件" [ref=e115] [cursor=pointer]:
+                          - generic [ref=e116]: 工业软件
+                      - listitem "专属云" [ref=e117]:
+                        - generic "专属云" [ref=e118] [cursor=pointer]:
+                          - generic [ref=e119]: 专属云
+                  - generic:
+                    - generic:
+                      - generic [ref=e120]:
+                        - img [ref=e122]
+                        - textbox "搜索云服务" [ref=e125]
+                      - img [ref=e127] [cursor=pointer]
+                    - generic [ref=e132]:
+                      - generic [ref=e134]:
+                        - generic [ref=e135]: 最近访问
+                        - list [ref=e136]:
+                          - link "MaaS模型即服务" [ref=e1252] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelarts#/model-studio/homepage
+                            - generic [ref=e1253]:
+                              - img [ref=e1255]
+                              - generic "MaaS模型即服务" [ref=e1258]
+                          - link "大模型开发平台 ModelArts Studio" [ref=e1261] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelartsstudio/
+                            - generic [ref=e1262]:
+                              - img [ref=e1264]
+                              - generic "大模型开发平台 ModelArts Studio" [ref=e1267]
+                          - link "软件开发生产线 CodeArts" [ref=e1271] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/devcloud
+                            - generic [ref=e1272]:
+                              - img [ref=e1274]
+                              - generic "软件开发生产线 CodeArts" [ref=e1277]
+                      - generic [ref=e158]:
+                        - generic [ref=e159]: 我的收藏
+                        - list [ref=e160]:
+                          - link "弹性云服务器 ECS" [ref=e162] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/ecs/manager/vmList
+                            - generic [ref=e163]:
+                              - img [ref=e165]
+                              - generic "弹性云服务器 ECS" [ref=e168]
+                              - generic "取消收藏" [ref=e171]:
+                                - img [ref=e172]
+                          - link "裸金属服务器 BMS" [ref=e176] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/bms/manager/bmsInfo/vmList
+                            - generic [ref=e177]:
+                              - img [ref=e179]
+                              - generic "裸金属服务器 BMS" [ref=e182]
+                              - generic "取消收藏" [ref=e185]:
+                                - img [ref=e186]
+                          - link "弹性伸缩 AS" [ref=e190] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/as/manager/groupConfigInfo/groupList
+                            - generic [ref=e191]:
+                              - img [ref=e193]
+                              - generic "弹性伸缩 AS" [ref=e196]
+                              - generic "取消收藏" [ref=e199]:
+                                - img [ref=e200]
+                          - link "对象存储服务 OBS" [ref=e204] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/obs/#/obs/manager/buckets
+                            - generic [ref=e205]:
+                              - img [ref=e207]
+                              - generic "对象存储服务 OBS" [ref=e210]
+                              - generic "取消收藏" [ref=e213]:
+                                - img [ref=e214]
+                          - link "云硬盘 EVS" [ref=e218] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/evs/manager/volumelist
+                            - generic [ref=e219]:
+                              - img [ref=e221]
+                              - generic "云硬盘 EVS" [ref=e224]
+                              - generic "取消收藏" [ref=e227]:
+                                - img [ref=e228]
+                          - link "云备份 CBR" [ref=e232] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/cbr/v2/#/cbr
+                            - generic [ref=e233]:
+                              - img [ref=e235]
+                              - generic "云备份 CBR" [ref=e238]
+                              - generic "取消收藏" [ref=e241]:
+                                - img [ref=e242]
+                          - link "虚拟私有云 VPC" [ref=e246] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/vpc
+                            - generic [ref=e247]:
+                              - img [ref=e249]
+                              - generic "虚拟私有云 VPC" [ref=e252]
+                              - generic "取消收藏" [ref=e255]:
+                                - img [ref=e256]
+                          - link "弹性负载均衡 ELB" [ref=e260] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/vpc/#/elb/manager/elbList
+                            - generic [ref=e261]:
+                              - img [ref=e263]
+                              - generic "弹性负载均衡 ELB" [ref=e266]
+                              - generic "取消收藏" [ref=e269]:
+                                - img [ref=e270]
+                          - link "弹性公网IP EIP" [ref=e274] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/vpc/#/vpc/vpcmanager/eips
+                            - generic [ref=e275]:
+                              - img [ref=e277]
+                              - generic "弹性公网IP EIP" [ref=e280]
+                              - generic "取消收藏" [ref=e283]:
+                                - img [ref=e284]
+                          - link "云数据库 RDS" [ref=e288] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/rds/
+                            - generic [ref=e289]:
+                              - img [ref=e291]
+                              - generic "云数据库 RDS" [ref=e294]
+                              - generic "取消收藏" [ref=e297]:
+                                - img [ref=e298]
+                          - link "域名注册 Domains" [ref=e302] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/domain
+                            - generic [ref=e303]:
+                              - img [ref=e305]
+                              - generic "域名注册 Domains" [ref=e308]
+                              - generic "取消收藏" [ref=e311]:
+                                - img [ref=e312]
+        - link "前往官网" [ref=e315] [cursor=pointer]:
+          - /url: http://www.huaweicloud.com/
+          - img [ref=e317]
+        - link "控制台" [ref=e322] [cursor=pointer]:
+          - /url: https://console.huaweicloud.com/console?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2
+          - generic [ref=e323]: 控制台
+        - generic [ref=e326] [cursor=pointer]:
+          - generic [ref=e327]: 
+          - paragraph [ref=e328]: 西南-贵阳一
+          - img [ref=e330]
+      - generic [ref=e333]:
+        - generic [ref=e335]:
+          - generic [ref=e336]:
+            - img [ref=e338] [cursor=pointer]
+            - textbox "MaaS" [ref=e816]:
+              - /placeholder: 搜索云服务、资源（IP / 名称 / ID）、快捷操作、文档、API、解决方案
+            - img [ref=e818] [cursor=pointer]
+          - list [ref=e821]:
+            - generic [ref=e342]:
+              - generic [ref=e822]:
+                - list [ref=e825]:
+                  - listitem [ref=e826] [cursor=pointer]: 全部 (894)
+                  - listitem [ref=e827] [cursor=pointer]: 控制台 (7)
+                  - listitem [ref=e828] [cursor=pointer]: 资源 (0)
+                  - listitem [ref=e829] [cursor=pointer]: 快捷操作 (8)
+                  - listitem [ref=e830] [cursor=pointer]: 文档 (400)
+                  - listitem [ref=e831] [cursor=pointer]: API (0)
+                  - listitem [ref=e832] [cursor=pointer]: 解决方案 (35)
+                  - listitem [ref=e833] [cursor=pointer]: 云商店 (44)
+                  - listitem [ref=e834] [cursor=pointer]: 开发者 (400)
+                - listitem [ref=e836]
+              - generic [ref=e838]:
+                - list [ref=e839]:
+                  - listitem [ref=e840]:
+                    - generic [ref=e841]:
+                      - generic [ref=e842]:
+                        - text: 控制台
+                        - generic [ref=e843]: (7)
+                      - img [ref=e846] [cursor=pointer]
+                    - list [ref=e852]:
+                      - listitem [ref=e853]:
+                        - link "MaaS模型即服务 人工智能" [ref=e854] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/homepage
+                          - generic [ref=e855]:
+                            - generic [ref=e856]:
+                              - img [ref=e858]
+                              - generic "MaaS模型即服务" [ref=e861]
+                            - generic "人工智能" [ref=e862]
+                        - generic [ref=e866]:
+                          - link "模型广场" [ref=e867] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/model-studio/square
+                          - link "模型体验" [ref=e868] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/model-studio/experience
+                          - link "在线推理" [active] [ref=e869] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/model-studio/deployment
+                          - link "模型调优" [ref=e870] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/model-studio/optimization
+                      - listitem [ref=e871]:
+                        - link "密码安全中心 DEW 安全与合规" [ref=e872] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/dew/?locale=zh-cn#/dew/kms/keyList/customKey
+                          - generic [ref=e873]:
+                            - generic [ref=e874]:
+                              - img [ref=e876]
+                              - generic [ref=e878]: 密码安全中心 DEW
+                            - generic "安全与合规" [ref=e879]
+                      - listitem [ref=e880]:
+                        - link "多活高可用服务 MAS 应用中间件" [ref=e881] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/mas?locale=zh-cn
+                          - generic [ref=e882]:
+                            - generic [ref=e883]:
+                              - img [ref=e885]
+                              - generic [ref=e887]: 多活高可用服务 MAS
+                            - generic "应用中间件" [ref=e888]
+                      - listitem [ref=e889]:
+                        - link "函数工作流 FunctionGraph 计算" [ref=e890] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/functiongraph/?locale=zh-cn
+                          - generic [ref=e891]:
+                            - generic [ref=e892]:
+                              - img [ref=e894]
+                              - generic [ref=e896]: 函数工作流 FunctionGraph
+                            - generic "计算" [ref=e897]
+                      - listitem [ref=e898]:
+                        - link "安全云脑 SecMaster 安全与合规" [ref=e899] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/secmaster?locale=zh-cn
+                          - generic [ref=e900]:
+                            - generic [ref=e901]:
+                              - img [ref=e903]
+                              - generic [ref=e905]: 安全云脑 SecMaster
+                            - generic "安全与合规" [ref=e906]
+                      - listitem [ref=e907]:
+                        - link "云桌面 Workspace 企业应用" [ref=e908] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/workspace/v2/?locale=zh-cn#/console/overview
+                          - generic [ref=e909]:
+                            - generic [ref=e910]:
+                              - img [ref=e912]
+                              - generic [ref=e914]: 云桌面 Workspace
+                            - generic "企业应用" [ref=e915]
+                  - listitem [ref=e916]:
+                    - generic [ref=e917]:
+                      - generic [ref=e918]:
+                        - text: 快捷操作
+                        - generic [ref=e919]: (8)
+                      - img [ref=e922] [cursor=pointer]
+                    - list [ref=e928]:
+                      - listitem [ref=e929]:
+                        - link "首页 MaaS 模型即服务" [ref=e930] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/homepage
+                          - generic [ref=e931]:
+                            - generic [ref=e933]: 首页
+                            - generic "MaaS 模型即服务" [ref=e934]
+                      - listitem [ref=e935]:
+                        - link "模型广场 MaaS 模型即服务" [ref=e936] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/square
+                          - generic [ref=e937]:
+                            - generic [ref=e939]: 模型广场
+                            - generic "MaaS 模型即服务" [ref=e940]
+                      - listitem [ref=e941]:
+                        - link "模型体验 MaaS 模型即服务" [ref=e942] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/experience
+                          - generic [ref=e943]:
+                            - generic [ref=e945]: 模型体验
+                            - generic "MaaS 模型即服务" [ref=e946]
+                      - listitem [ref=e947]:
+                        - link "在线推理 MaaS 模型即服务" [ref=e948] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/deployment
+                          - generic [ref=e949]:
+                            - generic [ref=e951]: 在线推理
+                            - generic "MaaS 模型即服务" [ref=e952]
+                      - listitem [ref=e953]:
+                        - link "模型调优 MaaS 模型即服务" [ref=e954] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/optimization
+                          - generic [ref=e955]:
+                            - generic [ref=e957]: 模型调优
+                            - generic "MaaS 模型即服务" [ref=e958]
+                      - listitem [ref=e959]:
+                        - link "我的模型 MaaS 模型即服务" [ref=e960] [cursor=pointer]:
+                          - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/my
+                          - generic [ref=e961]:
+                            - generic [ref=e963]: 我的模型
+                            - generic "MaaS 模型即服务" [ref=e964]
+                  - listitem [ref=e965]:
+                    - generic [ref=e966]:
+                      - generic [ref=e967]:
+                        - text: 文档
+                        - generic [ref=e968]: (400)
+                      - img [ref=e971] [cursor=pointer]
+                    - list [ref=e977]:
+                      - listitem [ref=e978]:
+                        - link "MaaS MCP概述 MaaS模型即服务" [ref=e979] [cursor=pointer]:
+                          - /url: https://support.huaweicloud.com/mcp-app-maas/maas-modelarts-0105.html?locale=zh-cn
+                          - generic [ref=e980]:
+                            - generic "MaaS MCP概述" [ref=e983]
+                            - generic "MaaS模型即服务" [ref=e984]
+                      - listitem [ref=e985]:
+                        - link "什么是MaaS MaaS模型即服务" [ref=e986] [cursor=pointer]:
+                          - /url: https://support.huaweicloud.com/productdesc-maas/productdesc_maas_0002.html?locale=zh-cn
+                          - generic [ref=e987]:
+                            - generic "什么是MaaS" [ref=e990]
+                            - generic "MaaS模型即服务" [ref=e991]
+                      - listitem [ref=e992]:
+                        - link "准备MaaS资源 MaaS模型即服务" [ref=e993] [cursor=pointer]:
+                          - /url: https://support.huaweicloud.com/usermanual-maas/usermanual_maas_0006.html?locale=zh-cn
+                          - generic [ref=e994]:
+                            - generic "准备MaaS资源" [ref=e997]
+                            - generic "MaaS模型即服务" [ref=e998]
+                      - listitem [ref=e999]:
+                        - link "在MaaS体验文本对话 MaaS模型即服务" [ref=e1000] [cursor=pointer]:
+                          - /url: https://support.huaweicloud.com/model-call-maas/model-call-055.html?locale=zh-cn
+                          - generic [ref=e1001]:
+                            - generic "在MaaS体验文本对话" [ref=e1004]
+                            - generic "MaaS模型即服务" [ref=e1005]
+                      - listitem [ref=e1006]:
+                        - link "MaaS调优模型 MaaS模型即服务" [ref=e1007] [cursor=pointer]:
+                          - /url: https://support.huaweicloud.com/model-tuning-maas/maas-modelarts-0008.html?locale=zh-cn
+                          - generic [ref=e1008]:
+                            - generic "MaaS调优模型" [ref=e1011]
+                            - generic "MaaS模型即服务" [ref=e1012]
+                      - listitem [ref=e1013]:
+                        - link "准备MaaS资源 MaaS模型即服务" [ref=e1014] [cursor=pointer]:
+                          - /url: https://support.huaweicloud.com/inference-maas/maas-modelarts-0003.html?locale=zh-cn
+                          - generic [ref=e1015]:
+                            - generic "准备MaaS资源" [ref=e1018]
+                            - generic "MaaS模型即服务" [ref=e1019]
+                  - listitem [ref=e1020]:
+                    - generic [ref=e1021]:
+                      - generic [ref=e1022]:
+                        - text: 解决方案
+                        - generic [ref=e1023]: (35)
+                      - img [ref=e1026] [cursor=pointer]
+                    - list [ref=e1032]:
+                      - listitem [ref=e1033]:
+                        - link "快速搭建智能文档处理系统 解决方案" [ref=e1034] [cursor=pointer]:
+                          - /url: https://www.huaweicloud.com/solution/implementations/quickly-build-an-intelligent-document-processing-system.html?locale=zh-cn
+                          - generic [ref=e1035]:
+                            - generic [ref=e1037]: 快速搭建智能文档处理系统
+                            - generic "解决方案" [ref=e1038]
+                      - listitem [ref=e1039]:
+                        - link "雪浪工艺生成智能助手解决方案 解决方案" [ref=e1040] [cursor=pointer]:
+                          - /url: https://www.huaweicloud.com/solution/manufacturing/ippa.html?locale=zh-cn
+                          - generic [ref=e1041]:
+                            - generic [ref=e1043]: 雪浪工艺生成智能助手解决方案
+                            - generic "解决方案" [ref=e1044]
+                      - listitem [ref=e1045]:
+                        - link "赞奇AIKnow智能体编排服务解决方案 解决方案" [ref=e1046] [cursor=pointer]:
+                          - /url: https://www.huaweicloud.com/solution/high-tech/xsuperzone.html?locale=zh-cn
+                          - generic [ref=e1047]:
+                            - generic [ref=e1049]: 赞奇AIKnow智能体编排服务解决方案
+                            - generic "解决方案" [ref=e1050]
+                      - listitem [ref=e1051]:
+                        - link "有赞快消行业私域用户运营服务平台解决方案 解决方案" [ref=e1052] [cursor=pointer]:
+                          - /url: https://www.huaweicloud.com/solution/retail/yfpuops.html?locale=zh-cn
+                          - generic [ref=e1053]:
+                            - generic [ref=e1055]: 有赞快消行业私域用户运营服务平台解决方案
+                            - generic "解决方案" [ref=e1056]
+                      - listitem [ref=e1057]:
+                        - link "明奇科技线下场域营运智能解决方案 解决方案" [ref=e1058] [cursor=pointer]:
+                          - /url: https://www.huaweicloud.com/solution/retail/mqtoois.html?locale=zh-cn
+                          - generic [ref=e1059]:
+                            - generic [ref=e1061]: 明奇科技线下场域营运智能解决方案
+                            - generic "解决方案" [ref=e1062]
+                      - listitem [ref=e1063]:
+                        - link "南讯综合零售全渠道消费者运营解决方案 解决方案" [ref=e1064] [cursor=pointer]:
+                          - /url: https://www.huaweicloud.com/solution/retail-real-estate/nascent.html?locale=zh-cn
+                          - generic [ref=e1065]:
+                            - generic [ref=e1067]: 南讯综合零售全渠道消费者运营解决方案
+                            - generic "解决方案" [ref=e1068]
+                  - listitem [ref=e1069]:
+                    - generic [ref=e1070]:
+                      - generic [ref=e1071]:
+                        - text: 云商店
+                        - generic [ref=e1072]: (44)
+                      - img [ref=e1075] [cursor=pointer]
+                    - list [ref=e1081]:
+                      - listitem [ref=e1082]:
+                        - link "恒时专业服务 商家：深圳恒时计算机软件有限公司" [ref=e1083] [cursor=pointer]:
+                          - /url: https://marketplace.huaweicloud.com/contents/fd846a59-430d-4fe7-b6af-9427536aa6a9?locale=zh-cn
+                          - generic [ref=e1084]:
+                            - generic [ref=e1085]:
+                              - img [ref=e1087]
+                              - generic [ref=e1088]: 恒时专业服务
+                            - generic "商家：深圳恒时计算机软件有限公司" [ref=e1089]
+                      - listitem [ref=e1090]:
+                        - link "OpenClaw 商家：华为云计算技术有限公司" [ref=e1091] [cursor=pointer]:
+                          - /url: https://marketplace.huaweicloud.com/contents/c2cc1872-a93f-4339-8c51-94a91d2e36bb?locale=zh-cn
+                          - generic [ref=e1092]:
+                            - generic [ref=e1093]:
+                              - img [ref=e1095]
+                              - generic [ref=e1096]: OpenClaw
+                            - generic "商家：华为云计算技术有限公司" [ref=e1097]
+                      - listitem [ref=e1098]:
+                        - link "观测云SaaS定制版 商家：上海观测未来信息技术有限公司" [ref=e1099] [cursor=pointer]:
+                          - /url: https://marketplace.huaweicloud.com/contents/d67b9a00-d80b-4fec-b163-858fbf8e9def?locale=zh-cn
+                          - generic [ref=e1100]:
+                            - generic [ref=e1101]:
+                              - img [ref=e1103]
+                              - generic [ref=e1104]: 观测云SaaS定制版
+                            - generic "商家：上海观测未来信息技术有限公司" [ref=e1105]
+                      - listitem [ref=e1106]:
+                        - link "Ai智能名片SaaS版 商家：深圳市加推科技有限公司" [ref=e1107] [cursor=pointer]:
+                          - /url: https://marketplace.huaweicloud.com/contents/0e4be4b1-638d-4487-8cce-8e9a785968f4?locale=zh-cn
+                          - generic [ref=e1108]:
+                            - generic [ref=e1109]:
+                              - img [ref=e1111]
+                              - generic [ref=e1112]: Ai智能名片SaaS版
+                            - generic "商家：深圳市加推科技有限公司" [ref=e1113]
+                      - listitem [ref=e1114]:
+                        - link "HZERO企业级PaaS平台配套服务 商家：上海汉得信息技术股份有限公司" [ref=e1115] [cursor=pointer]:
+                          - /url: https://marketplace.huaweicloud.com/contents/31586ab8-8000-4e31-8257-59b142c0b63c?locale=zh-cn
+                          - generic [ref=e1116]:
+                            - generic [ref=e1117]:
+                              - img [ref=e1119]
+                              - generic [ref=e1120]: HZERO企业级PaaS平台配套服务
+                            - generic "商家：上海汉得信息技术股份有限公司" [ref=e1121]
+                      - listitem [ref=e1122]:
+                        - link "米端SaaS智能建站 商家：济宁米端智能科技有限公司" [ref=e1123] [cursor=pointer]:
+                          - /url: https://marketplace.huaweicloud.com/contents/2347fd06-fa25-4867-af48-f362bc0f19bd?locale=zh-cn
+                          - generic [ref=e1124]:
+                            - generic [ref=e1125]:
+                              - img [ref=e1127]
+                              - generic [ref=e1128]: 米端SaaS智能建站
+                            - generic "商家：济宁米端智能科技有限公司" [ref=e1129]
+                  - listitem [ref=e1130]:
+                    - generic [ref=e1131]:
+                      - generic [ref=e1132]:
+                        - text: 开发者
+                        - generic [ref=e1133]: (400)
+                      - img [ref=e1136] [cursor=pointer]
+                    - list [ref=e1142]:
+                      - listitem [ref=e1143]:
+                        - link "如何在Dify中配置MaaS服务 博客" [ref=e1144] [cursor=pointer]:
+                          - /url: https://bbs.huaweicloud.com/blogs/459739?locale=zh-cn
+                          - generic [ref=e1145]:
+                            - generic "如何在Dify中配置MaaS服务" [ref=e1148]
+                            - generic "博客" [ref=e1149]
+                      - listitem [ref=e1150]:
+                        - link "【MaaS应用系列】MaaS X Dify基于DeepSeek API快速构建一个网站智能客服 博客" [ref=e1151] [cursor=pointer]:
+                          - /url: https://bbs.huaweicloud.com/blogs/447127?locale=zh-cn
+                          - generic [ref=e1152]:
+                            - generic "【MaaS应用系列】MaaS X Dify基于DeepSeek API快速构建一个网站智能客服" [ref=e1155]
+                            - generic "博客" [ref=e1156]
+                      - listitem [ref=e1157]:
+                        - link "【MaaS应用系列】MaaS X Cursor：基于DeepSeek API快速构建代码编辑器 博客" [ref=e1158] [cursor=pointer]:
+                          - /url: https://bbs.huaweicloud.com/blogs/447344?locale=zh-cn
+                          - generic [ref=e1159]:
+                            - generic "【MaaS应用系列】MaaS X Cursor：基于DeepSeek API快速构建代码编辑器" [ref=e1162]
+                            - generic "博客" [ref=e1163]
+                      - listitem [ref=e1164]:
+                        - link "【MaaS应用系列】MaaS X Cline：基于DeepSeek API快速构建AI编程助手 博客" [ref=e1165] [cursor=pointer]:
+                          - /url: https://bbs.huaweicloud.com/blogs/447568?locale=zh-cn
+                          - generic [ref=e1166]:
+                            - generic "【MaaS应用系列】MaaS X Cline：基于DeepSeek API快速构建AI编程助手" [ref=e1169]
+                            - generic "博客" [ref=e1170]
+                      - listitem [ref=e1171]:
+                        - link "【MaaS应用系列】MaaS X Cherry Studio：基于DeepSeek API快速构建个人AI智能助手 博客" [ref=e1172] [cursor=pointer]:
+                          - /url: https://bbs.huaweicloud.com/blogs/447250?locale=zh-cn
+                          - generic [ref=e1173]:
+                            - generic "【MaaS应用系列】MaaS X Cherry Studio：基于DeepSeek API快速构建个人AI智能助手" [ref=e1176]
+                            - generic "博客" [ref=e1177]
+                      - listitem [ref=e1178]:
+                        - link "MaaS Tokens 多模态接口调用示例 博客" [ref=e1179] [cursor=pointer]:
+                          - /url: https://bbs.huaweicloud.com/blogs/464508?locale=zh-cn
+                          - generic [ref=e1180]:
+                            - generic "MaaS Tokens 多模态接口调用示例" [ref=e1183]
+                            - generic "博客" [ref=e1184]
+                - listitem [ref=e1185]
+                - generic [ref=e1186]:
+                  - generic [ref=e1187] [cursor=pointer]:
+                    - img [ref=e1189]
+                    - generic [ref=e1193]:
+                      - img [ref=e1196]
+                      - generic [ref=e1199]:
+                        - generic [ref=e1200]:
+                          - generic "您对“全局搜索”不满意的原因是什么？" [ref=e1201]
+                          - img [ref=e1203]
+                        - list [ref=e1206]:
+                          - listitem "搜索不到想要的结果" [ref=e1207]:
+                            - generic [ref=e1210]: 搜索不到想要的结果
+                          - listitem "出现太多不相关的内容" [ref=e1211]:
+                            - generic [ref=e1214]: 出现太多不相关的内容
+                          - listitem "搜索内容排序不合理" [ref=e1215]:
+                            - generic [ref=e1218]: 搜索内容排序不合理
+                          - listitem "不容易发现全局搜索入口" [ref=e1219]:
+                            - generic [ref=e1222]: 不容易发现全局搜索入口
+                          - listitem "加载速度太慢" [ref=e1223]:
+                            - generic [ref=e1226]: 加载速度太慢
+                          - listitem "其他原因" [ref=e1227]:
+                            - generic [ref=e1230]: 其他原因
+                        - generic [ref=e1231]:
+                          - textbox "请输入您的建议" [ref=e1232]
+                          - generic [ref=e1233]: 0/200
+                        - generic [ref=e1235]: 确定
+                  - generic [ref=e1238] [cursor=pointer]:
+                    - generic [ref=e1239]: 建议反馈
+                    - generic [ref=e1240]:
+                      - generic [ref=e1241]:
+                        - generic "您对“全局搜索”的建议" [ref=e1242]
+                        - img [ref=e1244]
+                      - generic [ref=e1247]:
+                        - textbox "您想搜什么内容，有什么建议？" [ref=e1248]
+                        - generic [ref=e1249]: 0/200
+                      - generic [ref=e1251]: 确定
+        - generic [ref=e390] [cursor=pointer]: 更多
+        - img [ref=e396] [cursor=pointer]
+        - link [ref=e402] [cursor=pointer]:
+          - /url: https://console.huaweicloud.com/mc
+          - img [ref=e405]
+        - img [ref=e414] [cursor=pointer]
+        - img [ref=e425]
+        - generic [ref=e431] [cursor=pointer]:
+          - img [ref=e433]
+          - generic [ref=e438]: 简体
+        - link "hid_dsvf83fzq_kf5dv" [ref=e441] [cursor=pointer]:
+          - /url: https://account.huaweicloud.com/usercenter/#/accountindex/accountInfo
+          - list [ref=e443]:
+            - listitem "hid_dsvf83fzq_kf5dv" [ref=e444]
+  - generic [ref=e445]:
+    - generic [ref=e447]:
+      - generic [ref=e448]:
+        - img [ref=e459] [cursor=pointer]
+        - img [ref=e469] [cursor=pointer]
+        - img [ref=e482] [cursor=pointer]
+      - img [ref=e494] [cursor=pointer]
+    - generic [ref=e503] [cursor=pointer]:
+      - img
+  - generic [ref=e508]:
+    - generic:
+      - generic:
+        - generic:
+          - generic [ref=e543]:
+            - generic [ref=e544]: 大模型开发平台ModelArts Studio
+            - generic [ref=e548] [cursor=pointer]:
+              - generic [ref=e549]: 请选择空间
+              - generic [ref=e550]: 
+            - generic:
+              - link "模型广场":
+                - /url: "#/home/model-square"
+                - generic [ref=e552] [cursor=pointer]: 模型广场
+            - generic:
+              - link "体验中心 ":
+                - /url: "#/home/sign-agreement:pid"
+                - generic [ref=e554] [cursor=pointer]: 体验中心
+                - generic [ref=e555] [cursor=pointer]: 
+            - generic:
+              - generic [ref=e557]: 空间资产
+              - generic:
+                - generic:
+                  - link "数据":
+                    - /url: "#/home/asset-management/asset-data"
+                    - generic [ref=e559] [cursor=pointer]: 数据
+                - generic:
+                  - link "模型":
+                    - /url: "#/home/asset-management/asset-model"
+                    - generic [ref=e561] [cursor=pointer]: 模型
+                - generic:
+                  - link "组件":
+                    - /url: "#/home/asset-management/asset-component"
+                    - generic [ref=e563] [cursor=pointer]: 组件
+            - generic:
+              - generic [ref=e565]: 数据工程
+              - generic:
+                - generic:
+                  - link "数据获取 ":
+                    - /url: "#/home/sign-agreement:pid"
+                    - generic [ref=e567] [cursor=pointer]: 数据获取
+                    - generic [ref=e568] [cursor=pointer]: 
+                - generic:
+                  - link "数据加工 ":
+                    - /url: "#/home/sign-agreement:pid"
+                    - generic [ref=e570] [cursor=pointer]: 数据加工
+                    - generic [ref=e571] [cursor=pointer]: 
+                - generic:
+                  - link "数据发布 ":
+                    - /url: "#/home/sign-agreement:pid"
+                    - generic [ref=e573] [cursor=pointer]: 数据发布
+                    - generic [ref=e574] [cursor=pointer]: 
+                - generic:
+                  - link "数据管理 ":
+                    - /url: "#/home/sign-agreement:pid"
+                    - generic [ref=e576] [cursor=pointer]: 数据管理
+                    - generic [ref=e577] [cursor=pointer]: 
+            - generic:
+              - generic [ref=e579]: 模型开发
+              - generic:
+                - generic:
+                  - link "模型训练":
+                    - /url: "#/home/pangustudio-model-dev/home/custom-model/model-training"
+                    - generic [ref=e581] [cursor=pointer]: 模型训练
+                - generic:
+                  - link "模型压缩":
+                    - /url: "#/home/pangustudio-model-dev/home/custom-model/model-compression"
+                    - generic [ref=e583] [cursor=pointer]: 模型压缩
+                - generic:
+                  - link "模型部署":
+                    - /url: "#/home/pangustudio-model-dev/home/custom-model/model-deployment"
+                    - generic [ref=e585] [cursor=pointer]: 模型部署
+            - generic:
+              - generic [ref=e587]: 评测平台
+              - generic:
+                - generic:
+                  - link "评测集管理":
+                    - /url: "#/home/pangustudio-model-dev/home/custom-model/eval-set-management"
+                    - generic [ref=e589] [cursor=pointer]: 评测集管理
+                - generic:
+                  - link "API管理":
+                    - /url: "#/home/pangustudio-model-dev/home/custom-model/eval-api-management"
+                    - generic [ref=e591] [cursor=pointer]: API管理
+                - generic:
+                  - link "评测任务":
+                    - /url: "#/home/pangustudio-model-dev/home/custom-model/model-evaluation"
+                    - generic [ref=e593] [cursor=pointer]: 评测任务
+            - generic:
+              - generic [ref=e595]: 垂域应用开发
+              - generic:
+                - generic:
+                  - link "应用组件 ":
+                    - /url: "#/home/sign-agreement:pid"
+                    - generic [ref=e597] [cursor=pointer]: 应用组件
+                    - generic [ref=e598] [cursor=pointer]: 
+                - generic:
+                  - link "工业应用编排":
+                    - /url: "#/home/pangustudio-app-dev/home/agent/canvas-app-home"
+                    - generic [ref=e600] [cursor=pointer]: 工业应用编排
+                - generic:
+                  - link "AI 助手":
+                    - /url: "#/home/pangustudio-app-dev/home/assistant/management"
+                    - generic [ref=e602] [cursor=pointer]: AI 助手
+            - generic:
+              - link "Versatile ":
+                - /url: https://console.huaweicloud.com/versatile/#/home/overview
+                - generic [ref=e604] [cursor=pointer]:
+                  - text: Versatile
+                  - generic [ref=e605]: 
+                - text: 
+            - generic:
+              - generic [ref=e607]: 系统管理与统计
+              - generic:
+                - generic:
+                  - link "应用接入":
+                    - /url: "#/home/custom-model/application-access"
+                    - generic [ref=e609] [cursor=pointer]: 应用接入
+                - generic:
+                  - link "调用统计":
+                    - /url: "#/home/invoking-statistics"
+                    - generic [ref=e611] [cursor=pointer]: 调用统计
+                - generic:
+                  - link "空间管理":
+                    - /url: "#/home/space-management"
+                    - generic [ref=e613] [cursor=pointer]: 空间管理
+          - generic:
+            - generic: 返回首页
+    - generic [ref=e510]:
+      - generic [ref=e614]:
+        - generic [ref=e617]:
+          - generic [ref=e618]:
+            - generic [ref=e619]: 
+            - generic: 
+          - generic [ref=e620]: ModelArts Studio数据工程、模型开发等功能使用，需要先完成OBSReadOnly、OBSWriteOnly、ModelDeploy等相关授权，点击 此处 完成授权
+        - generic [ref=e621]:
+          - generic [ref=e622]:
+            - generic [ref=e624]:
+              - generic [ref=e627] [cursor=pointer]:
+                - img [ref=e629]
+                - generic [ref=e631]: 隐藏如何使用
+              - generic [ref=e634] [cursor=pointer]:
+                - img [ref=e636]
+                - generic [ref=e638]: 订购管理
+              - generic [ref=e641] [cursor=pointer]:
+                - generic [ref=e642]: 
+                - generic [ref=e643]: 设置
+            - generic [ref=e644]:
+              - generic [ref=e646]:
+                - heading "大模型开发平台 ModelArts Studio" [level=1] [ref=e648]
+                - paragraph [ref=e649]: ModelArts Studio是盘古大模型唯一的企业级服务入口，为企业用户提供盘古大模型及三方模型的推理服务，以及数据工程、模型开发、垂域应用开发、Agent开发的大模型自定义服务。
+                - generic [ref=e650]:
+                  - button "立即订购" [ref=e651] [cursor=pointer]
+                  - button "试用咨询" [ref=e652] [cursor=pointer]
+              - generic [ref=e656]:
+                - heading "hid_dsvf83fzq_kf5dv" [level=6] [ref=e657]
+                - generic [ref=e659]: 超级管理员
+          - generic [ref=e660]:
+            - generic [ref=e663]:
+              - generic [ref=e664]:
+                - heading "如何使用ModelArts Studio" [level=5] [ref=e666]
+                - generic [ref=e669] [cursor=pointer]:
+                  - img [ref=e671]
+                  - generic [ref=e673]: 隐藏
+              - generic [ref=e674]:
+                - generic [ref=e675]:
+                  - generic [ref=e676]: "1"
+                  - generic [ref=e677]:
+                    - heading "创建空间" [level=6] [ref=e678]
+                    - paragraph [ref=e679]: 超级管理员创建空间，并添加空间管理员与成员，按照职能归属分配相应角色，所有开发工作都将在工作空间内完成
+                - generic [ref=e680]:
+                  - generic [ref=e681]: "2"
+                  - generic [ref=e682]:
+                    - heading "空间内开启任务" [level=6] [ref=e683]
+                    - paragraph [ref=e684]: 在空间内开启数据工程、模型开发、垂域应用开发、Agent开发四大工具套件，沉淀数据、模型、组件及应用资产
+                - generic [ref=e685]:
+                  - generic [ref=e686]: "3"
+                  - generic [ref=e687]:
+                    - heading "模型部署和调用" [level=6] [ref=e688]
+                    - paragraph [ref=e689]: 模型部署之后，在能力调测和模型部署页面进行模型服务的调测及调用
+                - generic [ref=e690]:
+                  - generic [ref=e691]: "4"
+                  - generic [ref=e692]:
+                    - heading "应用落地" [level=6] [ref=e693]
+                    - paragraph [ref=e694]: 基于模型服务以及Agent开发的知识库、工作流等能力，构建落地应用，支撑用户快速运用大模型能力
+            - generic [ref=e695]:
+              - generic [ref=e698]:
+                - heading "我的空间" [level=5] [ref=e701]
+                - generic [ref=e702]:
+                  - generic [ref=e703]:
+                    - button "创建空间" [ref=e705] [cursor=pointer]
+                    - generic [ref=e706]:
+                      - generic [ref=e708] [cursor=pointer]:
+                        - generic [ref=e710]: 
+                        - textbox "选择属性筛选，或输入关键字搜索" [ref=e714]
+                      - button "" [ref=e715] [cursor=pointer]:
+                        - generic [ref=e716]: 
+                  - paragraph [ref=e720]: 暂无数据
+                  - generic [ref=e722]:
+                    - generic [ref=e723]: 总条数：0
+                    - generic [ref=e725]:
+                      - generic [ref=e727]: 
+                      - generic [ref=e728] [cursor=pointer]: "1"
+                      - generic [ref=e730]: 
+              - generic [ref=e732] [cursor=pointer]:
+                - heading "Versatile" [level=2] [ref=e733]
+                - paragraph [ref=e734]:
+                  - text: 创建属于你的原生应用
+                  - text: 快来体验吧！
+            - generic [ref=e735]:
+              - generic [ref=e738]:
+                - generic [ref=e739]:
+                  - heading "常见问题" [level=5] [ref=e741]
+                  - img [ref=e745] [cursor=pointer]
+                - generic [ref=e747]:
+                  - generic [ref=e748]:
+                    - generic [ref=e749] [cursor=pointer]:
+                      - heading "如何判断盘古大模型训练状态是否正常？" [level=6] [ref=e750]
+                      - paragraph [ref=e751]: 判断训练状态是否正常，通常可以通过观察训练过程中Loss（损失函数值）的变化趋势。损失函数是一种衡量模型预测结果和真实结果之间的差距的指标，正常情况下越小越好。
+                    - generic [ref=e752] [cursor=pointer]:
+                      - heading "训练智能客服系统大模型需考虑哪些方面？" [level=6] [ref=e753]
+                      - paragraph [ref=e754]: 根据智能客服场景，建议从以下方面考虑：根据企业实际服务的场景和积累的数据量，评估是否需要构建行业模型，如电商、金融等。根据每个客户的金牌客服话术，可以对对话模型进行有监督微调，进一步优化其性能。
+                  - generic [ref=e755]:
+                    - generic [ref=e756] [cursor=pointer]:
+                      - heading "如何调整推理参数，使模型效果最优？" [level=6] [ref=e757]
+                      - paragraph [ref=e758]: 推理参数（解码参数）是一组用于控制模型生成预测结果的参数，其可以用于控制模型生成结果的样式，如长度、随机性、创造性、多样性、准确性和丰富度等等。
+                    - generic [ref=e759] [cursor=pointer]:
+                      - heading "什么是提示词工程？" [level=6] [ref=e760]
+                      - paragraph [ref=e761]: 提示工程是一项将知识、技巧和直觉结合的工作，需要通过不断实践实现模型输出效果的提升。提示词和模型之间存在着密切关系，本指南结合了大模型通用的提示工程技巧以及盘古大模型的调优实践经验，总结的一些技巧和方法更为适合基于盘古大模型的提示工程。
+              - generic [ref=e764]:
+                - generic [ref=e765]:
+                  - heading "最佳实践" [level=5] [ref=e767]
+                  - img [ref=e771] [cursor=pointer]
+                - generic [ref=e774] [cursor=pointer]:
+                  - heading "盘古NLP大模型调优实践" [level=6] [ref=e775]
+                  - paragraph [ref=e776]: 3803人围观
+                  - generic "推荐阅读" [ref=e778]:
+                    - img [ref=e780]
+                    - text: 推荐阅读
+            - generic [ref=e784]:
+              - heading "相关服务" [level=5] [ref=e787]
+              - generic [ref=e788]:
+                - generic [ref=e789] [cursor=pointer]:
+                  - heading "对象存储服务 OBS" [level=6] [ref=e791]
+                  - generic [ref=e792]:
+                    - generic "热门" [ref=e794]
+                    - generic "配合数据工程使用" [ref=e796]
+                  - paragraph [ref=e797]: 提供安全稳定、性能领先、无限弹性扩展的存储能力，降低使用成本，驱动千行百业数据价值变现
+                - generic [ref=e798] [cursor=pointer]:
+                  - heading "企业搜索服务 Koosearch" [level=6] [ref=e800]
+                  - generic [ref=e801]:
+                    - generic "热门" [ref=e803]
+                    - generic "配合Agent开发使用" [ref=e805]
+                  - paragraph [ref=e806]: 盘古大模型驱动搜索，搜索增强盘古大模型
+                - generic [ref=e807] [cursor=pointer]:
+                  - heading "内容审核 Moderation" [level=6] [ref=e809]
+                  - generic [ref=e810]:
+                    - generic "新品" [ref=e812]
+                    - generic "配合模型开发使用" [ref=e814]
+                  - paragraph [ref=e815]: 基于图像、文本、音频、视频检测技术，可自动进行涉黄、广告、涉暴等内容检测，帮助客户降低业务违规风险
+      - generic:
+        - generic:
+          - generic [ref=e529]: 
+          - generic:
+            - generic:  
+            - generic:
+              - img [ref=e532] [cursor=pointer]
+              - generic [ref=e534] [cursor=pointer]:
+                - generic: 
+              - generic [ref=e535] [cursor=pointer]:
+                - generic: 

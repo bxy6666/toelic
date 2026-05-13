@@ -1,0 +1,939 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - paragraph [ref=e5]:
+      - generic [ref=e6]:
+        - text: 诚邀您对“MaaS模型即服务”进行产品满意度评价。
+        - generic [ref=e7] [cursor=pointer]: 开始评价
+      - generic [ref=e8]: 
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic "打开服务列表" [ref=e14] [cursor=pointer]:
+            - img [ref=e16]
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic [ref=e18]:
+                    - list [ref=e19]:
+                      - listitem [ref=e20] [cursor=pointer]:
+                        - img [ref=e22]
+                        - text: 收藏和访问
+                      - listitem [ref=e24] [cursor=pointer]:
+                        - img [ref=e26]
+                        - text: 精选推荐
+                      - listitem [ref=e30] [cursor=pointer]:
+                        - img [ref=e32]
+                        - text: 所有服务
+                    - list [ref=e41]:
+                      - listitem "Flexus云服务" [ref=e42]:
+                        - generic "Flexus云服务" [ref=e43] [cursor=pointer]:
+                          - generic [ref=e44]: Flexus云服务
+                      - listitem "计算" [ref=e45]:
+                        - generic "计算" [ref=e46] [cursor=pointer]:
+                          - generic [ref=e47]: 计算
+                      - listitem "存储" [ref=e48]:
+                        - generic "存储" [ref=e49] [cursor=pointer]:
+                          - generic [ref=e50]: 存储
+                      - listitem "网络" [ref=e51]:
+                        - generic "网络" [ref=e52] [cursor=pointer]:
+                          - generic [ref=e53]: 网络
+                      - listitem "数据库" [ref=e54]:
+                        - generic "数据库" [ref=e55] [cursor=pointer]:
+                          - generic [ref=e56]: 数据库
+                      - listitem "安全与合规" [ref=e57]:
+                        - generic "安全与合规" [ref=e58] [cursor=pointer]:
+                          - generic [ref=e59]: 安全与合规
+                      - listitem "容器" [ref=e60]:
+                        - generic "容器" [ref=e61] [cursor=pointer]:
+                          - generic [ref=e62]: 容器
+                      - listitem "应用中间件" [ref=e63]:
+                        - generic "应用中间件" [ref=e64] [cursor=pointer]:
+                          - generic [ref=e65]: 应用中间件
+                      - listitem "管理与监管" [ref=e66]:
+                        - generic "管理与监管" [ref=e67] [cursor=pointer]:
+                          - generic [ref=e68]: 管理与监管
+                      - listitem "迁移" [ref=e69]:
+                        - generic "迁移" [ref=e70] [cursor=pointer]:
+                          - generic [ref=e71]: 迁移
+                      - listitem "人工智能" [ref=e72]:
+                        - generic "人工智能" [ref=e73] [cursor=pointer]:
+                          - generic [ref=e74]: 人工智能
+                      - listitem "开发与运维" [ref=e75]:
+                        - generic "开发与运维" [ref=e76] [cursor=pointer]:
+                          - generic [ref=e77]: 开发与运维
+                      - listitem "企业应用" [ref=e78]:
+                        - generic "企业应用" [ref=e79] [cursor=pointer]:
+                          - generic [ref=e80]: 企业应用
+                      - listitem "云通信" [ref=e81]:
+                        - generic "云通信" [ref=e82] [cursor=pointer]:
+                          - generic [ref=e83]: 云通信
+                      - listitem "视频" [ref=e84]:
+                        - generic "视频" [ref=e85] [cursor=pointer]:
+                          - generic [ref=e86]: 视频
+                      - listitem "IoT物联网" [ref=e87]:
+                        - generic "IoT物联网" [ref=e88] [cursor=pointer]:
+                          - generic [ref=e89]: IoT物联网
+                      - listitem "域名与网站" [ref=e90]:
+                        - generic "域名与网站" [ref=e91] [cursor=pointer]:
+                          - generic [ref=e92]: 域名与网站
+                      - listitem "云商店" [ref=e93]:
+                        - generic "云商店" [ref=e94] [cursor=pointer]:
+                          - generic [ref=e95]: 云商店
+                      - listitem "企业网络" [ref=e96]:
+                        - generic "企业网络" [ref=e97] [cursor=pointer]:
+                          - generic [ref=e98]: 企业网络
+                      - listitem "企业协同" [ref=e99]:
+                        - generic "企业协同" [ref=e100] [cursor=pointer]:
+                          - generic [ref=e101]: 企业协同
+                      - listitem "CDN与智能边缘" [ref=e102]:
+                        - generic "CDN与智能边缘" [ref=e103] [cursor=pointer]:
+                          - generic [ref=e104]: CDN与智能边缘
+                      - listitem "大数据" [ref=e105]:
+                        - generic "大数据" [ref=e106] [cursor=pointer]:
+                          - generic [ref=e107]: 大数据
+                      - listitem "区块链" [ref=e108]:
+                        - generic "区块链" [ref=e109] [cursor=pointer]:
+                          - generic [ref=e110]: 区块链
+                      - listitem "开天aPaaS" [ref=e111]:
+                        - generic "开天aPaaS" [ref=e112] [cursor=pointer]:
+                          - generic [ref=e113]: 开天aPaaS
+                      - listitem "工业软件" [ref=e114]:
+                        - generic "工业软件" [ref=e115] [cursor=pointer]:
+                          - generic [ref=e116]: 工业软件
+                      - listitem "专属云" [ref=e117]:
+                        - generic "专属云" [ref=e118] [cursor=pointer]:
+                          - generic [ref=e119]: 专属云
+                  - generic:
+                    - generic:
+                      - generic [ref=e120]:
+                        - img [ref=e122]
+                        - textbox "搜索云服务" [ref=e125]
+                      - img [ref=e127] [cursor=pointer]
+                    - generic [ref=e132]:
+                      - generic [ref=e134]:
+                        - generic [ref=e135]: 最近访问
+                        - list [ref=e136]:
+                          - link "MaaS模型即服务" [ref=e138] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelarts#/model-studio/homepage
+                            - generic [ref=e139]:
+                              - img [ref=e141]
+                              - generic "MaaS模型即服务" [ref=e144]
+                          - link "大模型开发平台 ModelArts Studio" [ref=e148] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/modelartsstudio/
+                            - generic [ref=e149]:
+                              - img [ref=e151]
+                              - generic "大模型开发平台 ModelArts Studio" [ref=e154]
+                          - link "软件开发生产线 CodeArts" [ref=e158] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/devcloud
+                            - generic [ref=e159]:
+                              - img [ref=e161]
+                              - generic "软件开发生产线 CodeArts" [ref=e164]
+                      - generic [ref=e168]:
+                        - generic [ref=e169]: 我的收藏
+                        - list [ref=e170]:
+                          - link "弹性云服务器 ECS" [ref=e172] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/ecs/manager/vmList
+                            - generic [ref=e173]:
+                              - img [ref=e175]
+                              - generic "弹性云服务器 ECS" [ref=e178]
+                              - generic "取消收藏" [ref=e181]:
+                                - img [ref=e182]
+                          - link "裸金属服务器 BMS" [ref=e186] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/bms/manager/bmsInfo/vmList
+                            - generic [ref=e187]:
+                              - img [ref=e189]
+                              - generic "裸金属服务器 BMS" [ref=e192]
+                              - generic "取消收藏" [ref=e195]:
+                                - img [ref=e196]
+                          - link "弹性伸缩 AS" [ref=e200] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/as/manager/groupConfigInfo/groupList
+                            - generic [ref=e201]:
+                              - img [ref=e203]
+                              - generic "弹性伸缩 AS" [ref=e206]
+                              - generic "取消收藏" [ref=e209]:
+                                - img [ref=e210]
+                          - link "对象存储服务 OBS" [ref=e214] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/obs/#/obs/manager/buckets
+                            - generic [ref=e215]:
+                              - img [ref=e217]
+                              - generic "对象存储服务 OBS" [ref=e220]
+                              - generic "取消收藏" [ref=e223]:
+                                - img [ref=e224]
+                          - link "云硬盘 EVS" [ref=e228] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/ecm/#/evs/manager/volumelist
+                            - generic [ref=e229]:
+                              - img [ref=e231]
+                              - generic "云硬盘 EVS" [ref=e234]
+                              - generic "取消收藏" [ref=e237]:
+                                - img [ref=e238]
+                          - link "云备份 CBR" [ref=e242] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/cbr/v2/#/cbr
+                            - generic [ref=e243]:
+                              - img [ref=e245]
+                              - generic "云备份 CBR" [ref=e248]
+                              - generic "取消收藏" [ref=e251]:
+                                - img [ref=e252]
+                          - link "虚拟私有云 VPC" [ref=e256] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/vpc
+                            - generic [ref=e257]:
+                              - img [ref=e259]
+                              - generic "虚拟私有云 VPC" [ref=e262]
+                              - generic "取消收藏" [ref=e265]:
+                                - img [ref=e266]
+                          - link "弹性负载均衡 ELB" [ref=e270] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/vpc/#/elb/manager/elbList
+                            - generic [ref=e271]:
+                              - img [ref=e273]
+                              - generic "弹性负载均衡 ELB" [ref=e276]
+                              - generic "取消收藏" [ref=e279]:
+                                - img [ref=e280]
+                          - link "弹性公网IP EIP" [ref=e284] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/vpc/#/vpc/vpcmanager/eips
+                            - generic [ref=e285]:
+                              - img [ref=e287]
+                              - generic "弹性公网IP EIP" [ref=e290]
+                              - generic "取消收藏" [ref=e293]:
+                                - img [ref=e294]
+                          - link "云数据库 RDS" [ref=e298] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/rds/
+                            - generic [ref=e299]:
+                              - img [ref=e301]
+                              - generic "云数据库 RDS" [ref=e304]
+                              - generic "取消收藏" [ref=e307]:
+                                - img [ref=e308]
+                          - link "域名注册 Domains" [ref=e312] [cursor=pointer]:
+                            - /url: https://console.huaweicloud.com/domain
+                            - generic [ref=e313]:
+                              - img [ref=e315]
+                              - generic "域名注册 Domains" [ref=e318]
+                              - generic "取消收藏" [ref=e321]:
+                                - img [ref=e322]
+        - link "前往官网" [ref=e325] [cursor=pointer]:
+          - /url: http://www.huaweicloud.com/
+          - img [ref=e327]
+        - link "控制台" [ref=e332] [cursor=pointer]:
+          - /url: https://console.huaweicloud.com/console?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2
+          - generic [ref=e333]: 控制台
+        - generic [ref=e336] [cursor=pointer]:
+          - generic [ref=e337]: 
+          - paragraph [ref=e338]: 西南-贵阳一
+          - img [ref=e340]
+      - generic [ref=e343]:
+        - generic [ref=e345]:
+          - generic [ref=e346]:
+            - img [ref=e348] [cursor=pointer]
+            - textbox "搜索云服务、资源（IP / 名称 / ID）、快捷操作、文档、API、解决方案" [ref=e350]
+          - list:
+            - generic [ref=e354]:
+              - generic [ref=e356]:
+                - generic [ref=e357]:
+                  - text: 最近搜索
+                  - generic [ref=e359] [cursor=pointer]: 清空
+                - list [ref=e360]:
+                  - listitem "MaaS" [ref=e361] [cursor=pointer]:
+                    - generic [ref=e362]: MaaS
+                  - listitem "ModelArts Studi" [ref=e363] [cursor=pointer]:
+                    - generic [ref=e364]: ModelArts Studi
+                  - listitem "CodeArts" [ref=e365] [cursor=pointer]:
+                    - generic [ref=e366]: CodeArts
+                  - listitem "ModelArts Studio" [ref=e367] [cursor=pointer]:
+                    - generic [ref=e368]: ModelArts Studio
+              - listitem [ref=e370]
+              - generic [ref=e371]: 最近访问
+              - list [ref=e372]:
+                - listitem [ref=e373]:
+                  - link "MaaS模型即服务" [ref=e374] [cursor=pointer]:
+                    - /url: https://console.huaweicloud.com/modelarts?locale=zh-cn#/model-studio/homepage
+                    - generic [ref=e376]:
+                      - img [ref=e378]
+                      - generic "MaaS模型即服务" [ref=e380]
+                - listitem [ref=e381]:
+                  - link "大模型开发平台 ModelArts Studio" [ref=e382] [cursor=pointer]:
+                    - /url: https://console.huaweicloud.com/modelartsstudio/?locale=zh-cn
+                    - generic [ref=e384]:
+                      - img [ref=e386]
+                      - generic "大模型开发平台 ModelArts Studio" [ref=e388]
+                - listitem [ref=e389]:
+                  - link "软件开发生产线 CodeArts" [ref=e390] [cursor=pointer]:
+                    - /url: https://console.huaweicloud.com/devcloud?locale=zh-cn
+                    - generic [ref=e392]:
+                      - img [ref=e394]
+                      - generic "软件开发生产线 CodeArts" [ref=e396]
+              - generic [ref=e398]:
+                - generic [ref=e399]: 快捷入口
+                - generic [ref=e400]:
+                  - link "续费管理" [ref=e401] [cursor=pointer]:
+                    - /url: https://account.huaweicloud.com/usercenter/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/userindex/renewalManagement
+                  - link "域名列表" [ref=e402] [cursor=pointer]:
+                    - /url: https://console.huaweicloud.com/domain/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/domain/list
+                  - link "优惠券" [ref=e403] [cursor=pointer]:
+                    - /url: https://account.huaweicloud.com/usercenter/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/userindex/coupons
+                  - link "我的工单" [ref=e404] [cursor=pointer]:
+                    - /url: https://console.huaweicloud.com/ticket/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/ticketindex/serviceTickets
+                  - link "我的订单" [ref=e405] [cursor=pointer]:
+                    - /url: https://account.huaweicloud.com/usercenter/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/userindex/myOrder
+                  - link "支持计划" [ref=e406] [cursor=pointer]:
+                    - /url: https://console.huaweicloud.com/ticket/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/ticketindex/supportPlanDetail
+        - generic [ref=e410] [cursor=pointer]: 更多
+        - img [ref=e416] [cursor=pointer]
+        - link [ref=e422] [cursor=pointer]:
+          - /url: https://console.huaweicloud.com/mc
+          - img [ref=e425]
+        - img [ref=e434] [cursor=pointer]
+        - img [ref=e445] [cursor=pointer]
+        - generic [ref=e451] [cursor=pointer]:
+          - img [ref=e453]
+          - generic [ref=e458]: 简体
+        - link "hid_dsvf83fzq_kf5dv" [ref=e461] [cursor=pointer]:
+          - /url: https://account.huaweicloud.com/usercenter/#/accountindex/accountInfo
+          - list [ref=e463]:
+            - listitem "hid_dsvf83fzq_kf5dv" [ref=e464]
+  - generic [ref=e465]:
+    - generic [ref=e467]:
+      - generic [ref=e468]:
+        - img [ref=e479] [cursor=pointer]
+        - img [ref=e489] [cursor=pointer]
+        - img [ref=e503] [cursor=pointer]
+      - img [ref=e515] [cursor=pointer]
+    - generic [ref=e525] [cursor=pointer]:
+      - img
+  - generic [ref=e533]:
+    - generic [ref=e539]:
+      - generic [ref=e540]:
+        - generic [ref=e542]:
+          - img [ref=e543]
+          - generic [ref=e545]: MaaS
+        - generic [ref=e546]:
+          - link "总览" [ref=e548] [cursor=pointer]:
+            - /url: "#/model-studio/homepage"
+            - generic [ref=e551]:
+              - img [ref=e553]
+              - generic [ref=e555]: 总览
+          - link "模型广场" [ref=e557] [cursor=pointer]:
+            - /url: "#/model-studio/square"
+            - generic [ref=e560]:
+              - img [ref=e562]
+              - generic [ref=e564]: 模型广场
+          - generic [ref=e565]:
+            - generic [ref=e566] [cursor=pointer]:
+              - generic [ref=e570]: 模型体验
+              - generic [ref=e571]: 
+            - generic [ref=e572]:
+              - link "文本对话" [ref=e574] [cursor=pointer]:
+                - /url: "#/model-studio/experience"
+                - generic [ref=e576]:
+                  - img [ref=e578]
+                  - generic [ref=e580]: 文本对话
+              - link "图像理解" [ref=e582] [cursor=pointer]:
+                - /url: "#/model-studio/imageunderstand"
+                - generic [ref=e584]:
+                  - img [ref=e586]
+                  - generic [ref=e588]: 图像理解
+              - link "图片生成" [ref=e590] [cursor=pointer]:
+                - /url: "#/model-studio/image-generation"
+                - generic [ref=e592]:
+                  - img [ref=e594]
+                  - generic [ref=e596]: 图片生成
+          - generic [ref=e597]:
+            - generic [ref=e598] [cursor=pointer]:
+              - generic [ref=e602]: 模型推理
+              - generic [ref=e603]: 
+            - link "在线推理" [ref=e606] [cursor=pointer]:
+              - /url: "#/model-studio/deployment"
+              - generic [ref=e608]:
+                - img [ref=e610]
+                - generic [ref=e612]: 在线推理
+          - generic [ref=e614] [cursor=pointer]:
+            - generic [ref=e618]: 模型定制
+            - generic [ref=e619]: 
+          - generic [ref=e621] [cursor=pointer]:
+            - generic [ref=e625]:
+              - generic [ref=e626]: 应用开发
+              - generic "即将下线" [ref=e628]
+            - generic [ref=e629]: 
+          - generic [ref=e630]:
+            - generic [ref=e631] [cursor=pointer]:
+              - generic [ref=e635]: 管理与统计
+              - generic [ref=e636]: 
+            - generic [ref=e637]:
+              - link "API Key 管理" [ref=e639] [cursor=pointer]:
+                - /url: "#/model-studio/authmanage"
+                - generic [ref=e641]:
+                  - img [ref=e643]
+                  - generic [ref=e645]: API Key 管理
+              - link "资源包管理 " [ref=e647] [cursor=pointer]:
+                - /url: https://account.huaweicloud.com/usercenter/?locale=zh-cn&agencyId=ce53fc9fe2554ba292b62eebefd51a49&region=cn-southwest-2#/userindex/myResourcePackage?cloudServiceType=hws.service.type.modelarts
+                - generic [ref=e649]:
+                  - img [ref=e651]
+                  - generic [ref=e653]: 资源包管理
+                  - generic [ref=e654]: 
+                - text: 
+              - link "调用统计" [ref=e656] [cursor=pointer]:
+                - /url: "#/model-studio/statistics"
+                - generic [ref=e658]:
+                  - img [ref=e660]
+                  - generic [ref=e662]: 调用统计
+      - img [ref=e666] [cursor=pointer]
+    - generic [ref=e670]:
+      - generic:
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - img
+              - generic: 展开全部
+            - generic:
+              - generic:
+                - generic: 
+              - generic: "2"
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                - generic: 最小化
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                - generic: 关闭全部
+        - generic:
+          - generic:
+            - generic:
+              - generic: 
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic: 开通成功
+            - generic: 
+          - text:  
+      - generic [ref=e671]:
+        - generic [ref=e676]:
+          - generic [ref=e677]:
+            - generic [ref=e678]: 
+            - generic: 
+          - generic [ref=e679]:
+            - text: 由于大模型即服务平台的数据存储、模型导入以及部署上线等功能依赖OBS、SWR等服务，需获取依赖服务授权后才能正常使用相关功能，点击
+            - link "此处" [ref=e680] [cursor=pointer]:
+              - /url: javascript:void(0);
+            - text: 获取依赖服务授权，查看
+            - link "配置 ModelArts 委托授权。" [ref=e681] [cursor=pointer]:
+              - /url: javascript:void(0);
+        - generic [ref=e692]:
+          - generic [ref=e695]:
+            - text: 
+            - list [ref=e697]:
+              - listitem [ref=e698] [cursor=pointer]:
+                - generic [ref=e700]: 预置服务
+              - listitem [ref=e701] [cursor=pointer]:
+                - generic [ref=e703]: 自定义接入点
+              - listitem [ref=e704] [cursor=pointer]:
+                - generic [ref=e706]: 我的服务
+            - text: 
+          - generic [ref=e712]:
+            - generic [ref=e713]:
+              - generic [ref=e715]:
+                - generic [ref=e717]:
+                  - generic [ref=e718]: 预置服务 (21)
+                  - generic [ref=e721]: 
+                - generic [ref=e722]:
+                  - generic [ref=e729] [cursor=pointer]:
+                    - img [ref=e731]
+                    - generic [ref=e733]: 使用指南
+                  - generic [ref=e736]:
+                    - radio [ref=e738] [cursor=pointer]
+                    - generic [ref=e741]: 百万tokens单位展示
+              - generic [ref=e745]:
+                - generic [ref=e746]:
+                  - generic [ref=e747]: 
+                  - generic: 
+                - generic [ref=e748]:
+                  - text: 套餐包可用于抵扣部分预置服务模型体验/调用消耗token；超出套餐包额度或使用时段，将自动转为按需计费。查看套餐包使用详情
+                  - link "查看已购套餐包 " [ref=e749] [cursor=pointer]:
+                    - /url: https://account.huaweicloud.com/usercenter/#/userindex/myResourcePackage?cloudServiceType=hws.service.type.modelarts
+                - generic [ref=e750] [cursor=pointer]: 
+              - generic [ref=e753]:
+                - generic [ref=e755] [cursor=pointer]:
+                  - generic [ref=e757]: 
+                  - textbox "默认按照名称搜索、过滤" [ref=e761]
+                - generic [ref=e762]:
+                  - button "" [ref=e763] [cursor=pointer]:
+                    - generic [ref=e764]: 
+                  - button "" [ref=e766] [cursor=pointer]:
+                    - generic [ref=e767]: 
+            - generic [ref=e769]:
+              - table [ref=e771]:
+                - rowgroup [ref=e772]:
+                  - row "服务名称/资源ID   状态   类型  计费方式  推理定价 优惠折扣  模型限流  调用统计 操作" [ref=e773]:
+                    - columnheader [ref=e774]
+                    - columnheader "服务名称/资源ID  " [ref=e775]:
+                      - generic [ref=e779] [cursor=pointer]:
+                        - generic [ref=e781]: 服务名称/资源ID
+                        - generic [ref=e782]: 
+                        - generic [ref=e1694]: 
+                    - columnheader "状态  " [ref=e785]:
+                      - generic [ref=e789] [cursor=pointer]:
+                        - generic [ref=e791]: 状态
+                        - generic [ref=e793]: 
+                        - generic [ref=e1696]: 
+                    - columnheader "类型 " [ref=e796]:
+                      - generic [ref=e800]:
+                        - generic [ref=e802]: 类型
+                        - generic [ref=e804] [cursor=pointer]: 
+                    - columnheader "计费方式 " [ref=e805]:
+                      - generic [ref=e809]:
+                        - generic [ref=e811]: 计费方式
+                        - generic [ref=e813] [cursor=pointer]: 
+                    - columnheader "推理定价" [ref=e814]:
+                      - generic [ref=e820]: 推理定价
+                    - columnheader "优惠折扣 " [ref=e821]:
+                      - generic [ref=e825]:
+                        - generic [ref=e827]: 优惠折扣
+                        - generic [ref=e828] [cursor=pointer]: 
+                    - columnheader "模型限流 " [ref=e829]:
+                      - generic [ref=e833]:
+                        - generic [ref=e835]: 模型限流
+                        - generic [ref=e836] [cursor=pointer]: 
+                    - columnheader "调用统计" [ref=e837]:
+                      - generic [ref=e843]: 调用统计
+                    - columnheader "操作" [ref=e844]:
+                      - generic [ref=e850]: 操作
+              - table [ref=e853]:
+                - rowgroup:
+                  - row:
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                    - columnheader
+                - rowgroup [ref=e854]:
+                  - 'row " Qwen3-30B-A3B -- 未开通 文本生成 按token计费 输入:¥0.00075 / 千tokens 输出:¥0.003 - ¥0.0075 / 千tokens -- TPM: 500,000 RPM: 1,500 开通服务 调用说明  更多 " [ref=e855]':
+                    - cell "" [ref=e856]:
+                      - generic [ref=e859] [cursor=pointer]: 
+                    - cell "Qwen3-30B-A3B --" [ref=e860]:
+                      - generic [ref=e864]:
+                        - cell "Qwen3-30B-A3B" [ref=e865]:
+                          - generic [ref=e866]: Qwen3-30B-A3B
+                        - generic [ref=e868]: "--"
+                    - cell "未开通" [ref=e869]:
+                      - generic [ref=e873]:
+                        - img [ref=e875]
+                        - generic [ref=e877]: 未开通
+                    - cell "文本生成" [ref=e878]:
+                      - generic [ref=e882]: 文本生成
+                    - cell "按token计费" [ref=e883]:
+                      - generic [ref=e887]: 按token计费
+                    - cell "输入:¥0.00075 / 千tokens 输出:¥0.003 - ¥0.0075 / 千tokens" [ref=e888]:
+                      - generic [ref=e891]:
+                        - generic [ref=e1698]: 输入:¥0.00075 / 千tokens
+                        - generic [ref=e1700]: 输出:¥0.003 - ¥0.0075 / 千tokens
+                    - cell "--" [ref=e896]:
+                      - generic [ref=e899]: "--"
+                    - 'cell "TPM: 500,000 RPM: 1,500" [ref=e900]':
+                      - generic [ref=e1701]:
+                        - paragraph [ref=e1702]: "TPM: 500,000"
+                        - paragraph [ref=e1703]: "RPM: 1,500"
+                    - cell [ref=e905]:
+                      - button [disabled] [ref=e1705]:
+                        - img [ref=e1707]
+                    - cell "开通服务 调用说明  更多 " [ref=e912]:
+                      - generic [ref=e1709]:
+                        - generic [ref=e1710]:
+                          - generic [ref=e1713] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1715] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1716]: 
+                        - button "更多 " [ref=e1718] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1719]: 
+                  - 'row " DeepSeek-V3.1 -- 未开通 文本生成 按token计费 输入:¥0.004 / 千tokens 输出:¥0.012 / 千tokens -- TPM: 500,000 RPM: 1,500 开通服务 调用说明  更多 " [ref=e925]':
+                    - cell "" [ref=e926]:
+                      - generic [ref=e929] [cursor=pointer]: 
+                    - cell "DeepSeek-V3.1 --" [ref=e930]:
+                      - generic [ref=e934]:
+                        - cell "DeepSeek-V3.1" [ref=e935]:
+                          - generic [ref=e936]: DeepSeek-V3.1
+                        - generic [ref=e938]: "--"
+                    - cell "未开通" [ref=e939]:
+                      - generic [ref=e943]:
+                        - img [ref=e945]
+                        - generic [ref=e947]: 未开通
+                    - cell "文本生成" [ref=e948]:
+                      - generic [ref=e952]: 文本生成
+                    - cell "按token计费" [ref=e953]:
+                      - generic [ref=e957]: 按token计费
+                    - cell "输入:¥0.004 / 千tokens 输出:¥0.012 / 千tokens" [ref=e958]:
+                      - generic [ref=e961]:
+                        - generic [ref=e1721]: 输入:¥0.004 / 千tokens
+                        - generic [ref=e1723]: 输出:¥0.012 / 千tokens
+                    - cell "--" [ref=e966]:
+                      - generic [ref=e969]: "--"
+                    - 'cell "TPM: 500,000 RPM: 1,500" [ref=e970]':
+                      - generic [ref=e1724]:
+                        - paragraph [ref=e1725]: "TPM: 500,000"
+                        - paragraph [ref=e1726]: "RPM: 1,500"
+                    - cell [ref=e975]:
+                      - button [disabled] [ref=e1728]:
+                        - img [ref=e1730]
+                    - cell "开通服务 调用说明  更多 " [ref=e982]:
+                      - generic [ref=e1732]:
+                        - generic [ref=e1733]:
+                          - generic [ref=e1736] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1738] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1739]: 
+                        - button "更多 " [ref=e1741] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1742]: 
+                  - 'row " Qwen3-235B-A22B -- 未开通 文本生成 按token计费 输入:¥0.002 / 千tokens 输出:¥0.008 - ¥0.02 / 千tokens -- TPM: 500,000 RPM: 1,500 开通服务 调用说明  更多 " [ref=e995]':
+                    - cell "" [ref=e996]:
+                      - generic [ref=e999] [cursor=pointer]: 
+                    - cell "Qwen3-235B-A22B --" [ref=e1000]:
+                      - generic [ref=e1004]:
+                        - cell "Qwen3-235B-A22B" [ref=e1005]:
+                          - generic [ref=e1006]: Qwen3-235B-A22B
+                        - generic [ref=e1008]: "--"
+                    - cell "未开通" [ref=e1009]:
+                      - generic [ref=e1013]:
+                        - img [ref=e1015]
+                        - generic [ref=e1017]: 未开通
+                    - cell "文本生成" [ref=e1018]:
+                      - generic [ref=e1022]: 文本生成
+                    - cell "按token计费" [ref=e1023]:
+                      - generic [ref=e1027]: 按token计费
+                    - cell "输入:¥0.002 / 千tokens 输出:¥0.008 - ¥0.02 / 千tokens" [ref=e1028]:
+                      - generic [ref=e1031]:
+                        - generic [ref=e1744]: 输入:¥0.002 / 千tokens
+                        - generic [ref=e1746]: 输出:¥0.008 - ¥0.02 / 千tokens
+                    - cell "--" [ref=e1036]:
+                      - generic [ref=e1039]: "--"
+                    - 'cell "TPM: 500,000 RPM: 1,500" [ref=e1040]':
+                      - generic [ref=e1747]:
+                        - paragraph [ref=e1748]: "TPM: 500,000"
+                        - paragraph [ref=e1749]: "RPM: 1,500"
+                    - cell [ref=e1045]:
+                      - button [disabled] [ref=e1751]:
+                        - img [ref=e1753]
+                    - cell "开通服务 调用说明  更多 " [ref=e1052]:
+                      - generic [ref=e1755]:
+                        - generic [ref=e1756]:
+                          - generic [ref=e1759] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1761] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1762]: 
+                        - button "更多 " [ref=e1764] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1765]: 
+                  - 'row " Kimi-K2 -- 未开通 文本生成 按token计费 输入:¥0.004 / 千tokens 输出:¥0.016 / 千tokens -- TPM: 500,000 RPM: 150 开通服务 调用说明  更多 " [ref=e1065]':
+                    - cell "" [ref=e1066]:
+                      - generic [ref=e1069] [cursor=pointer]: 
+                    - cell "Kimi-K2 --" [ref=e1070]:
+                      - generic [ref=e1074]:
+                        - cell "Kimi-K2" [ref=e1075]:
+                          - generic [ref=e1076]: Kimi-K2
+                        - generic [ref=e1078]: "--"
+                    - cell "未开通" [ref=e1079]:
+                      - generic [ref=e1083]:
+                        - img [ref=e1085]
+                        - generic [ref=e1087]: 未开通
+                    - cell "文本生成" [ref=e1088]:
+                      - generic [ref=e1092]: 文本生成
+                    - cell "按token计费" [ref=e1093]:
+                      - generic [ref=e1097]: 按token计费
+                    - cell "输入:¥0.004 / 千tokens 输出:¥0.016 / 千tokens" [ref=e1098]:
+                      - generic [ref=e1101]:
+                        - generic [ref=e1767]: 输入:¥0.004 / 千tokens
+                        - generic [ref=e1769]: 输出:¥0.016 / 千tokens
+                    - cell "--" [ref=e1106]:
+                      - generic [ref=e1109]: "--"
+                    - 'cell "TPM: 500,000 RPM: 150" [ref=e1110]':
+                      - generic [ref=e1770]:
+                        - paragraph [ref=e1771]: "TPM: 500,000"
+                        - paragraph [ref=e1772]: "RPM: 150"
+                    - cell [ref=e1115]:
+                      - button [disabled] [ref=e1774]:
+                        - img [ref=e1776]
+                    - cell "开通服务 调用说明  更多 " [ref=e1122]:
+                      - generic [ref=e1778]:
+                        - generic [ref=e1779]:
+                          - generic [ref=e1782] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1784] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1785]: 
+                        - button "更多 " [ref=e1787] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1788]: 
+                  - 'row " BGE-Reranker-V2-M3 -- 未开通 重排序 按token计费 输入:¥0.00007 / 千tokens -- TPM: 20,000 RPM: 120 开通服务 调用说明 " [ref=e1135]':
+                    - cell "" [ref=e1136]:
+                      - generic [ref=e1139] [cursor=pointer]: 
+                    - cell "BGE-Reranker-V2-M3 --" [ref=e1140]:
+                      - generic [ref=e1144]:
+                        - cell "BGE-Reranker-V2-M3" [ref=e1145]:
+                          - generic [ref=e1146]: BGE-Reranker-V2-M3
+                        - generic [ref=e1148]: "--"
+                    - cell "未开通" [ref=e1149]:
+                      - generic [ref=e1153]:
+                        - img [ref=e1155]
+                        - generic [ref=e1157]: 未开通
+                    - cell "重排序" [ref=e1158]:
+                      - generic [ref=e1162]: 重排序
+                    - cell "按token计费" [ref=e1163]:
+                      - generic [ref=e1167]: 按token计费
+                    - cell "输入:¥0.00007 / 千tokens" [ref=e1168]:
+                      - generic [ref=e1790]: 输入:¥0.00007 / 千tokens
+                    - cell "--" [ref=e1174]:
+                      - generic [ref=e1177]: "--"
+                    - 'cell "TPM: 20,000 RPM: 120" [ref=e1178]':
+                      - generic [ref=e1791]:
+                        - paragraph [ref=e1792]: "TPM: 20,000"
+                        - paragraph [ref=e1793]: "RPM: 120"
+                    - cell [ref=e1183]:
+                      - button [disabled] [ref=e1795]:
+                        - img [ref=e1797]
+                    - cell "开通服务 调用说明 " [ref=e1190]:
+                      - generic [ref=e1799]:
+                        - generic [ref=e1800]:
+                          - generic [ref=e1803] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1805] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1806]: 
+                  - 'row " DeepSeek-V3.2 d8656bc5-fe6b-4944-b6bc-a34724af1cea 开通 文本生成 按token计费 输入:¥0.002 / 千tokens 输出:¥0.003 / 千tokens -- TPM: 500,000 RPM: 700 关闭服务 调用说明  更多 " [ref=e1807]':
+                    - cell "" [ref=e1201]:
+                      - generic [ref=e1204] [cursor=pointer]: 
+                    - cell "DeepSeek-V3.2 d8656bc5-fe6b-4944-b6bc-a34724af1cea" [ref=e1808]:
+                      - generic [ref=e1209]:
+                        - cell "DeepSeek-V3.2" [ref=e1210]:
+                          - generic [ref=e1211]: DeepSeek-V3.2
+                        - generic [ref=e1213]: d8656bc5-fe6b-4944-b6bc-a34724af1cea
+                    - cell "开通" [ref=e1809]:
+                      - generic [ref=e1218]:
+                        - img [ref=e1220]
+                        - generic [ref=e1222]: 开通
+                    - cell "文本生成" [ref=e1223]:
+                      - generic [ref=e1227]: 文本生成
+                    - cell "按token计费" [ref=e1228]:
+                      - generic [ref=e1232]: 按token计费
+                    - cell "输入:¥0.002 / 千tokens 输出:¥0.003 / 千tokens" [ref=e1233]:
+                      - generic [ref=e1236]:
+                        - generic [ref=e1811]: 输入:¥0.002 / 千tokens
+                        - generic [ref=e1813]: 输出:¥0.003 / 千tokens
+                    - cell "--" [ref=e1241]:
+                      - generic [ref=e1244]: "--"
+                    - 'cell "TPM: 500,000 RPM: 700" [ref=e1245]':
+                      - generic [ref=e1814]:
+                        - paragraph [ref=e1815]: "TPM: 500,000"
+                        - paragraph [ref=e1816]: "RPM: 700"
+                    - cell [ref=e1250]:
+                      - button [ref=e1818] [cursor=pointer]:
+                        - img [ref=e1820]
+                    - cell "关闭服务 调用说明  更多 " [ref=e1822]:
+                      - generic [ref=e1823]:
+                        - generic [ref=e1824]:
+                          - generic [ref=e1827]: 关闭服务
+                          - text: 
+                        - button "调用说明 " [active] [ref=e1829] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1830]: 
+                        - button "更多 " [ref=e1832] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1833]: 
+                  - 'row " GLM-5 -- 未开通 文本生成 按token计费 输入:¥0.004 - ¥0.006 / 千tokens 输出:¥0.018 - ¥0.022 / 千tokens -- TPM: 500,000 RPM: 30 开通服务 调用说明  更多 " [ref=e1270]':
+                    - cell "" [ref=e1271]:
+                      - generic [ref=e1274] [cursor=pointer]: 
+                    - cell "GLM-5 --" [ref=e1275]:
+                      - generic [ref=e1279]:
+                        - cell "GLM-5" [ref=e1280]:
+                          - generic [ref=e1281]: GLM-5
+                        - generic [ref=e1283]: "--"
+                    - cell "未开通" [ref=e1284]:
+                      - generic [ref=e1288]:
+                        - img [ref=e1290]
+                        - generic [ref=e1292]: 未开通
+                    - cell "文本生成" [ref=e1293]:
+                      - generic [ref=e1297]: 文本生成
+                    - cell "按token计费" [ref=e1298]:
+                      - generic [ref=e1302]: 按token计费
+                    - cell "输入:¥0.004 - ¥0.006 / 千tokens 输出:¥0.018 - ¥0.022 / 千tokens" [ref=e1303]:
+                      - generic [ref=e1306]:
+                        - generic [ref=e1835]: 输入:¥0.004 - ¥0.006 / 千tokens
+                        - generic [ref=e1837]: 输出:¥0.018 - ¥0.022 / 千tokens
+                    - cell "--" [ref=e1311]:
+                      - generic [ref=e1314]: "--"
+                    - 'cell "TPM: 500,000 RPM: 30" [ref=e1315]':
+                      - generic [ref=e1838]:
+                        - paragraph [ref=e1839]: "TPM: 500,000"
+                        - paragraph [ref=e1840]: "RPM: 30"
+                    - cell [ref=e1320]:
+                      - button [disabled] [ref=e1842]:
+                        - img [ref=e1844]
+                    - cell "开通服务 调用说明  更多 " [ref=e1327]:
+                      - generic [ref=e1846]:
+                        - generic [ref=e1847]:
+                          - generic [ref=e1850] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1852] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1853]: 
+                        - button "更多 " [ref=e1855] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1856]: 
+                  - 'row " Qwen2.5-VL-72B -- 未开通 图像理解 按token计费 输入:¥0.016 / 千tokens 输出:¥0.048 / 千tokens -- TPM: 100,000 RPM: 60 开通服务 调用说明  更多 " [ref=e1340]':
+                    - cell "" [ref=e1341]:
+                      - generic [ref=e1344] [cursor=pointer]: 
+                    - cell "Qwen2.5-VL-72B --" [ref=e1345]:
+                      - generic [ref=e1349]:
+                        - cell "Qwen2.5-VL-72B" [ref=e1350]:
+                          - generic [ref=e1351]: Qwen2.5-VL-72B
+                        - generic [ref=e1353]: "--"
+                    - cell "未开通" [ref=e1354]:
+                      - generic [ref=e1358]:
+                        - img [ref=e1360]
+                        - generic [ref=e1362]: 未开通
+                    - cell "图像理解" [ref=e1363]:
+                      - generic [ref=e1367]: 图像理解
+                    - cell "按token计费" [ref=e1368]:
+                      - generic [ref=e1372]: 按token计费
+                    - cell "输入:¥0.016 / 千tokens 输出:¥0.048 / 千tokens" [ref=e1373]:
+                      - generic [ref=e1376]:
+                        - generic [ref=e1858]: 输入:¥0.016 / 千tokens
+                        - generic [ref=e1860]: 输出:¥0.048 / 千tokens
+                    - cell "--" [ref=e1381]:
+                      - generic [ref=e1384]: "--"
+                    - 'cell "TPM: 100,000 RPM: 60" [ref=e1385]':
+                      - generic [ref=e1861]:
+                        - paragraph [ref=e1862]: "TPM: 100,000"
+                        - paragraph [ref=e1863]: "RPM: 60"
+                    - cell [ref=e1390]:
+                      - button [disabled] [ref=e1865]:
+                        - img [ref=e1867]
+                    - cell "开通服务 调用说明  更多 " [ref=e1397]:
+                      - generic [ref=e1869]:
+                        - generic [ref=e1870]:
+                          - generic [ref=e1873] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1875] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1876]: 
+                        - button "更多 " [ref=e1878] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1879]: 
+                  - 'row " Qwen_Image -- 未开通 图片生成 按张计费 ¥0.25 / 张 -- TPM: 0 RPM: 144 开通服务 调用说明  更多 " [ref=e1410]':
+                    - cell "" [ref=e1411]:
+                      - generic [ref=e1414] [cursor=pointer]: 
+                    - cell "Qwen_Image --" [ref=e1415]:
+                      - generic [ref=e1419]:
+                        - cell "Qwen_Image" [ref=e1420]:
+                          - generic [ref=e1421]: Qwen_Image
+                        - generic [ref=e1423]: "--"
+                    - cell "未开通" [ref=e1424]:
+                      - generic [ref=e1428]:
+                        - img [ref=e1430]
+                        - generic [ref=e1432]: 未开通
+                    - cell "图片生成" [ref=e1433]:
+                      - generic [ref=e1437]: 图片生成
+                    - cell "按张计费" [ref=e1438]:
+                      - generic [ref=e1442]: 按张计费
+                    - cell "¥0.25 / 张" [ref=e1443]:
+                      - generic [ref=e1881]: ¥0.25 / 张
+                    - cell "--" [ref=e1449]:
+                      - generic [ref=e1452]: "--"
+                    - 'cell "TPM: 0 RPM: 144" [ref=e1453]':
+                      - generic [ref=e1882]:
+                        - paragraph [ref=e1883]: "TPM: 0"
+                        - paragraph [ref=e1884]: "RPM: 144"
+                    - cell [ref=e1458]:
+                      - button [disabled] [ref=e1886]:
+                        - img [ref=e1888]
+                    - cell "开通服务 调用说明  更多 " [ref=e1465]:
+                      - generic [ref=e1890]:
+                        - generic [ref=e1891]:
+                          - generic [ref=e1894] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1896] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1897]: 
+                        - button "更多 " [ref=e1899] [cursor=pointer]:
+                          - text: 更多
+                          - generic [ref=e1900]: 
+                  - 'row " Wan2.2-T2V-A14B -- 未开通 视频生成 按token计费 输出:¥0.005 / 千tokens -- TPM: 0 RPM: 60 开通服务 调用说明 " [ref=e1478]':
+                    - cell "" [ref=e1479]:
+                      - generic [ref=e1482] [cursor=pointer]: 
+                    - cell "Wan2.2-T2V-A14B --" [ref=e1483]:
+                      - generic [ref=e1487]:
+                        - cell "Wan2.2-T2V-A14B" [ref=e1488]:
+                          - generic [ref=e1489]: Wan2.2-T2V-A14B
+                        - generic [ref=e1491]: "--"
+                    - cell "未开通" [ref=e1492]:
+                      - generic [ref=e1496]:
+                        - img [ref=e1498]
+                        - generic [ref=e1500]: 未开通
+                    - cell "视频生成" [ref=e1501]:
+                      - generic [ref=e1505]: 视频生成
+                    - cell "按token计费" [ref=e1506]:
+                      - generic [ref=e1510]: 按token计费
+                    - cell "输出:¥0.005 / 千tokens" [ref=e1511]:
+                      - generic [ref=e1902]: 输出:¥0.005 / 千tokens
+                    - cell "--" [ref=e1517]:
+                      - generic [ref=e1520]: "--"
+                    - 'cell "TPM: 0 RPM: 60" [ref=e1521]':
+                      - generic [ref=e1903]:
+                        - paragraph [ref=e1904]: "TPM: 0"
+                        - paragraph [ref=e1905]: "RPM: 60"
+                    - cell [ref=e1526]:
+                      - button [disabled] [ref=e1907]:
+                        - img [ref=e1909]
+                    - cell "开通服务 调用说明 " [ref=e1533]:
+                      - generic [ref=e1911]:
+                        - generic [ref=e1912]:
+                          - generic [ref=e1915] [cursor=pointer]: 开通服务
+                          - text: 
+                        - button "调用说明 " [ref=e1917] [cursor=pointer]:
+                          - text: 调用说明
+                          - generic [ref=e1918]: 
+              - text: 
+            - generic [ref=e1544]:
+              - generic [ref=e1546] [cursor=pointer]:
+                - generic [ref=e1548]: "10"
+                - generic [ref=e1549]: 
+              - generic [ref=e1550]:
+                - generic [ref=e1552]: 
+                - generic [ref=e1553] [cursor=pointer]: "1"
+                - generic [ref=e1554] [cursor=pointer]: "2"
+                - generic [ref=e1555] [cursor=pointer]: "3"
+                - generic "下一页" [ref=e1556] [cursor=pointer]:
+                  - generic [ref=e1557]: 
+    - generic:
+      - generic:
+        - generic:
+          - generic:
+            - generic [ref=e1559]: 
+            - generic:
+              - generic:  
+              - generic:
+                - img [ref=e1562] [cursor=pointer]
+                - generic [ref=e1564] [cursor=pointer]:
+                  - generic: 
+                - generic [ref=e1565] [cursor=pointer]:
+                  - generic: 
+  - text: 
+  - list [ref=e1921]:
+    - listitem [ref=e1922] [cursor=pointer]:
+      - generic [ref=e1925]: 版本
+    - listitem [ref=e1926] [cursor=pointer]:
+      - generic [ref=e1929]:
+        - text: "20251215"
+        - generic "主推版本" [ref=e1931]
