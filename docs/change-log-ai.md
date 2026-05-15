@@ -1,5 +1,17 @@
 # AI 变更记录
 
+## 2026-05-13 / Codex 对话记录归档
+
+- 将 3 个指定 Codex 会话 `.jsonl` 原始记录复制到 `docs/codex-conversations/raw/`，保留全局 `.codex` 原始会话不删除，避免破坏 Codex 桌面端历史记录。
+- 新增 `docs/codex-conversations/README.md`，记录线程 ID、主题、项目内归档路径、文件大小和 SHA256 校验值。
+- 本次未修改业务代码、未安装依赖、未运行构建链；仅做项目内对话证据归档。
+
+## 2026-05-13 / Codex 对话 Markdown 导出
+
+- 新增 `scripts/export-codex-conversations-md.py`，从 `docs/codex-conversations/raw/*.jsonl` 提取用户询问与助手回复，导出为 Markdown。
+- 新增 `docs/codex-conversations/markdown/README.md` 和 3 个线程 Markdown 文件，分别包含 227、112、62 条 user/assistant 消息。
+- 转换时刻意跳过工具调用和终端输出，保留问答正文，便于课堂材料整理与人工阅读。
+
 ## 2026-05-10 / 开发过程截图 Word 汇总
 
 - 新增 `scripts/build-dev-process-doc.py`，用于生成开发过程截图说明 Word。
@@ -377,3 +389,11 @@
 - PPT 内容覆盖开发背景、spec-driven coding 流程、技术架构、AI 生成链路、听力/语法/错题/统计成果、UI 迭代、验收安全和课堂演示路线。
 - QA：确认 PPTX 内含 15 个 slide XML；预览图共 15 页；普通幻灯片中未发现可见 `Slide Number` / `sldNum` 占位符；敏感字段搜索未命中真实 Key、Authorization 或 Bearer。
 - 说明：未修改业务代码，未修改 `package.json`，未新增运行时依赖；PPTX 未通过 PowerPoint/Keynote 桌面程序做人工打开验收。
+
+## 2026-05-14 / 两人分工演讲稿
+
+- 基于 `output/presentation/toeic-practice-studio-final-report-slides6-8-redesign.pptx`、`output/presentation/speaker-notes.md`、`spec.md`、`design.md`、`acceptance.md` 和 `readme.md` 生成两人分工版课堂演讲稿。
+- 新增 `output/presentation/two-person-speech-script.md`，按第 1-9 页和第 10-19 页拆分讲者 A / 讲者 B。
+- 内容覆盖项目背景、学习痛点、spec-driven 流程、技术架构、数据模型、AI 生成链路、听力/语法/错题/统计成果、验收结果和总结反思。
+- 本次仅新增汇报文稿和变更记录，未修改业务代码，未新增依赖。
+- 后续补充 spec-driven 开发总结、收获与个人体会，强调边界意识、任务拆分、验收证据和 AI 辅助开发中的规格约束价值。
