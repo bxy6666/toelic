@@ -10,6 +10,9 @@
     "start:public": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start-public.ps1",
     "tunnel:quick": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/public-tunnel.ps1",
     "lint": "eslint .",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "smoke:public": "node scripts/public-acceptance.mjs",
     "smoke:generation": "node scripts/generation-smoke.mjs",
     "prisma:generate": "prisma generate",
@@ -35,12 +38,15 @@
     "@types/node": "^24.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^9.0.0",
     "eslint-config-next": "^16.0.0",
     "playwright": "^1.59.1",
     "prisma": "^6.19.3",
     "tailwindcss": "^4.2.4",
     "tsx": "^4.21.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.8"
   }
 }

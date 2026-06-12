@@ -1,5 +1,18 @@
 # AI 变更记录
 
+## 2026-06-12 / TypeScript 单元测试体系
+
+- 按 TypeScript + Next.js 项目现状接入 Vitest 单元测试体系，新增 `vitest.config.ts`、`tests/setup.ts` 和 `tests/unit/` 用例目录；测试环境固定为 Node，不引入 JUnit、jsdom 或 React Testing Library。
+- 新增开发依赖 `vitest`、`@vitest/coverage-v8`、`vite-tsconfig-paths`，并补充 `test`、`test:run`、`test:coverage` 脚本；覆盖率只纳入核心生题与答题链路文件，避免把设置、统计、错题列表等外围模块纳入首版单测口径。
+- 仅保留最关键功能测试：`question-validation`、`question-generation`、`practice-service` 以及生成题/答题记录 API Route 薄层；删除设置、统计、MaaS 客户端、错题服务等较不重要测试。Prisma、MaaS、OpenAI、fetch 均使用 mock，不访问真实网络或数据库。
+- 验证结果：Node v24.14.0 满足 Vitest 最新版要求；`npm run test:run` 5 个文件 / 27 个核心用例全部通过；`npm run test:coverage` 通过，核心文件 statements 覆盖率 89.93%；`npm run lint` 无错误但保留既有 `output/presentation/src/build-report-deck.mjs` 4 个 warning；`npm run build` 通过。
+
+## 2026-05-15 / Markdown 文档复制打包归档
+
+- 将项目内 `.md` / `.mdx` / `.markdown` / `.txt` 展示型文字文件复制到 `E:\BaiduNetdiskDownload\TOEIC练习项目文档汇总\files\`，按文档内容与用途重新命名并分类。
+- 生成 `E:\BaiduNetdiskDownload\TOEIC练习项目文档汇总\文档打包汇总.md` 与 `文档文件清单.csv`，记录原路径、归档路径、类型、大小、行数和内容标题。
+- 生成压缩包 `E:\BaiduNetdiskDownload\TOEIC练习项目文档汇总.zip`；去除对话线程 ID 和时间戳式数字组合文件名，本次未修改业务代码，未安装依赖。
+
 ## 2026-05-13 / Codex 对话记录归档
 
 - 将 3 个指定 Codex 会话 `.jsonl` 原始记录复制到 `docs/codex-conversations/raw/`，保留全局 `.codex` 原始会话不删除，避免破坏 Codex 桌面端历史记录。
