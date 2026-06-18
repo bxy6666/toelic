@@ -38,14 +38,17 @@ const question = {
   grammarPoint: "tense",
 };
 
-beforeEach(() => {
+// Equivalent to JUnit @Before: prepare shared Prisma and mistake-service mocks.
+function setUp() {
   prismaMocks.questionFindUnique.mockResolvedValue(question);
   prismaMocks.practiceRecordCreate.mockResolvedValue({
     id: "record-1",
     questionId: "question-1",
   });
   mistakeMocks.createOrUpdateMistake.mockResolvedValue({ id: "mistake-1" });
-});
+}
+
+beforeEach(setUp);
 
 describe("recordPracticeAnswer", () => {
   it("normalizes lowercase answers and records a correct answer", async () => {

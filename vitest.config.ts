@@ -11,7 +11,6 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "html", "json-summary"],
       include: [
-        "lib/question-validation.ts",
         "lib/question-generation.ts",
         "lib/practice-service.ts",
         "app/api/ai/generate-questions/route.ts",

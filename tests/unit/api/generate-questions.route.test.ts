@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
+import { jsonRequest, readJson } from "../test-utils";
 
 const generationMocks = vi.hoisted(() => ({
   generateQuestionsWithMaas: vi.fn(),
@@ -46,19 +47,11 @@ const generatedQuestion = {
 async function post(body: unknown) {
   const { POST } = await import("@/app/api/ai/generate-questions/route");
 
-  return POST(
-    new Request("http://localhost/api/ai/generate-questions", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  );
+  return POST(jsonRequest("http://localhost/api/ai/generate-questions", body));
 }
 
-async function readJson(response: Response) {
-  return response.json() as Promise<Record<string, unknown>>;
-}
-
-beforeEach(() => {
+// Equivalent to JUnit @Before: prepare shared generation and database mocks.
+function setUp() {
   generationMocks.generateQuestionsWithMaas.mockResolvedValue([generatedQuestion]);
   generationMocks.attachImagesToPictureDescriptionQuestions.mockResolvedValue([
     generatedQuestion,
@@ -73,7 +66,9 @@ beforeEach(() => {
   prismaMocks.transaction.mockImplementation((operations: Promise<unknown>[]) =>
     Promise.all(operations),
   );
-});
+}
+
+beforeEach(setUp);
 
 describe("POST /api/ai/generate-questions", () => {
   it("validates request bodies before generating questions", async () => {

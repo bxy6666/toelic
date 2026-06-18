@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
+import { jsonRequest, readJson } from "../test-utils";
 
 const practiceMocks = vi.hoisted(() => ({
   recordPracticeAnswer: vi.fn(),
@@ -13,19 +14,11 @@ vi.mock("@/lib/practice-service", () => ({
 async function post(body: unknown) {
   const { POST } = await import("@/app/api/practice-records/route");
 
-  return POST(
-    new Request("http://localhost/api/practice-records", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  );
+  return POST(jsonRequest("http://localhost/api/practice-records", body));
 }
 
-async function readJson(response: Response) {
-  return response.json() as Promise<Record<string, unknown>>;
-}
-
-beforeEach(() => {
+// Equivalent to JUnit @Before: prepare the default answer submission result.
+function setUp() {
   practiceMocks.recordPracticeAnswer.mockResolvedValue({
     result: {
       questionId: "question-1",
@@ -33,7 +26,9 @@ beforeEach(() => {
       isCorrect: true,
     },
   });
-});
+}
+
+beforeEach(setUp);
 
 describe("POST /api/practice-records", () => {
   it("rejects missing questionId or userAnswer", async () => {
