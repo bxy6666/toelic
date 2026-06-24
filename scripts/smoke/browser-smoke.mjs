@@ -1,4 +1,4 @@
-import { chromium } from "playwright";
+﻿import { chromium } from "playwright";
 
 const browser = await chromium.launch({ channel: "msedge", headless: true });
 const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });

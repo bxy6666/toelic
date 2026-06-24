@@ -1,9 +1,11 @@
 # TOEIC Practice Studio Spec
 
 状态：Approved  
-阶段：Gate 4 - implementation  
-最后更新：2026-05-08  
+阶段：V2.1 implemented / documentation maintained  
+最后更新：2026-06-24  
 开发原则：严格执行 `spec.md -> design.md -> tasks.md -> implementation -> acceptance.md`
+
+当前最新版说明：前文中关于“第一版本机个人使用、不做登录”的描述保留为 MVP / V1.x 历史边界；自 V2 起，项目已加入登录、注册、Session Cookie、公网访问保护和用户数据隔离。当前最终功能边界以第 14 节 V1.8 / V2 / V2.1 工程与公网安全增强规格为准。
 
 ## 0. Spec-Driven 流程
 

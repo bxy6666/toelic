@@ -1,7 +1,16 @@
 # TOEIC Practice Studio Acceptance
 
-最后更新：2026-05-09  
-当前阶段：Gate 4 - implementation
+最后更新：2026-06-24  
+当前阶段：V2.1 implemented / documentation maintained
+
+## 最新状态摘要
+
+| 项目 | 状态 | 说明 |
+| --- | --- | --- |
+| 当前功能版本 | PASS | 已实现登录、注册、Session Cookie、公网保护、用户数据隔离、AI 限额、图片文件化和答题事务化 |
+| 目录整理 | PASS | spec-driven 文档已移动到 `docs/spec-driven/`；smoke、公网、报告脚本已分别移动到 `scripts/smoke/`、`scripts/public/`、`scripts/reports/` |
+| 文档入口 | PASS | 根目录保留 `README.md`，文档总入口为 `docs/README.md` |
+| 最新工程验证 | PASS | `typecheck`、`lint`、单测、生产构建、Prisma schema 校验和 smoke 脚本语法检查已完成 |
 
 ## 任务验收记录
 
@@ -69,10 +78,10 @@
 | T14 build | PASS | `npm run build` | 通过 |
 | T14 Prisma migration | PASS | `npx prisma migrate deploy` | 无待应用迁移 |
 | T14 HTTP smoke | PASS | 核心页面与 API 请求 | `/`、听力、语法、错题、统计、设置、settings API、stats API 均返回 200 |
-| T14 Browser smoke | PASS | `node scripts/browser-smoke.mjs`，Playwright + Edge | 6 个核心页面均有可读文本 |
+| T14 Browser smoke | PASS | `node scripts/smoke/browser-smoke.mjs`，Playwright + Edge | 6 个核心页面均有可读文本 |
 | T16 V1.1 spec-driven 文档补充 | PASS | 检查 `spec.md`、`design.md`、`tasks.md` | 已补充 V1.1 UI 打磨规格、设计和任务记录 |
 | T16 首页真实统计 | PASS | `GET /`、`GET /api/stats`、`npm run build` 路由输出 | 首页不再使用固定占位统计，展示来自 SQLite 统计服务的数据；`/` 和 `/stats` 已设为动态渲染 |
-| T16 练习工作区 UI 打磨 | PASS | `GET /listening`、`GET /grammar`、`node scripts/browser-smoke.mjs` | 增强生成设置摘要、题目元信息、选项选中态和提交后正确/错误反馈 |
+| T16 练习工作区 UI 打磨 | PASS | `GET /listening`、`GET /grammar`、`node scripts/smoke/browser-smoke.mjs` | 增强生成设置摘要、题目元信息、选项选中态和提交后正确/错误反馈 |
 | T16 工程验证 | PASS | `npm run lint`、`npm run build`、`npx prisma migrate deploy` | 全部通过，无新增依赖 |
 | T17 spec-driven 文档补充 | PASS | 检查 `spec.md`、`design.md`、`tasks.md` | 已补充 V1.2 丰富动效、动态背景和卡通贴纸范围 |
 | T17 Motion 依赖 | PASS | `npm install motion`、`package.json` | 已新增 `motion`，未引入大型 3D、粒子、Lottie、Rive 或游戏引擎 |
@@ -80,31 +89,31 @@
 | T17 听力页动效与背景 | PASS | `GET /listening`、Playwright 截图 `output/playwright/v1-2-listening.png` | 听力页增加声波背景、页面进入、题目切换和贴纸空状态；答题前隐藏选项规则未改 |
 | T17 语法页动效与背景 | PASS | `GET /grammar`、Playwright 截图 `output/playwright/v1-2-grammar.png` | 语法页增加漂浮词块背景、页面进入、题目切换和贴纸空状态 |
 | T17 reduced motion | PASS | 检查 `app/globals.css` | `prefers-reduced-motion: reduce` 下关闭背景和贴纸 CSS 动画 |
-| T17 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` | 全部通过 |
+| T17 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` | 全部通过 |
 | T18 spec-driven 文档补充 | PASS | 检查 `spec.md`、`design.md`、`tasks.md` | 已补充 V1.3 生成中、进度和完成面板范围 |
 | T18 生成中状态 | PASS | 检查 `components/practice-workspace.tsx`、浏览器 smoke | `loading` 时显示“正在生成题目”状态面板 |
 | T18 练习进度条 | PASS | 检查 `components/practice-workspace.tsx` | 生成题目后显示 `answeredCount / questions.length` 和百分比进度条 |
 | T18 完成面板 | PASS | Playwright API 拦截 UI 流程、截图 `output/playwright/v1-3-completion.png` | 最后一题提交后显示“本组完成”，提供再来一组、查看错题、学习统计入口 |
 | T18 听力隐藏选项规则 | PASS | Playwright API 拦截 UI 流程 | 提交前英文选项正文隐藏，提交后显示完整英文选项 |
-| T18 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` | 全部通过，无新增依赖 |
+| T18 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` | 全部通过，无新增依赖 |
 | T19 spec-driven 文档补充 | PASS | 检查 `spec.md`、`design.md`、`tasks.md` | 已补充 V1.4 视觉对齐和响应式巡检范围 |
 | T19 指标卡片对齐 | PASS | 新增 `components/metric-card.tsx`，截图 `output/playwright/v1-4-home-desktop.png` | 首页统计卡片改用统一指标卡片，数字与单位使用 baseline 对齐 |
 | T19 统计页同类修复 | PASS | 截图 `output/playwright/v1-4-stats-desktop.png` | 统计页汇总指标改用同一 `MetricCard`，避免同类错位 |
 | T19 移动端溢出巡检 | PASS | Playwright 桌面 / 移动端截图和 bounding box 检查 | 首页、统计页、听力页、语法页桌面与移动端 `overflowCandidates=0` |
 | T19 移动端导航 | PASS | 截图 `output/playwright/v1-4-home-mobile.png` | 顶部导航移动端改为自动换行，不再横向溢出视口 |
-| T19 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` | 全部通过，无新增依赖 |
+| T19 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` | 全部通过，无新增依赖 |
 | T20 题目查询接口 | PASS | `GET /api/questions`、`type` / `difficulty` / `tag` 筛选、非法枚举请求 | 新增查询接口可返回已生成题目；非法 `type` / `difficulty` 返回 `REQUEST_INVALID` |
 | T20 错题重新练习 | PASS | 错题题目调用 `POST /api/practice-records` 答错、答对、重复答错 | 复练复用现有答题 API；重复答错时 `wrongCount+1` 且状态变为 `reviewing` |
 | T20 错题页入口 | PASS | `GET /mistakes` | 页面包含“重新练习”入口；已掌握、移除、笔记能力保持不变 |
-| T20 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`、`npm run smoke:generation` | 全部通过；9 个 MaaS 子题型真实生成仍全部 PASS |
+| T20 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`、`npm run smoke:generation` | 全部通过；9 个 MaaS 子题型真实生成仍全部 PASS |
 | T21 首页 Hero 今日计划卡片 | PASS | Playwright 首页桌面 / 移动端截图 | CTA 下方新增“今日智能练习计划”卡片；桌面卡片约 639px × 190px |
 | T21 听力 CTA 可读性 | PASS | Playwright 读取计算样式 | “开始听力”按钮为深绿背景、白色文字，解决黑底文字不清问题 |
-| T21 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` | 全部通过，无新增依赖 |
+| T21 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` | 全部通过，无新增依赖 |
 | T22 学习统计 Hero | PASS | Playwright 统计页桌面 / 移动端截图 | `/stats` 主体新增浅色 Hero、淡网格和卡通报告插画；顶部导航未修改 |
 | T22 数据卡片重构 | PASS | Playwright 可见性检查、页面截图 | 7 个统计项改为圆角渐变数据卡片，保留原有数据含义 |
 | T22 最近 7 天折线图 | PASS | Playwright 检查 Recharts SVG 渲染 | 最近 7 天使用 Recharts 双折线 / 面积图，包含 legend 和 tooltip 能力 |
 | T22 薄弱标签优化 | PASS | Playwright 可见性检查 | 薄弱标签改为有权重层级的胶囊标签，并加入轻量辅助插画 |
-| T22 响应式与工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`、Playwright scrollWidth 检查 | 桌面 / 移动端无横向滚动；新增依赖 `recharts` |
+| T22 响应式与工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`、Playwright scrollWidth 检查 | 桌面 / 移动端无横向滚动；新增依赖 `recharts` |
 
 ## MVP 验收汇总
 
@@ -144,7 +153,7 @@
 | 语法题生成 | PASS | `POST /api/ai/generate-questions`，`practiceType=grammar` | 生成 ID `cmowyt88o0000u8iolltn7h88`，写入 SQLite |
 | 听力题生成 | PASS | `POST /api/ai/generate-questions`，`practiceType=listening` | 生成 ID `cmowyuaru0001u8iox1rt1l8n`，写入 SQLite，包含 `listeningScript` |
 | MaaS JSON 兼容 | PASS | 真实 MaaS 响应验证 | 若模型返回完整 JSON 代码块，后端剥离外层代码块后继续进行严格字段校验；夹杂额外文本仍拒绝 |
-| 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` | 全部通过 |
+| 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` | 全部通过 |
 
 ## V1.8 / V2 / V2.1 改进验收记录
 
@@ -168,8 +177,9 @@
 | `npm install` | PASS | 使用本地 npm cache 安装成功；npm audit 当前报告 7 个漏洞，未执行自动修复 |
 | `npm run typecheck` | PASS | TypeScript 类型检查通过 |
 | `npm run lint` | PASS | 0 error；`output/presentation/src/build-report-deck.mjs` 保留 4 个既有 unused warnings |
-| `npm run test:run` | PASS | 8 个测试文件、37 个测试全部通过 |
+| `npm run test:run` | PASS | 7 个测试文件、27 个测试全部通过 |
 | `npm run build` | PASS | Next.js 生产构建通过；登录保护已使用 Next 16 `proxy.ts` 约定 |
-| `npx prisma validate` | PASS | 带 `DATABASE_URL=file:./verification.db` 时 schema 校验通过 |
-| `npx prisma migrate deploy` | WARNING | 当前环境仍打印空 `Schema engine error`；已用 `prisma db execute` 在全新 SQLite 文件顺序执行 3 个 migration SQL，全部成功 |
-| `node --check scripts/*.mjs` | PASS | `public-acceptance.mjs` 与 `generation-smoke.mjs` 登录适配后语法检查通过 |
+| `npx prisma validate` | PASS | 当前 `.env` 指向的 SQLite 配置下 schema 校验通过 |
+| `npx prisma migrate deploy` | PASS | 已为当前非空 `dev.db` 补齐 3 个 migration baseline 记录，随后 deploy / status 均显示无待应用迁移 |
+| `node --check scripts/smoke/*.mjs` | PASS | `public-acceptance.mjs` 与 `generation-smoke.mjs` 登录适配后语法检查通过 |
+| `git diff --check` | PASS | 未发现空白错误，仅有 Git 提示后续可能按配置转换 CRLF |

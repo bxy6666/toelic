@@ -1,4 +1,4 @@
-const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
+﻿const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
 const smokeUsername = process.env.SMOKE_USERNAME || "smoke_admin";
 const smokePassword = process.env.SMOKE_PASSWORD || "SmokePass123";
 let authCookie = "";

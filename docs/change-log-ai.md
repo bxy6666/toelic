@@ -1,5 +1,14 @@
 # AI 变更记录
 
+## 2026-06-24 / 目录结构与文档入口整理
+
+- 将 spec-driven 四件套从根目录移动到 `docs/spec-driven/`：`spec.md`、`design.md`、`tasks.md`、`acceptance.md`。
+- 将辅助脚本按用途归类：`scripts/smoke/`、`scripts/public/`、`scripts/reports/`。
+- 将手工验证数据库移动到 `output/database/`，根目录只保留框架配置、标准 `README.md` 和必要源码目录。
+- 新增 `docs/README.md` 文档索引，并重写 `docs/project-context.md` 为当前 V2.1 状态。
+- 更新 `package.json` 脚本、README、报告生成脚本和当前文档中的脚本路径引用。
+- 当前最新验证口径：`npm run typecheck`、`npm run lint`、`npm run test:run`、`npm run build`、`npx prisma validate`、`npx prisma migrate deploy`。
+
 ## 2026-06-12 / TypeScript 单元测试体系
 
 - 按 TypeScript + Next.js 项目现状接入 Vitest 单元测试体系，新增 `vitest.config.ts`、`tests/setup.ts` 和 `tests/unit/` 用例目录；测试环境固定为 Node，不引入 JUnit、jsdom 或 React Testing Library。
@@ -22,13 +31,13 @@
 
 ## 2026-05-13 / Codex 对话 Markdown 导出
 
-- 新增 `scripts/export-codex-conversations-md.py`，从 `docs/codex-conversations/raw/*.jsonl` 提取用户询问与助手回复，导出为 Markdown。
+- 新增 `scripts/reports/export-codex-conversations-md.py`，从 `docs/codex-conversations/raw/*.jsonl` 提取用户询问与助手回复，导出为 Markdown。
 - 新增 `docs/codex-conversations/markdown/README.md` 和 3 个线程 Markdown 文件，分别包含 227、112、62 条 user/assistant 消息。
 - 转换时刻意跳过工具调用和终端输出，保留问答正文，便于课堂材料整理与人工阅读。
 
 ## 2026-05-10 / 开发过程截图 Word 汇总
 
-- 新增 `scripts/build-dev-process-doc.py`，用于生成开发过程截图说明 Word。
+- 新增 `scripts/reports/build-dev-process-doc.py`，用于生成开发过程截图说明 Word。
 - 生成 `output/doc/toeic-dev-process-screenshots.docx`，仅收录开发过程材料，不包含课堂展示 PPT 页面内容。
 - Word 内容覆盖大模型对话日志摘录、spec-driven Gate 流程、设计文档、T01-T22 任务拆分、验收记录、AI 变更时间线、工程结构、终端验证摘要、产品运行与响应式截图。
 - 大模型对话截图来源为 Codex 本地会话日志摘录，未伪造聊天 UI 截图；若课堂要求聊天窗口原图，可按 Word 第 1 节提示补拍替换。
@@ -224,7 +233,7 @@
 
 - 执行 `npm run lint`、`npm run build`、`npx prisma migrate deploy`，均通过。
 - 执行核心页面与 API HTTP smoke，均返回 200。
-- 新增 `scripts/browser-smoke.mjs`，使用 Playwright + 本机 Edge 验证核心页面有可读内容。
+- 新增 `scripts/smoke/browser-smoke.mjs`，使用 Playwright + 本机 Edge 验证核心页面有可读内容。
 - 安装开发期依赖 `playwright`，仅用于浏览器验收。
 
 ## 2026-05-08 Gate 5 / T15
@@ -239,7 +248,7 @@
 - 将 AI JSON 解析增强为仅兼容“完整响应为 JSON 代码块”的情况，剥离外层代码块后仍执行严格字段校验。
 - 使用真实 MaaS 调用生成 1 道语法题和 1 道听力题，并写入 SQLite。
 - 验证 `GET /api/settings` 只返回 `hasApiKey`，不返回完整 Key。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`，均通过。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`，均通过。
 - 更新 `acceptance.md`，将听力/语法 MaaS 实题生成补测状态更新为 `PASS`。
 
 ## 2026-05-08 V1.1 / UI 打磨
@@ -251,7 +260,7 @@
 - 优化全局导航壳，增加 sticky header 和当前导航的轻量高亮。
 - 优化练习工作区，增加队列 / 已提交 / 难度状态、题型摘要、选项选中态和提交后的正确 / 错误反馈。
 - 保持听力答题前隐藏英文选项正文、API Key 服务端读取和 MaaS / 答题 API 不变。
-- 执行 `npm run lint`、`npm run build`、`npx prisma migrate deploy`、`node scripts/browser-smoke.mjs`，均通过。
+- 执行 `npm run lint`、`npm run build`、`npx prisma migrate deploy`、`node scripts/smoke/browser-smoke.mjs`，均通过。
 
 ## 2026-05-08 V1.2 / 丰富动效与活力重设计
 
@@ -263,7 +272,7 @@
 - `app/globals.css` 增加全局动态网格背景、听力声波背景、语法漂浮词块背景，并支持 `prefers-reduced-motion` 降级。
 - 清理旧原型遗留的全局 `h1/h2/p` 样式，避免覆盖 Tailwind 页面字号。
 - 保持 MaaS、SQLite、答题记录、错题和统计 API 不变。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`，均通过。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`，均通过。
 - 使用 Playwright 截图检查首页、听力页、语法页，截图保存到 `output/playwright/`。
 
 ## 2026-05-08 V1.3 / 练习流程体验完善
@@ -273,7 +282,7 @@
 - 新增练习进度条，展示已提交题数、总题数和完成百分比。
 - 新增最后一题完成面板，提供“再来一组”“查看错题”“学习统计”入口。
 - 使用 Playwright 拦截本地 API 验证听力题提交前隐藏英文选项、提交后显示英文选项和完成面板。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`，均通过。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`，均通过。
 
 ## 2026-05-08 V1.4 / 视觉对齐与响应式巡检
 
@@ -283,7 +292,7 @@
 - 统计页汇总区改用同一 `MetricCard`，避免同类排版问题复现。
 - 移动端顶部导航从横向滚动改为自动换行，消除移动端可见元素溢出候选。
 - 使用 Playwright 生成首页、统计页、听力页、语法页的桌面和移动端截图，并执行 bounding box 巡检；核心页面均无文本溢出候选。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`，均通过。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`，均通过。
 
 ## 2026-05-08 / 启动文档
 
@@ -304,7 +313,7 @@
 - 在题目校验中增加请求子题型一致性检查，模型返回的 `subtype` 必须等于请求的 `subtype`。
 - MaaS 生成遇到 `subtype` 不一致时最多自动重试 1 次，连续不一致则返回明确错误。
 - 强化听力和语法 Prompt，要求 `subtype` 与 `difficulty` 原样返回，并让示例 JSON 使用当前请求值。
-- 新增 `scripts/generation-smoke.mjs` 和 `npm run smoke:generation`，一键验证 9 个前端子题型的真实生成、字段完整性、子题型一致性和落库 ID。
+- 新增 `scripts/smoke/generation-smoke.mjs` 和 `npm run smoke:generation`，一键验证 9 个前端子题型的真实生成、字段完整性、子题型一致性和落库 ID。
 - 执行 `npm run lint`、`npm run smoke:generation`、`npm run build` 均通过；复测 9 个子题型全部 PASS。
 
 ## 2026-05-09 / V1.5 题目查询与错题重新练习
@@ -313,7 +322,7 @@
 - 新增 `GET /api/questions`，支持 `type`、`subtype`、`difficulty`、`tag`、`limit` 查询已生成题目。
 - 错题本卡片新增“重新练习”入口，可在卡片内选择 A/B/C/D 并复用 `POST /api/practice-records` 提交。
 - 重新练习提交后显示正确 / 错误结果，并刷新错题列表；重复答错沿用 `wrongCount+1` 和 `reviewing` 状态规则。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs`、`npm run smoke:generation` 均通过。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs`、`npm run smoke:generation` 均通过。
 
 ## 2026-05-09 / V1.6 首页 Hero 今日计划卡片
 
@@ -321,7 +330,7 @@
 - 修复首页 Hero 中“开始听力”按钮深色背景下文字不清的问题，改为深绿色背景与白色文字。
 - 在首页 Hero 左侧按钮下方新增“今日智能练习计划”卡片，包含三项任务、预计用时、弱项标签和“开始今日计划”入口。
 - 卡片采用浅绿色到浅米色渐变、浅边框、轻阴影和淡线性耳机图标，保持右侧插画布局不变。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` 均通过，并生成首页桌面 / 移动端截图到 `output/playwright/`。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` 均通过，并生成首页桌面 / 移动端截图到 `output/playwright/`。
 
 ## 2026-05-09 / V1.7 学习统计卡通仪表盘
 
@@ -331,7 +340,7 @@
 - 学习统计 Hero 改为浅绿色 / 奶油色卡通报告区，保留原标题、副标题和 Gate badge。
 - 7 个统计项改为轻卡通数据卡片，正确率卡片增加环形进度。
 - 薄弱标签改为有权重层级的胶囊标签，并增加小型便利贴插画。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` 均通过，并生成统计页桌面 / 移动端截图到 `output/playwright/`。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` 均通过，并生成统计页桌面 / 移动端截图到 `output/playwright/`。
 
 ## 2026-05-09 / 统计页薄弱标签图标对齐修复
 
@@ -355,7 +364,7 @@
 
 ## 2026-05-09 / Cloudflare Quick Tunnel 启动脚本
 
-- 新增 `scripts/public-tunnel.ps1`，自动定位 `cloudflared.exe`、检查本地 `127.0.0.1:3000` 服务，并使用 IPv4 + HTTP/2 启动 Quick Tunnel。
+- 新增 `scripts/public/public-tunnel.ps1`，自动定位 `cloudflared.exe`、检查本地 `127.0.0.1:3000` 服务，并使用 IPv4 + HTTP/2 启动 Quick Tunnel。
 - 脚本支持 `-CheckOnly`，可只验证 `cloudflared` 与本地服务可用性，不启动长驻公网隧道。
 - 脚本会从 `cloudflared` 日志中提取 `https://*.trycloudflare.com`，并用中文高亮输出“公网访问地址”。
 - 修复 Windows PowerShell 将 `cloudflared` 的 stderr 日志当作 `NativeCommandError` 中断脚本的问题。
@@ -367,31 +376,31 @@
 
 - 修复 `components/motion-ui.tsx` 中页面进入动画在服务端 HTML 阶段输出 `opacity:0` 的问题。
 - 将 `MotionPage` 和 `MotionStagger` 的 `initial` 改为 `false`，确保公网端 JS chunk 暂时未加载时仍能显示完整静态页面内容。
-- 执行 `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` 均通过。
+- 执行 `npm run lint`、`npm run build`、`node scripts/smoke/browser-smoke.mjs` 均通过。
 - 执行 `npm run tunnel:quick -- -CheckOnly`，确认本地服务与 `cloudflared` 检查通过。
 
 ## 2026-05-09 / Tunnel 脚本中文乱码修复
 
-- 在 `scripts/public-tunnel.ps1` 启动时设置控制台输入 / 输出编码为 UTF-8，并在 Windows 下切换代码页到 `65001`。
+- 在 `scripts/public/public-tunnel.ps1` 启动时设置控制台输入 / 输出编码为 UTF-8，并在 Windows 下切换代码页到 `65001`。
 - 将脚本内直接输出的中文提示改为 Unicode 码点拼接，避免 Windows PowerShell 5 读取 UTF-8 无 BOM 脚本时出现中文乱码。
 - 将 `npm run tunnel:quick` 增加 `-NoProfile`，减少用户 PowerShell 配置文件对编码设置的影响。
 - 执行 `npm run tunnel:quick -- -CheckOnly` 和 `npm run lint` 均通过；单独验证中文提示可正确显示。
 
 ## 2026-05-09 / 公网完整功能验收与点击修复
 
-- 新增 `scripts/public-acceptance.mjs` 和 `npm run smoke:public`，用于对公网 URL 进行 Playwright 验收。
+- 新增 `scripts/smoke/public-acceptance.mjs` 和 `npm run smoke:public`，用于对公网 URL 进行 Playwright 验收。
 - 验收覆盖桌面 / 移动端 6 个页面可见控件 trial click、顶部导航、首页入口、语法生成与答题、听力生成与播放 / 停止 / 答题、错题筛选与复练、设置刷新 / 保存 / 恢复、清除数据弹窗和统计 API / 图表 / 薄弱标签。
 - 将顶层页面导航与入口链接改为普通 `<a href>`，避免 Cloudflare Quick Tunnel 下 Next 客户端 RSC 导航偶发 502 导致点击后页面不完整。
-- 修复 `scripts/public-tunnel.ps1` 误把 `https://api.trycloudflare.com` 当作公网访问地址输出的问题。
+- 修复 `scripts/public/public-tunnel.ps1` 误把 `https://api.trycloudflare.com` 当作公网访问地址输出的问题。
 - 执行 `npm run lint`、`npm run build` 均通过。
 - 使用公网地址 `https://sent-murray-doctor-san.trycloudflare.com` 执行 `npm run smoke:public`，结果为 41 PASS、0 FAIL。
 
 ## 2026-05-09 / start:public 端口占用提示修复
 
-- 新增 `scripts/start-public.ps1`，在启动公网服务前检查 `3000` 端口。
+- 新增 `scripts/public/start-public.ps1`，在启动公网服务前检查 `3000` 端口。
 - 若 `3000` 已经由本项目 `next start` 占用，`npm run start:public` 会提示服务已在运行并正常退出，避免 `EADDRINUSE` 被误认为启动失败。
 - 若 `3000` 被其他进程占用，会输出占用进程 PID 和命令行，方便处理。
-- 将 `package.json` 中的 `start:public` 改为调用 `scripts/start-public.ps1`。
+- 将 `package.json` 中的 `start:public` 改为调用 `scripts/public/start-public.ps1`。
 - 执行 `npm run start:public`、`npm run lint` 和 `GET /api/settings` 检查均通过。
 ## 2026-05-10 / 课堂汇报 PPT 产出
 

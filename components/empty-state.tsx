@@ -24,7 +24,7 @@ export function EmptyState({ title, description }: EmptyStateProps) {
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground">
-        后续任务会按 `tasks.md` 顺序补齐这里的真实功能。
+        后续任务会按 `docs/spec-driven/tasks.md` 顺序补齐这里的真实功能。
       </CardContent>
     </Card>
   );

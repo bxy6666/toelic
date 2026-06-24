@@ -1,58 +1,68 @@
-# 项目上下文缓存
+# 项目上下文
 
-## 1. 项目基本信息
+## 基本信息
 
-- 项目名称：TOEIC Practice Studio（暂定）
-- 项目根目录：`E:\托业`
-- 项目类型：混合型项目（Next.js Web 前端 + 本地 API Route）
-- 当前阶段：V1.7 学习统计卡通仪表盘完成，MVP 本地版与 MaaS 真实生成均已通过
-- 主要目标：先以 spec-driven coding 方式明确听力练习、语法练习、错题本、学习统计和 MaaS 生成题目的产品规格
-- 项目级规则文件：暂无
+- 项目名称：TOEIC Practice Studio
+- 当前根目录：`D:\toelic`
+- 项目类型：Next.js Web 应用 + 本地 API Routes + Prisma / SQLite
+- 当前阶段：V2.1 工程增强已实现，包含登录、注册、公网保护、用户数据隔离、AI 限流和图片文件化存储
+- 主要目标：为课程汇报提供一个可运行、可演示、可验收的 TOEIC 听力 / 语法练习系统
 
-## 2. 环境识别结论
+## 技术栈
 
-- 当前目录已创建 Next.js 最小项目骨架
-- 包管理器：npm
-- 运行时：Node v24.14.0，npm 11.9.0
-- Tailwind 状态：已接入 Tailwind CSS v4
-- shadcn/ui 状态：已接入，使用 Radix 基础与 lucide 图标
-- 当前任务已完成 T01-T22，已接入 Prisma + SQLite、本地 API Route、MaaS 生成链路、Motion 动效和 Recharts 图表
-- 可运行脚本：`npm run dev`、`npm run dev:public`、`npm run build`、`npm run start`、`npm run start:public`、`npm run lint`
-- 开发服务器：`http://127.0.0.1:3000`
-- 锁文件：`package-lock.json`
-- ESLint：已配置 `eslint.config.mjs`
-- UI 组件：`components/ui/button.tsx`、`card.tsx`、`input.tsx`、`select.tsx`、`tabs.tsx`、`badge.tsx`、`alert.tsx`、`dialog.tsx`、`separator.tsx`
-- 应用壳：`components/app-shell.tsx`
-- 动效组件：`components/motion-ui.tsx`
-- 卡通贴纸组件：`components/cartoon-sticker.tsx`
-- 指标卡片组件：`components/metric-card.tsx`
-- 空状态：`components/empty-state.tsx`
-- Prisma：6.19.3
-- SQLite 数据库：`C:\Users\ALGH\toeic-practice-studio\dev.db`
-- 数据模型：`Question`、`PracticeRecord`、`Mistake`、`UserSetting`
-- 已确认后续技术方向：Next.js + TypeScript + Tailwind + shadcn/ui + Motion + Prisma + SQLite
-- 已确认 MaaS 模型：DeepSeek-V3.2，model 参数为 `deepseek-v3.2`
-- 已接入 OpenAI Image API：仅听力 `picture-description` 题型使用 `OPENAI_API_KEY` 与 `OPENAI_IMAGE_MODEL` 生成原创配图，默认模型 `gpt-image-2`
+- 前端：Next.js App Router、React、TypeScript
+- 样式：Tailwind CSS、shadcn/ui、lucide-react、Motion、Recharts
+- 后端：Next.js Route Handlers
+- 数据库：SQLite + Prisma 6.19.3
+- 测试：Vitest
+- 浏览器验收：Playwright
 
-## 3. 工具状态
+## 关键目录
 
-- fd：已安装，`10.4.2`
-- ripgrep：已安装，`15.1.0`
-- Context7：本次无需启用
-- ast-grep：本次无需启用
-- shadcn/ui：已最小接入
-- Aider：本次无需启用
+- `app/`：页面和 API Routes
+- `components/`：应用组件与 UI 组件
+- `lib/`：认证、AI 生成、统计、错题、设置、Prisma client 等业务服务
+- `prisma/`：schema、migrations 和本地 SQLite 数据库
+- `prompts/`：听力 / 语法题目生成 Prompt
+- `tests/unit/`：单元测试
+- `scripts/smoke/`：浏览器 smoke、真实生成 smoke、公网验收脚本
+- `scripts/public/`：公网启动和 Cloudflare Tunnel 脚本
+- `scripts/reports/`：课程汇报材料生成脚本
+- `docs/spec-driven/`：规格、设计、任务、验收文档
+- `output/`：截图、PPT、报告和临时验证产物
 
-## 4. 当前最小执行建议
+## 最新功能状态
 
-- 当前 `spec.md` 已 Approved
-- 当前 `design.md` 已 Approved
-- 当前 `tasks.md` 已 Approved
-- 按 T01 到 T15 顺序小步实现
-- 当前最小下一步：配置 `OPENAI_API_KEY` 后人工验收听力图片描述题，重点检查真实配图、播放、隐藏选项、提交后解析和非图片题型不触发图片生成
+- 登录 / 注册 / 退出已实现。
+- 首次无用户时可创建管理员。
+- 普通用户注册默认开放，可通过 `PUBLIC_REGISTRATION_ENABLED=false` 关闭。
+- 所有核心业务接口按当前用户鉴权并隔离数据。
+- 答题记录和错题 upsert 在同一事务内完成。
+- 设置页的默认难度、默认题量和听力语速已在练习页生效。
+- 图片描述题生成图片保存为本地文件路径。
+- AI 生成按用户和日期统计次数，默认每日 50 题。
+- 清空数据接口要求服务端确认字段 `confirmText: "CLEAR"`。
 
-## 5. 最近一次完整扫描
+## 文档状态
 
-- 时间：2026-05-08
-- 执行范围：规则读取、根目录空白状态确认、fd / ripgrep 检查
-- 结论：T01-T22 已完成；MaaS 听力/语法真实生成补测通过；题目查询接口、错题重新练习、首页 Hero 今日计划卡片、学习统计卡通仪表盘、首页和统计页指标对齐、桌面 / 移动端响应式巡检已通过
+- 规格文档：[docs/spec-driven/spec.md](./spec-driven/spec.md)
+- 设计文档：[docs/spec-driven/design.md](./spec-driven/design.md)
+- 任务拆分：[docs/spec-driven/tasks.md](./spec-driven/tasks.md)
+- 验收记录：[docs/spec-driven/acceptance.md](./spec-driven/acceptance.md)
+- 根目录说明：[README.md](../README.md)
+
+## 验证状态
+
+- `npm run typecheck`：通过
+- `npm run lint`：通过，保留既有 `output/presentation/src/build-report-deck.mjs` unused warnings
+- `npm run test:run`：7 个测试文件、27 个测试通过
+- `npm run build`：通过
+- `npx prisma validate`：通过
+
+## 后续维护原则
+
+1. 新需求先更新 `docs/spec-driven/spec.md`。
+2. 设计变化同步更新 `docs/spec-driven/design.md`。
+3. 可执行任务同步更新 `docs/spec-driven/tasks.md`。
+4. 实现完成后更新 `docs/spec-driven/acceptance.md`。
+5. 不移动 Next.js / Prisma / Tailwind 等框架要求留在根目录的配置文件。

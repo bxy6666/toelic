@@ -1,10 +1,12 @@
 # TOEIC Practice Studio Tasks
 
 状态：Approved  
-阶段：Gate 4 - implementation  
-最后更新：2026-05-08  
+阶段：V2.1 implemented / documentation maintained  
+最后更新：2026-06-24  
 依据规格：[spec.md](./spec.md)  
 依据设计：[design.md](./design.md)
+
+当前最新版说明：T01-T22 保留为 MVP 到 V1.7 的历史任务链；T23-T31 是 V1.8 / V2 / V2.1 工程、安全和数据治理增强，均已完成。当前目录结构已整理为 `docs/spec-driven/`、`scripts/smoke/`、`scripts/public/` 和 `scripts/reports/`。
 
 ## 0. Gate 3 执行边界
 
@@ -509,7 +511,7 @@
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - 首页 HTTP 验证
 
 验收记录：
@@ -551,7 +553,7 @@
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 截图检查首页、听力页、语法页
 
 验收记录：
@@ -585,7 +587,7 @@
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 截图检查听力 / 语法练习页
 
 验收记录：
@@ -620,7 +622,7 @@
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 截图检查首页、统计页、听力页、语法页
 
 验收记录：
@@ -690,7 +692,7 @@
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 首页桌面 / 移动端截图
 
 验收记录：
@@ -726,7 +728,7 @@
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 统计页桌面 / 移动端截图
 
 验收记录：

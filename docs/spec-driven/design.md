@@ -1,9 +1,11 @@
 # TOEIC Practice Studio Design
 
 状态：Approved  
-阶段：Gate 4 - implementation  
-最后更新：2026-05-08  
+阶段：V2.1 implemented / documentation maintained  
+最后更新：2026-06-24  
 依据规格：[spec.md](./spec.md)
+
+当前最新版说明：本文件前半部分保留 MVP / V1.x 的历史设计边界；登录、注册、公网保护、用户隔离、图片文件化和 AI 限额已作为 V2 / V2.1 增强实现，最终设计以第 19 节为准。
 
 ## 0. Gate 2 设计边界
 
@@ -860,7 +862,7 @@ submitted -> idle
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - 必要时通过 HTTP 请求检查首页包含真实统计相关文案
 
 ## 13. V1.2 丰富动效与活力重设计
@@ -916,7 +918,7 @@ submitted -> idle
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - 使用 Playwright 截图检查首页、听力页、语法页是否可读且背景未遮挡正文
 
 ## 14. V1.3 练习流程体验设计
@@ -948,7 +950,7 @@ submitted -> idle
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 截图检查听力页和语法页空状态 / 生成前状态可读
 
 ## 15. V1.4 视觉对齐与响应式巡检设计
@@ -979,7 +981,7 @@ submitted -> idle
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 生成首页、统计页桌面截图
 - Playwright 生成首页、听力页、语法页移动端截图，检查是否有文字重叠或明显错位
 
@@ -1033,7 +1035,7 @@ Hero 左侧在 CTA 下方加入一张轻量“学习计划便签”，使用浅�
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 生成首页桌面和移动端截图，检查按钮文字颜色、计划卡片可见性和桌面卡片高度。
 
 ## 18. V1.7 学习统计卡通仪表盘设计
@@ -1060,7 +1062,7 @@ Hero 左侧在 CTA 下方加入一张轻量“学习计划便签”，使用浅�
 
 - `npm run lint`
 - `npm run build`
-- `node scripts/browser-smoke.mjs`
+- `node scripts/smoke/browser-smoke.mjs`
 - Playwright 生成统计页桌面和移动端截图，检查折线图、核心标题、统计卡片、薄弱标签和横向滚动。
 
 ## 19. V1.8 / V2 / V2.1 工程与公网安全设计

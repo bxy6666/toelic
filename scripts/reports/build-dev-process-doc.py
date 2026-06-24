@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import textwrap
 from pathlib import Path
@@ -120,10 +120,10 @@ def build_assets() -> dict[str, Path]:
         if p.exists():
             p.unlink()
 
-    spec = read_text("spec.md")
-    design = read_text("design.md")
-    tasks = read_text("tasks.md")
-    acceptance = read_text("acceptance.md")
+    spec = read_text("docs/spec-driven/spec.md")
+    design = read_text("docs/spec-driven/design.md")
+    tasks = read_text("docs/spec-driven/tasks.md")
+    acceptance = read_text("docs/spec-driven/acceptance.md")
     changelog = read_text("docs/change-log-ai.md")
 
     assets: dict[str, Path] = {}
@@ -249,12 +249,11 @@ def build_assets() -> dict[str, Path]:
         "|-- lib/                 MaaS Client、题目校验、统计、错题、设置服务",
         "|-- prisma/              SQLite 数据模型与 migration",
         "|-- prompts/             听力 / 语法题目生成 Prompt",
-        "|-- scripts/             smoke、generation、公网验收与 tunnel 脚本",
-        "|-- docs/                项目上下文与 AI 变更记录",
-        "|-- spec.md              需求规格",
-        "|-- design.md            设计文档",
-        "|-- tasks.md             T01-T22 任务拆分",
-        "|-- acceptance.md        验收记录",
+        "|-- scripts/smoke/       浏览器、generation、公网验收脚本",
+        "|-- scripts/public/      公网启动与 tunnel 脚本",
+        "|-- scripts/reports/     课程汇报与过程文档生成脚本",
+        "|-- docs/                文档索引、上下文与 AI 变更记录",
+        "|-- docs/spec-driven/    需求规格、设计、任务拆分、验收记录",
     ]
     assets["tree"] = make_text_screenshot(
         "07-project-structure.png",
@@ -273,7 +272,7 @@ def build_assets() -> dict[str, Path]:
         "PS E:\\托业> npm run smoke:generation",
         "PASS - 9 个听力 / 语法子题型真实生成通过",
         "",
-        "PS E:\\托业> node scripts/browser-smoke.mjs",
+        "PS E:\\托业> node scripts/smoke/browser-smoke.mjs",
         "PASS - 核心页面浏览器 smoke 通过",
         "",
         "PS E:\\托业> npm run smoke:public",

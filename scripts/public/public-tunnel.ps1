@@ -1,4 +1,4 @@
-param(
+﻿param(
   [string]$Url = "http://127.0.0.1:3000",
   [int]$MaxRetries = 3,
   [switch]$CheckOnly
