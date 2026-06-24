@@ -77,6 +77,7 @@ export function SettingsPanel({
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const [clearConfirmText, setClearConfirmText] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -153,6 +154,8 @@ export function SettingsPanel({
     try {
       const response = await fetch("/api/settings/clear-data", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirmText: clearConfirmText }),
       });
       const payload = (await response.json()) as ApiResponse<{ cleared: true }>;
 
@@ -161,6 +164,7 @@ export function SettingsPanel({
       }
 
       setMessage("本地学习数据已清除。");
+      setClearConfirmText("");
     } catch (clearError) {
       setError(
         clearError instanceof Error ? clearError.message : "清除数据失败。",
@@ -333,9 +337,14 @@ export function SettingsPanel({
               <DialogHeader>
                 <DialogTitle>确认清除本地学习数据？</DialogTitle>
                 <DialogDescription>
-                  将删除已生成题目、练习记录和错题记录。API Key 和学习偏好不会被保存或展示。
+                  将删除已生成题目、练习记录和错题记录。输入 CLEAR 后才能继续。
                 </DialogDescription>
               </DialogHeader>
+              <Input
+                value={clearConfirmText}
+                onChange={(event) => setClearConfirmText(event.target.value)}
+                placeholder="CLEAR"
+              />
               <DialogFooter>
                 <DialogClose asChild>
                   <Button variant="outline">取消</Button>
@@ -344,7 +353,7 @@ export function SettingsPanel({
                   <Button
                     variant="destructive"
                     onClick={clearData}
-                    disabled={clearing}
+                    disabled={clearing || clearConfirmText !== "CLEAR"}
                   >
                     {clearing ? "清除中" : "确认清除"}
                   </Button>

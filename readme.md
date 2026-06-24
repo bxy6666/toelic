@@ -14,6 +14,7 @@
 在项目根目录执行：
 
 ```powershell
+Copy-Item .env.example .env
 npm install
 npm run prisma:generate
 ```
@@ -24,11 +25,11 @@ npm run prisma:generate
 npx prisma migrate deploy
 ```
 
-项目默认使用 SQLite。数据库地址由 `.env` 中的 `DATABASE_URL` 控制，当前设计为本机文件数据库。
+项目默认使用 SQLite。数据库地址由 `.env` 中的 `DATABASE_URL` 控制，当前设计为本机文件数据库。首次运行前先创建 `.env`，否则 Prisma CLI 无法读取数据库地址。
 
 ## 3. 配置 MaaS API Key
 
-在项目根目录创建或修改 `.env.local`，参考 `.env.local.example`：
+在项目根目录创建或修改 `.env` 或 `.env.local`，参考 `.env.example` / `.env.local.example`：
 
 ```env
 MAAS_API_KEY=your_local_api_key_here
@@ -76,6 +77,42 @@ npm run lint
 npm run build
 node scripts/browser-smoke.mjs
 ```
+
+## 9. 登录与公网安全
+
+V2 起，公网分享模式需要先登录。第一次打开 `/login` 时，如果数据库中还没有用户，输入用户名和至少 8 位密码会创建本机管理员账号；创建后不再开放注册。
+
+登录后才能使用生题、答题、错题、统计、设置和清空数据。Session 使用 HttpOnly Cookie，浏览器脚本不能读取完整 token。
+
+清空学习数据时，前端弹窗确认之外，接口还要求提交确认文本：
+
+```json
+{
+  "confirmText": "CLEAR"
+}
+```
+
+AI 生成默认每日上限为 50 题，可在本机环境变量中调整：
+
+```env
+DAILY_AI_GENERATION_LIMIT=50
+```
+
+## 10. 新环境验证
+
+首次拉取或迁移后建议执行：
+
+```powershell
+npm install
+npm run prisma:generate
+npx prisma migrate deploy
+npm run typecheck
+npm run lint
+npm run test:run
+npm run build
+```
+
+图片描述题生成的图片会保存在 `output/generated-images/`，该目录不提交到 Git。
 
 如果修改了 Prisma schema 或数据库迁移，再执行：
 

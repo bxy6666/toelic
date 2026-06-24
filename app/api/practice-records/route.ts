@@ -1,24 +1,12 @@
-import { NextResponse } from "next/server";
-
-import { AppError, isAppError } from "@/lib/errors";
+import { AppError } from "@/lib/errors";
+import { handleApiError, jsonOk, readJsonBody } from "@/lib/api-response";
+import { requireUserFromRequest } from "@/lib/auth";
 import { recordPracticeAnswer } from "@/lib/practice-service";
-
-function jsonError(error: AppError) {
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: error.code,
-        message: error.message,
-      },
-    },
-    { status: error.status },
-  );
-}
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as Record<string, unknown>;
+    const user = await requireUserFromRequest(request);
+    const body = (await readJsonBody(request)) as Record<string, unknown>;
     const questionId =
       typeof body.questionId === "string" ? body.questionId.trim() : "";
     const userAnswer =
@@ -35,18 +23,16 @@ export async function POST(request: Request) {
     }
 
     const data = await recordPracticeAnswer({
+      userId: user.id,
       questionId,
       userAnswer,
       timeSpentSeconds,
     });
 
-    return NextResponse.json({ ok: true, data });
+    return jsonOk(data);
   } catch (error) {
-    if (isAppError(error)) {
-      return jsonError(error);
-    }
-
-    return jsonError(
+    return handleApiError(
+      error,
       new AppError("DATABASE_WRITE_FAILED", "保存答题记录失败。", 500),
     );
   }

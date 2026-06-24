@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -70,6 +70,11 @@ type ApiResponse<T> =
 
 type PracticeWorkspaceProps = {
   practiceType: PracticeType;
+  initialSettings: {
+    defaultDifficulty: Difficulty;
+    defaultQuestionCount: number;
+    speechRate: number;
+  };
 };
 
 const answers: Answer[] = ["A", "B", "C", "D"];
@@ -95,12 +100,17 @@ const difficultyLabels = {
   hard: "困难",
 };
 
-export function PracticeWorkspace({ practiceType }: PracticeWorkspaceProps) {
+export function PracticeWorkspace({
+  practiceType,
+  initialSettings,
+}: PracticeWorkspaceProps) {
   const isListening = practiceType === "listening";
   const subtypes = isListening ? listeningSubtypes : grammarSubtypes;
   const [subtype, setSubtype] = useState(subtypes[0].value);
-  const [difficulty, setDifficulty] = useState<Difficulty>("medium");
-  const [count, setCount] = useState(isListening ? 3 : 5);
+  const [difficulty, setDifficulty] = useState<Difficulty>(
+    initialSettings.defaultDifficulty,
+  );
+  const [count, setCount] = useState(initialSettings.defaultQuestionCount);
   const [tags, setTags] = useState("");
   const [grammarPoint, setGrammarPoint] = useState("时态");
   const [questions, setQuestions] = useState<GeneratedQuestion[]>([]);
@@ -115,6 +125,10 @@ export function PracticeWorkspace({ practiceType }: PracticeWorkspaceProps) {
   const [submitting, setSubmitting] = useState(false);
   const [speaking, setSpeaking] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const questionStartRef = useRef({
+    questionId: "",
+    startedAt: 0,
+  });
 
   const currentQuestion = questions[currentIndex];
   const submitted = Boolean(result);
@@ -168,6 +182,10 @@ export function PracticeWorkspace({ practiceType }: PracticeWorkspaceProps) {
 
       setQuestions(payload.data.questions);
       setCurrentIndex(0);
+      questionStartRef.current = {
+        questionId: payload.data.questions[0]?.id ?? "",
+        startedAt: Date.now(),
+      };
     } catch (generateError) {
       setError(
         generateError instanceof Error
@@ -194,7 +212,10 @@ export function PracticeWorkspace({ practiceType }: PracticeWorkspaceProps) {
         body: JSON.stringify({
           questionId: currentQuestion.id,
           userAnswer: selectedAnswer,
-          timeSpentSeconds: 0,
+          timeSpentSeconds: Math.max(
+            0,
+            Math.round((Date.now() - questionStartRef.current.startedAt) / 1000),
+          ),
         }),
       });
       const payload = (await response.json()) as ApiResponse<{
@@ -224,7 +245,14 @@ export function PracticeWorkspace({ practiceType }: PracticeWorkspaceProps) {
     setSpeaking(false);
     setResult(null);
     setSelectedAnswer(null);
-    setCurrentIndex((index) => Math.min(index + 1, questions.length - 1));
+    setCurrentIndex((index) => {
+      const nextIndex = Math.min(index + 1, questions.length - 1);
+      questionStartRef.current = {
+        questionId: questions[nextIndex]?.id ?? "",
+        startedAt: Date.now(),
+      };
+      return nextIndex;
+    });
   }
 
   function replay() {
@@ -241,7 +269,7 @@ export function PracticeWorkspace({ practiceType }: PracticeWorkspaceProps) {
       .filter(Boolean)
       .join(" ");
     const utterance = new SpeechSynthesisUtterance(spoken);
-    utterance.rate = 1;
+    utterance.rate = initialSettings.speechRate;
     utterance.onend = () => setSpeaking(false);
     setSpeaking(true);
     window.speechSynthesis.speak(utterance);

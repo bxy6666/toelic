@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
-import { jsonRequest, readJson } from "../test-utils";
 
 const generationMocks = vi.hoisted(() => ({
   generateQuestionsWithMaas: vi.fn(),
@@ -11,6 +10,19 @@ const generationMocks = vi.hoisted(() => ({
 const prismaMocks = vi.hoisted(() => ({
   transaction: vi.fn(),
   questionCreate: vi.fn(),
+}));
+
+const authMocks = vi.hoisted(() => ({
+  requireUserFromRequest: vi.fn(),
+}));
+
+const usageMocks = vi.hoisted(() => ({
+  assertGenerationAllowed: vi.fn(),
+  recordGenerationUsage: vi.fn(),
+}));
+
+const imageStorageMocks = vi.hoisted(() => ({
+  persistQuestionImages: vi.fn(),
 }));
 
 vi.mock("@/lib/question-generation", async (importOriginal) => {
@@ -32,6 +44,19 @@ vi.mock("@/lib/prisma", () => ({
   },
 }));
 
+vi.mock("@/lib/auth", () => ({
+  requireUserFromRequest: authMocks.requireUserFromRequest,
+}));
+
+vi.mock("@/lib/generation-usage", () => ({
+  assertGenerationAllowed: usageMocks.assertGenerationAllowed,
+  recordGenerationUsage: usageMocks.recordGenerationUsage,
+}));
+
+vi.mock("@/lib/image-storage", () => ({
+  persistQuestionImages: imageStorageMocks.persistQuestionImages,
+}));
+
 const generatedQuestion = {
   type: "grammar",
   subtype: "sentence-completion",
@@ -47,15 +72,32 @@ const generatedQuestion = {
 async function post(body: unknown) {
   const { POST } = await import("@/app/api/ai/generate-questions/route");
 
-  return POST(jsonRequest("http://localhost/api/ai/generate-questions", body));
+  return POST(
+    new Request("http://localhost/api/ai/generate-questions", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  );
 }
 
-// Equivalent to JUnit @Before: prepare shared generation and database mocks.
-function setUp() {
+async function readJson(response: Response) {
+  return response.json() as Promise<Record<string, unknown>>;
+}
+
+beforeEach(() => {
+  authMocks.requireUserFromRequest.mockResolvedValue({
+    id: "user-1",
+    username: "admin",
+  });
+  usageMocks.assertGenerationAllowed.mockResolvedValue(undefined);
+  usageMocks.recordGenerationUsage.mockResolvedValue(undefined);
   generationMocks.generateQuestionsWithMaas.mockResolvedValue([generatedQuestion]);
   generationMocks.attachImagesToPictureDescriptionQuestions.mockResolvedValue([
     generatedQuestion,
   ]);
+  imageStorageMocks.persistQuestionImages.mockImplementation(
+    async (questions: unknown[]) => questions,
+  );
   prismaMocks.questionCreate.mockResolvedValue({
     id: "question-1",
     ...generatedQuestion,
@@ -66,9 +108,7 @@ function setUp() {
   prismaMocks.transaction.mockImplementation((operations: Promise<unknown>[]) =>
     Promise.all(operations),
   );
-}
-
-beforeEach(setUp);
+});
 
 describe("POST /api/ai/generate-questions", () => {
   it("validates request bodies before generating questions", async () => {
@@ -113,8 +153,11 @@ describe("POST /api/ai/generate-questions", () => {
         optionsJson: JSON.stringify(generatedQuestion.options),
         tagsJson: JSON.stringify(generatedQuestion.tags),
         source: "maas",
+        userId: "user-1",
       }),
     });
+    expect(usageMocks.assertGenerationAllowed).toHaveBeenCalledWith("user-1", 1);
+    expect(usageMocks.recordGenerationUsage).toHaveBeenCalledWith("user-1", 1);
     expect(payload).toMatchObject({
       ok: true,
       data: {
@@ -148,5 +191,26 @@ describe("POST /api/ai/generate-questions", () => {
       ok: false,
       error: { code: "QUESTION_VALIDATION_FAILED" },
     });
+  });
+
+  it("rejects unauthenticated generation requests", async () => {
+    authMocks.requireUserFromRequest.mockRejectedValue(
+      new AppError("UNAUTHORIZED", "Login required", 401),
+    );
+
+    const response = await post({
+      practiceType: "grammar",
+      subtype: "sentence-completion",
+      difficulty: "medium",
+      count: 1,
+    });
+    const payload = await readJson(response);
+
+    expect(response.status).toBe(401);
+    expect(payload).toMatchObject({
+      ok: false,
+      error: { code: "UNAUTHORIZED" },
+    });
+    expect(generationMocks.generateQuestionsWithMaas).not.toHaveBeenCalled();
   });
 });

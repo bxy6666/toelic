@@ -9,6 +9,8 @@ import {
 import { buildGrammarPrompt } from "@/prompts/generate-grammar-question";
 import { buildListeningPrompt } from "@/prompts/generate-listening-question";
 
+export type { ValidatedQuestion } from "@/lib/question-validation";
+
 export type QuestionGenerationRequest = {
   practiceType: PracticeType;
   subtype: string;

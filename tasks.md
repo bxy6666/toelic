@@ -754,5 +754,55 @@
 - `tasks.md` 包含错题本任务：待用户审核
 - `tasks.md` 包含统计任务：待用户审核
 - `tasks.md` 包含安全验收任务：待用户审核
+
+## 5. V1.8 / V2 / V2.1 改进任务
+
+| ID | 任务 | 状态 |
+| --- | --- | --- |
+| T23 | V1.8 统一 API 响应与题目 mapper | DONE |
+| T24 | V1.8 设置接入练习页并记录真实答题耗时 | DONE |
+| T25 | V1.8 答题记录与错题事务化 | DONE |
+| T26 | V2 新增管理员登录、Session Cookie 与页面保护 | DONE |
+| T27 | V2 用户数据隔离与旧数据接管迁移 | DONE |
+| T28 | V2 保护生题、答题、错题、设置和清空数据接口 | DONE |
+| T29 | V2.1 图片本地文件化与受保护访问路径 | DONE |
+| T30 | V2.1 AI 生成每日限额与使用统计 | DONE |
+| T31 | 工程门禁：typecheck、CI 与单元测试补充 | DONE |
+
+### T23 V1.8 统一 API 响应与题目 mapper
+
+- 新增统一 API 响应工具，减少 route 中重复的错误 JSON。
+- 新增题目 mapper，集中解析 `optionsJson` 和 `tagsJson`。
+- 验收：生成题、答题、错题、设置、统计接口仍返回统一 `{ ok, data/error }`。
+
+### T24 V1.8 设置接入练习页并记录真实答题耗时
+
+- `/listening` 与 `/grammar` 服务端读取当前用户设置并传入练习工作区。
+- Web Speech 使用设置中的 `speechRate`。
+- 主练习与错题复练提交真实 `timeSpentSeconds`。
+
+### T25 V1.8 答题记录与错题事务化
+
+- `recordPracticeAnswer` 使用 Prisma transaction 同时写入练习记录和错题 upsert。
+- 验收：答错时练习记录与错题状态保持一致。
+
+### T26-T28 V2 登录与公网安全
+
+- 新增登录页与 `/api/auth/login`、`/api/auth/logout`、`/api/auth/me`。
+- 首次无用户时创建管理员；后续关闭公开注册。
+- 受保护 API 未登录返回 `UNAUTHORIZED`。
+- 清空数据接口必须提交 `confirmText: "CLEAR"`。
+
+### T29-T30 V2.1 数据与成本治理
+
+- AI 图片保存为本地文件，数据库只存访问路径。
+- 生成图片读取接口按登录用户校验。
+- AI 生题按用户每日限额控制，默认 50 题。
+
+### T31 工程门禁
+
+- 新增 `npm run typecheck`。
+- 新增 GitHub Actions CI。
+- 新增认证、清空数据、受保护 API 和事务写入相关单元测试。
 - `tasks.md` 包含工程与浏览器验证任务：待用户审核
 - 当前未创建代码或安装依赖：已满足

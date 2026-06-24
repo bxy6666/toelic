@@ -1,24 +1,43 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
-import { jsonRequest, readJson } from "../test-utils";
 
 const practiceMocks = vi.hoisted(() => ({
   recordPracticeAnswer: vi.fn(),
+}));
+
+const authMocks = vi.hoisted(() => ({
+  requireUserFromRequest: vi.fn(),
 }));
 
 vi.mock("@/lib/practice-service", () => ({
   recordPracticeAnswer: practiceMocks.recordPracticeAnswer,
 }));
 
+vi.mock("@/lib/auth", () => ({
+  requireUserFromRequest: authMocks.requireUserFromRequest,
+}));
+
 async function post(body: unknown) {
   const { POST } = await import("@/app/api/practice-records/route");
 
-  return POST(jsonRequest("http://localhost/api/practice-records", body));
+  return POST(
+    new Request("http://localhost/api/practice-records", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
+  );
 }
 
-// Equivalent to JUnit @Before: prepare the default answer submission result.
-function setUp() {
+async function readJson(response: Response) {
+  return response.json() as Promise<Record<string, unknown>>;
+}
+
+beforeEach(() => {
+  authMocks.requireUserFromRequest.mockResolvedValue({
+    id: "user-1",
+    username: "admin",
+  });
   practiceMocks.recordPracticeAnswer.mockResolvedValue({
     result: {
       questionId: "question-1",
@@ -26,9 +45,7 @@ function setUp() {
       isCorrect: true,
     },
   });
-}
-
-beforeEach(setUp);
+});
 
 describe("POST /api/practice-records", () => {
   it("rejects missing questionId or userAnswer", async () => {
@@ -54,6 +71,7 @@ describe("POST /api/practice-records", () => {
     expect(response.status).toBe(200);
     expect(practiceMocks.recordPracticeAnswer).toHaveBeenCalledWith({
       questionId: "question-1",
+      userId: "user-1",
       userAnswer: "a",
       timeSpentSeconds: 9,
     });
@@ -76,5 +94,24 @@ describe("POST /api/practice-records", () => {
       ok: false,
       error: { code: "REQUEST_INVALID" },
     });
+  });
+
+  it("rejects unauthenticated requests", async () => {
+    authMocks.requireUserFromRequest.mockRejectedValue(
+      new AppError("UNAUTHORIZED", "Login required", 401),
+    );
+
+    const response = await post({
+      questionId: "question-1",
+      userAnswer: "A",
+    });
+    const payload = await readJson(response);
+
+    expect(response.status).toBe(401);
+    expect(payload).toMatchObject({
+      ok: false,
+      error: { code: "UNAUTHORIZED" },
+    });
+    expect(practiceMocks.recordPracticeAnswer).not.toHaveBeenCalled();
   });
 });

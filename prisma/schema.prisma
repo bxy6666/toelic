@@ -9,6 +9,7 @@ datasource db {
 
 model Question {
   id              String           @id @default(cuid())
+  userId          String?
   type            String
   subtype         String
   difficulty      String
@@ -23,9 +24,11 @@ model Question {
   imagePrompt     String?
   source          String
   createdAt       DateTime         @default(now())
+  user            User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
   practiceRecords PracticeRecord[]
   mistake         Mistake?
 
+  @@index([userId])
   @@index([type])
   @@index([difficulty])
   @@index([createdAt])
@@ -33,14 +36,17 @@ model Question {
 
 model PracticeRecord {
   id               String   @id @default(cuid())
+  userId           String?
   questionId       String
   practiceType     String
   userAnswer       String
   isCorrect        Boolean
   timeSpentSeconds Int      @default(0)
   practicedAt      DateTime @default(now())
+  user             User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   question         Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
   @@index([questionId])
   @@index([practiceType])
   @@index([practicedAt])
@@ -49,23 +55,65 @@ model PracticeRecord {
 
 model Mistake {
   id          String    @id @default(cuid())
+  userId      String?
   questionId  String    @unique
   wrongCount  Int       @default(1)
   lastWrongAt DateTime  @default(now())
   status      String    @default("new")
   note        String?
   masteredAt  DateTime?
+  user        User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
   question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
   @@index([status])
   @@index([lastWrongAt])
 }
 
 model UserSetting {
   id                   String   @id @default(cuid())
+  userId               String?  @unique
   defaultDifficulty    String   @default("medium")
   defaultQuestionCount Int      @default(5)
   speechRate           Float    @default(1.0)
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
+  user                 User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id              String            @id @default(cuid())
+  username        String            @unique
+  passwordHash    String
+  createdAt       DateTime          @default(now())
+  sessions        Session[]
+  questions       Question[]
+  practiceRecords PracticeRecord[]
+  mistakes        Mistake[]
+  setting         UserSetting?
+  generationUsage GenerationUsage[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model GenerationUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  dateKey   String
+  count     Int      @default(0)
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, dateKey])
+  @@index([dateKey])
 }

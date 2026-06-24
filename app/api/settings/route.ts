@@ -1,5 +1,11 @@
-import { NextResponse } from "next/server";
-
+import { AppError } from "@/lib/errors";
+import {
+  handleApiError,
+  jsonError,
+  jsonOk,
+  readJsonBody,
+} from "@/lib/api-response";
+import { requireUserFromRequest } from "@/lib/auth";
 import {
   getSettings,
   updateSettings,
@@ -7,71 +13,39 @@ import {
   type SettingsUpdateInput,
 } from "@/lib/settings-service";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const settings = await getSettings();
-    return NextResponse.json({ ok: true, data: settings });
-  } catch {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: {
-          code: "SETTINGS_READ_FAILED",
-          message: "读取设置失败，请稍后重试。",
-        },
-      },
-      { status: 500 },
+    const user = await requireUserFromRequest(request);
+    const settings = await getSettings(user.id);
+    return jsonOk(settings);
+  } catch (error) {
+    return handleApiError(
+      error,
+      new AppError("SETTINGS_READ_FAILED", "读取设置失败，请稍后重试。", 500),
     );
   }
 }
 
 export async function PATCH(request: Request) {
-  let body: SettingsUpdateInput;
-
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: {
-          code: "REQUEST_INVALID",
-          message: "请求格式不是有效 JSON。",
-        },
-      },
-      { status: 400 },
-    );
-  }
+    const user = await requireUserFromRequest(request);
+    const body = (await readJsonBody(request)) as SettingsUpdateInput;
 
-  const errors = validateSettingsUpdate(body);
+    const errors = validateSettingsUpdate(body);
 
-  if (errors.length > 0) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: {
-          code: "REQUEST_INVALID",
-          message: errors.join(" "),
-        },
-      },
-      { status: 400 },
-    );
-  }
+    if (errors.length > 0) {
+      return jsonError(
+        new AppError("REQUEST_INVALID", errors.join(" "), 400),
+      );
+    }
 
-  try {
-    await updateSettings(body);
-    const settings = await getSettings();
-    return NextResponse.json({ ok: true, data: settings });
-  } catch {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: {
-          code: "SETTINGS_UPDATE_FAILED",
-          message: "保存设置失败，请稍后重试。",
-        },
-      },
-      { status: 500 },
+    await updateSettings(user.id, body);
+    const settings = await getSettings(user.id);
+    return jsonOk(settings);
+  } catch (error) {
+    return handleApiError(
+      error,
+      new AppError("SETTINGS_UPDATE_FAILED", "保存设置失败，请稍后重试。", 500),
     );
   }
 }
