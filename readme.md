@@ -32,10 +32,10 @@ tests/                  Vitest 单元测试
 
 ## 快速启动
 
-请先进入项目根目录；如果项目不在 `D:\toelic`，把第一行替换为你的实际路径。
+请先进入项目根目录；如果项目不在 `E:\toelic\toelic`，把第一行替换为你的实际路径。
 
 ```powershell
-Set-Location D:\toelic
+Set-Location E:\toelic\toelic
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 npm.cmd install
 npm.cmd run prisma:generate

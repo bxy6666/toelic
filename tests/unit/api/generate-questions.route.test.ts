@@ -65,15 +65,16 @@ vi.mock("@/lib/image-storage", () => ({
 }));
 
 const generatedQuestion = {
-  type: "grammar",
+  type: "grammarsr",
   subtype: "sentence-completion",
   difficulty: "medium",
   prompt: "Prompt",
-  options: { A: "A", B: "B", C: "C", D: "D" },
+  options: { C: "C", B: "", E: "C", D: "D" },
   answer: "A",
   explanationZh: "Explanation",
   tags: ["tense"],
   grammarPoint: "tense",
+
 };
 
 const defaultGenerationRequest = {

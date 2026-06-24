@@ -1090,3 +1090,47 @@ Session token 使用随机值生成，只把哈希写入数据库；浏览器只
 ### 19.5 页面保护
 
 Proxy 在页面层检查 session cookie，未登录跳转 `/login`；服务端页面还会读取真实 session，失效时再次重定向。API 不通过页面重定向处理，而是返回 JSON 401。
+
+## 20. V3 paper-domain 整卷系统设计
+
+### 20.1 领域模型
+
+新增试卷域模型与旧单题模型并行：
+
+- `Paper`：试卷根对象，带 `userId` 与可选 `sourceKey`。
+- `PaperVersion`：版本对象，状态为 `draft / published / archived`。
+- `PaperSection`：版本内分区。
+- `QuestionItem`：版本内题目，首版只开放 `single_choice`。
+- `QuestionOption`：题目选项，A-D。
+- `Attempt`：服务端计时作答会话，包含 `startedAt / durationSeconds / expiresAt / submittedAt / lastAutosavedAt`。
+- `AttemptResponse`：逐题作答与逐题批改字段。
+- `GradingResult`：attempt 级总批改结果，`attemptId` 唯一。
+- `UploadedFile / ImportJob / ParseJob`：为后续文档导入预留。
+
+### 20.2 服务层规则
+
+所有试卷域规则集中在 `lib/paper-service.ts`。Route Handler 只负责鉴权、读参、调用服务和统一错误处理。
+
+核心规则：
+
+- 任何访问都必须按当前 `userId` 过滤。
+- 只有 `draft` 版本可编辑分区、题目、选项。
+- 发布前校验至少 1 道题、每道 `single_choice` 有 A-D 选项、答案命中选项。
+- Attempt 只能从 `published` 版本创建；同用户同版本存在未过期 `in_progress` Attempt 时复用。
+- 保存答案使用 `AttemptResponse(attemptId,itemId)` upsert，并刷新 `lastAutosavedAt`。
+- Submit 在 transaction 中批改，创建唯一 `GradingResult`；重复 submit 返回既有报告。
+
+### 20.3 UI 设计
+
+新增最小工作台 UI：
+
+- `/papers`：当前用户试卷列表与 seed 提示。
+- `/papers/new`：创建 Paper。
+- `/papers/{paperId}`：版本列表、新建版本、进入编辑或作答。
+- `/paper-versions/{versionId}/edit`：draft 版本录入分区、题目、选项，发布校验。
+- `/paper-versions/{versionId}/take`：创建或恢复 Attempt、保存答案、提交。
+- `/attempts/{attemptId}/report`：展示总分、正确率和逐题结果。
+
+### 20.4 Seed 设计
+
+`data/papers/*.json` 使用固定结构。`npm run seed:papers` 默认导入 `toeic-sample-001.json`，按 `userId + sourceKey + versionLabel` 幂等导入；无用户时失败并提示先创建用户。

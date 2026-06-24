@@ -808,3 +808,41 @@
 - 新增认证、清空数据、受保护 API 和事务写入相关单元测试。
 - `tasks.md` 包含工程与浏览器验证任务：待用户审核
 - 当前未创建代码或安装依赖：已满足
+
+## 6. V3 paper-domain 首包任务
+
+| ID | 任务 | 状态 |
+| --- | --- | --- |
+| T32 | 新增 paper-domain Prisma schema 与 migration | DONE |
+| T33 | 新增 paper-domain service 与 API Routes | DONE |
+| T34 | 新增最小整卷 UI 页面闭环 | DONE |
+| T35 | 新增 `data/papers/*.json` seed 与样例试卷 | DONE |
+| T36 | 补充 paper-domain 单元/API 测试 | DONE |
+| T37 | 执行工程验证并更新验收记录 | DONE |
+
+### T32 数据层
+
+新增 Paper、PaperVersion、PaperSection、QuestionItem、QuestionOption、Attempt、AttemptResponse、GradingResult，并预留 UploadedFile、ImportJob、ParseJob。保留旧单题模型不变。
+
+### T33 API
+
+实现 Paper / Version / draft editing / Attempt / report API，统一使用 `{ ok, data/error }`、`requireUserFromRequest` 和 `AppError`。
+
+### T34 UI
+
+实现 `/papers`、`/papers/new`、`/papers/{paperId}`、`/paper-versions/{versionId}/edit`、`/paper-versions/{versionId}/take`、`/attempts/{attemptId}/report`。
+
+### T35 Seed
+
+新增 `data/papers/toeic-sample-001.json` 与 `npm run seed:papers`，按用户和 `sourceKey + versionLabel` 幂等导入。
+
+### T38 paper-domain E2E smoke hardening
+
+Status: DONE
+
+- Fixed smoke target to `sourceKey = toeic-sample-001`.
+- Ensured the seed paper has 3 `single_choice` items for stable correct / wrong / unanswered verification.
+- Added `scripts/smoke/paper-domain-smoke.mjs` and `npm run smoke:papers`.
+- Added stable `data-testid` hooks for papers list, seed card, published version, attempt start, autosave status, submit, report summary, and per-item report states.
+- Verified published version edit page is read-only and direct edit API returns `VERSION_NOT_EDITABLE`.
+- Kept OCR, Redis, Qdrant, FastAPI, and old single-question flows out of scope.

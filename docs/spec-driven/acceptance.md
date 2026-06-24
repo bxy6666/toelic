@@ -183,3 +183,33 @@
 | `npx prisma migrate deploy` | PASS | 已为当前非空 `dev.db` 补齐 3 个 migration baseline 记录，随后 deploy / status 均显示无待应用迁移 |
 | `node --check scripts/smoke/*.mjs` | PASS | `public-acceptance.mjs` 与 `generation-smoke.mjs` 登录适配后语法检查通过 |
 | `git diff --check` | PASS | 未发现空白错误，仅有 Git 提示后续可能按配置转换 CRLF |
+
+## V3 paper-domain 首包验收记录
+
+| 验收项 | 状态 | 验证方式 | 备注 |
+| --- | --- | --- | --- |
+| Prisma 试卷域模型 | PASS | `npx prisma migrate dev --name add_paper_domain` | 已新增核心表和预留导入表，旧单题模型保留 |
+| Paper / Version / Attempt API | PASS | 代码检查、`tests/unit/api/papers.route.test.ts` | API 沿用 `{ ok, data/error }` 和登录鉴权 |
+| draft-only 编辑规则 | PASS | `tests/unit/lib/paper-service.test.ts` | 非 draft 编辑 / 发布路径返回 `VERSION_NOT_EDITABLE` |
+| 发布校验 | PASS | `tests/unit/lib/paper-service.test.ts` | A-D 选项与答案键校验已覆盖 |
+| AttemptResponse autosave | PASS | `tests/unit/lib/paper-service.test.ts` | `attemptId + itemId` upsert 并刷新 `lastAutosavedAt` |
+| Submit 幂等入口 | PASS | `tests/unit/lib/paper-service.test.ts` | 已存在 GradingResult 时直接返回报告 |
+| 最小 UI 闭环 | PASS | 页面文件检查 | 已新增 `/papers`、创建、详情、版本编辑、作答、报告页面 |
+| seed 样例 | PASS | 文件检查 | 已新增 `data/papers/toeic-sample-001.json` 与 `npm run seed:papers` |
+| seed 幂等性 | PASS | 连续执行 `npm run seed:papers` | 首次 `PASS toeic-sample-001 v1`，第二次 `SKIP toeic-sample-001 v1` |
+| V3 工程验证 | PASS | `typecheck`、`test:run`、`lint`、`build`、`prisma validate` | lint 仅保留既有 presentation unused warnings |
+
+## V3 paper-domain E2E smoke hardening acceptance
+
+| Item | Result |
+| --- | --- |
+| Command | `npm run smoke:papers` |
+| BASE_URL | `http://127.0.0.1:3000` |
+| Seed sourceKey | `toeic-sample-001` |
+| Attempt ID | `cmqsaecw3000bu8w4okhx6okd` |
+| Report summary | `total=3`, `correct=1`, `wrong=1`, `unanswered=1` |
+| Autosave reload | PASS |
+| Submit idempotency | PASS |
+| Published read-only UI | PASS |
+| Direct published edit API | PASS, returned `VERSION_NOT_EDITABLE` |
+| Scope guard | PASS, no OCR / Redis / Qdrant / FastAPI and no rewrite of old Question / PracticeRecord / Mistake flows |

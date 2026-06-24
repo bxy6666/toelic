@@ -3,9 +3,9 @@
 ## 基本信息
 
 - 项目名称：TOEIC Practice Studio
-- 当前根目录：`D:\toelic`
+- 当前根目录：`E:\toelic\toelic`
 - 项目类型：Next.js Web 应用 + 本地 API Routes + Prisma / SQLite
-- 当前阶段：V2.1 工程增强已实现，包含登录、注册、公网保护、用户数据隔离、AI 限流和图片文件化存储
+- 当前阶段：V3 paper-domain 首包已实现，包含整卷试卷、版本、手工录题、发布、作答、幂等批改、报告和本地 seed
 - 主要目标：为课程汇报提供一个可运行、可演示、可验收的 TOEIC 听力 / 语法练习系统
 
 ## 技术栈
@@ -42,6 +42,7 @@
 - 图片描述题生成图片保存为本地文件路径。
 - AI 生成按用户和日期统计次数，默认每日 50 题。
 - 清空数据接口要求服务端确认字段 `confirmText: "CLEAR"`。
+- 新整卷系统与旧单题系统并行存在；`/papers` 提供 Paper / PaperVersion / Attempt 的最小 UI 闭环。
 
 ## 文档状态
 

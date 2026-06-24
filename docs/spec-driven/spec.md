@@ -800,3 +800,47 @@ MVP 完成必须满足：
 - 设置中的听力语速会影响 Web Speech 播放。
 - 图片描述题生成的图片路径不再是 `data:image/...`。
 - `npm run typecheck`、`npm run lint`、`npm run test:run`、`npm run build` 可作为 CI 门禁。
+
+## 15. V3 paper-domain 整卷系统首包规格
+
+状态：Approved
+触发来源：基于外部研究报告与用户确认，新增可演示整卷系统闭环。
+
+### 15.1 范围
+
+本阶段新增整卷试卷系统，并与旧单题系统并行存在。必须支持：
+
+- 创建 Paper。
+- 创建 PaperVersion。
+- 手工添加 PaperSection、QuestionItem、QuestionOption。
+- 发布 PaperVersion。
+- 仅基于 published PaperVersion 创建或恢复 Attempt。
+- 保存 AttemptResponse。
+- 提交时按服务端时间判断是否超时，并对 `single_choice` 幂等批改。
+- 查看 Attempt report。
+- 通过 `data/papers/*.json` seed 本地试卷。
+
+### 15.2 非目标
+
+- 不接 OCR、Redis、Qdrant、FastAPI。
+- 不重写旧 `Question / PracticeRecord / Mistake`。
+- 不重写旧 `ai/generate-questions`、`practice-records`、`mistakes`、`stats`。
+- 不迁移旧单题数据到新试卷系统。
+
+### 15.3 数据与安全要求
+
+- 新增 Paper、PaperVersion、PaperSection、QuestionItem、QuestionOption、Attempt、AttemptResponse、GradingResult。
+- 预留 UploadedFile、ImportJob、ParseJob。
+- 所有接口必须使用现有 `{ ok, data/error }` 风格。
+- 所有 Paper / Version / Attempt 访问必须强制 user isolation。
+- 所有修改 PaperSection / QuestionItem / QuestionOption 的接口必须校验父级 PaperVersion 为 `draft`，否则返回 `VERSION_NOT_EDITABLE`。
+- Submit 必须通过 transaction 与 `GradingResult.attemptId` 唯一约束实现幂等。
+
+### 15.4 UI 验收页
+
+- `/papers`
+- `/papers/new`
+- `/papers/{paperId}`
+- `/paper-versions/{versionId}/edit`
+- `/paper-versions/{versionId}/take`
+- `/attempts/{attemptId}/report`

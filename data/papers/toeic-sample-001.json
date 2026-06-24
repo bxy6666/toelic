@@ -1,0 +1,78 @@
+{
+  "sourceKey": "toeic-sample-001",
+  "title": "TOEIC Sample Paper 001",
+  "description": "A small local seed paper for the paper-domain demo loop.",
+  "versionLabel": "v1",
+  "status": "published",
+  "defaultDurationSeconds": 900,
+  "sections": [
+    {
+      "sectionCode": "part5",
+      "title": "Part 5 - Incomplete Sentences",
+      "instructions": "Choose the best answer to complete each sentence.",
+      "orderIndex": 1
+    }
+  ],
+  "items": [
+    {
+      "sectionCode": "part5",
+      "questionNo": "101",
+      "itemType": "single_choice",
+      "stem": "The quarterly report must be submitted ___ Friday afternoon.",
+      "difficulty": "easy",
+      "orderIndex": 1,
+      "answer": {
+        "choice": "B"
+      },
+      "explanation": {
+        "zh": "by 表示截止时间，符合句意。"
+      },
+      "options": [
+        { "optionKey": "A", "optionText": "at", "orderIndex": 1 },
+        { "optionKey": "B", "optionText": "by", "orderIndex": 2 },
+        { "optionKey": "C", "optionText": "on", "orderIndex": 3 },
+        { "optionKey": "D", "optionText": "for", "orderIndex": 4 }
+      ]
+    },
+    {
+      "sectionCode": "part5",
+      "questionNo": "102",
+      "itemType": "single_choice",
+      "stem": "The manager asked the team to review the proposal more ___.",
+      "difficulty": "medium",
+      "orderIndex": 2,
+      "answer": {
+        "choice": "D"
+      },
+      "explanation": {
+        "zh": "修饰动词 review 需要副词 carefully。"
+      },
+      "options": [
+        { "optionKey": "A", "optionText": "careful", "orderIndex": 1 },
+        { "optionKey": "B", "optionText": "care", "orderIndex": 2 },
+        { "optionKey": "C", "optionText": "caring", "orderIndex": 3 },
+        { "optionKey": "D", "optionText": "carefully", "orderIndex": 4 }
+      ]
+    },
+    {
+      "sectionCode": "part5",
+      "questionNo": "103",
+      "itemType": "single_choice",
+      "stem": "Employees who complete the training will receive a certificate ___ email.",
+      "difficulty": "medium",
+      "orderIndex": 3,
+      "answer": {
+        "choice": "A"
+      },
+      "explanation": {
+        "zh": "by email 表示通过电子邮件发送。"
+      },
+      "options": [
+        { "optionKey": "A", "optionText": "by", "orderIndex": 1 },
+        { "optionKey": "B", "optionText": "with", "orderIndex": 2 },
+        { "optionKey": "C", "optionText": "into", "orderIndex": 3 },
+        { "optionKey": "D", "optionText": "among", "orderIndex": 4 }
+      ]
+    }
+  ]
+}
