@@ -4,27 +4,19 @@ import { AppError } from "@/lib/errors";
 import { recordPracticeAnswer } from "@/lib/practice-service";
 
 const prismaMocks = vi.hoisted(() => ({
-  questionFindUnique: vi.fn(),
+  questionFindFirst: vi.fn(),
   practiceRecordCreate: vi.fn(),
-}));
-
-const mistakeMocks = vi.hoisted(() => ({
-  createOrUpdateMistake: vi.fn(),
+  mistakeUpsert: vi.fn(),
+  transaction: vi.fn(),
 }));
 
 vi.mock("@/lib/prisma", () => ({
   prisma: {
     question: {
-      findUnique: prismaMocks.questionFindUnique,
+      findFirst: prismaMocks.questionFindFirst,
     },
-    practiceRecord: {
-      create: prismaMocks.practiceRecordCreate,
-    },
+    $transaction: prismaMocks.transaction,
   },
-}));
-
-vi.mock("@/lib/mistake-service", () => ({
-  createOrUpdateMistake: mistakeMocks.createOrUpdateMistake,
 }));
 
 const question = {
@@ -39,17 +31,30 @@ const question = {
 };
 
 beforeEach(() => {
-  prismaMocks.questionFindUnique.mockResolvedValue(question);
+  prismaMocks.questionFindFirst.mockResolvedValue(question);
   prismaMocks.practiceRecordCreate.mockResolvedValue({
     id: "record-1",
     questionId: "question-1",
   });
-  mistakeMocks.createOrUpdateMistake.mockResolvedValue({ id: "mistake-1" });
+  prismaMocks.mistakeUpsert.mockResolvedValue({ id: "mistake-1" });
+  prismaMocks.transaction.mockImplementation(
+    async (
+      callback: (tx: {
+        practiceRecord: { create: typeof prismaMocks.practiceRecordCreate };
+        mistake: { upsert: typeof prismaMocks.mistakeUpsert };
+      }) => Promise<unknown>,
+    ) =>
+      callback({
+        practiceRecord: { create: prismaMocks.practiceRecordCreate },
+        mistake: { upsert: prismaMocks.mistakeUpsert },
+      }),
+  );
 });
 
 describe("recordPracticeAnswer", () => {
   it("normalizes lowercase answers and records a correct answer", async () => {
     const result = await recordPracticeAnswer({
+      userId: "user-1",
       questionId: "question-1",
       userAnswer: " b ",
       timeSpentSeconds: 12,
@@ -57,6 +62,7 @@ describe("recordPracticeAnswer", () => {
 
     expect(prismaMocks.practiceRecordCreate).toHaveBeenCalledWith({
       data: {
+        userId: "user-1",
         questionId: "question-1",
         practiceType: "grammar",
         userAnswer: "B",
@@ -64,7 +70,7 @@ describe("recordPracticeAnswer", () => {
         timeSpentSeconds: 12,
       },
     });
-    expect(mistakeMocks.createOrUpdateMistake).not.toHaveBeenCalled();
+    expect(prismaMocks.mistakeUpsert).not.toHaveBeenCalled();
     expect(result.result).toMatchObject({
       userAnswer: "B",
       correctAnswer: "B",
@@ -76,32 +82,53 @@ describe("recordPracticeAnswer", () => {
 
   it("rejects answers outside A-D", async () => {
     await expect(
-      recordPracticeAnswer({ questionId: "question-1", userAnswer: "E" }),
+      recordPracticeAnswer({
+        userId: "user-1",
+        questionId: "question-1",
+        userAnswer: "E",
+      }),
     ).rejects.toBeInstanceOf(AppError);
   });
 
   it("returns a request error when the question does not exist", async () => {
-    prismaMocks.questionFindUnique.mockResolvedValue(null);
+    prismaMocks.questionFindFirst.mockResolvedValue(null);
 
     await expect(
-      recordPracticeAnswer({ questionId: "missing", userAnswer: "A" }),
+      recordPracticeAnswer({
+        userId: "user-1",
+        questionId: "missing",
+        userAnswer: "A",
+      }),
     ).rejects.toMatchObject({ code: "REQUEST_INVALID", status: 404 });
   });
 
   it("creates or updates a mistake for wrong answers", async () => {
     const result = await recordPracticeAnswer({
+      userId: "user-1",
       questionId: "question-1",
       userAnswer: "A",
       timeSpentSeconds: 5,
     });
 
-    expect(mistakeMocks.createOrUpdateMistake).toHaveBeenCalledWith("question-1");
+    expect(prismaMocks.mistakeUpsert).toHaveBeenCalledWith({
+      where: { questionId: "question-1" },
+      create: expect.objectContaining({
+        userId: "user-1",
+        questionId: "question-1",
+        wrongCount: 1,
+      }),
+      update: expect.objectContaining({
+        userId: "user-1",
+        wrongCount: { increment: 1 },
+      }),
+    });
     expect(result.mistake).toEqual({ id: "mistake-1" });
     expect(result.result.isCorrect).toBe(false);
   });
 
   it("clamps negative time spent to zero", async () => {
     await recordPracticeAnswer({
+      userId: "user-1",
       questionId: "question-1",
       userAnswer: "B",
       timeSpentSeconds: -30,

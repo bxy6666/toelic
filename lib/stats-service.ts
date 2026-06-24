@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { parseQuestionTags } from "@/lib/question-mapper";
 
 function startOfLocalDay(date: Date) {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
@@ -20,7 +21,7 @@ function formatDateKey(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
-export async function getStats() {
+export async function getStats(userId: string) {
   const now = new Date();
   const todayStart = startOfLocalDay(now);
   const sevenDaysAgo = new Date(todayStart);
@@ -40,30 +41,30 @@ export async function getStats() {
     recentRecords,
     activeMistakes,
   ] = await Promise.all([
-    prisma.practiceRecord.count(),
-    prisma.practiceRecord.count({ where: { isCorrect: true } }),
-    prisma.practiceRecord.count({ where: { practicedAt: { gte: todayStart } } }),
+    prisma.practiceRecord.count({ where: { userId } }),
+    prisma.practiceRecord.count({ where: { userId, isCorrect: true } }),
+    prisma.practiceRecord.count({ where: { userId, practicedAt: { gte: todayStart } } }),
     prisma.practiceRecord.count({
-      where: { practicedAt: { gte: todayStart }, isCorrect: true },
+      where: { userId, practicedAt: { gte: todayStart }, isCorrect: true },
     }),
-    prisma.practiceRecord.count({ where: { practiceType: "listening" } }),
+    prisma.practiceRecord.count({ where: { userId, practiceType: "listening" } }),
     prisma.practiceRecord.count({
-      where: { practiceType: "listening", isCorrect: true },
+      where: { userId, practiceType: "listening", isCorrect: true },
     }),
-    prisma.practiceRecord.count({ where: { practiceType: "grammar" } }),
+    prisma.practiceRecord.count({ where: { userId, practiceType: "grammar" } }),
     prisma.practiceRecord.count({
-      where: { practiceType: "grammar", isCorrect: true },
+      where: { userId, practiceType: "grammar", isCorrect: true },
     }),
     prisma.mistake.count({
-      where: { status: { in: ["new", "reviewing"] } },
+      where: { userId, status: { in: ["new", "reviewing"] } },
     }),
-    prisma.mistake.count({ where: { status: "mastered" } }),
+    prisma.mistake.count({ where: { userId, status: "mastered" } }),
     prisma.practiceRecord.findMany({
-      where: { practicedAt: { gte: sevenDaysAgo } },
+      where: { userId, practicedAt: { gte: sevenDaysAgo } },
       select: { practicedAt: true, isCorrect: true },
     }),
     prisma.mistake.findMany({
-      where: { status: { in: ["new", "reviewing"] } },
+      where: { userId, status: { in: ["new", "reviewing"] } },
       include: { question: true },
     }),
   ]);
@@ -86,7 +87,7 @@ export async function getStats() {
   const tagCounts = new Map<string, number>();
 
   for (const mistake of activeMistakes) {
-    const tags = JSON.parse(mistake.question.tagsJson) as string[];
+    const tags = parseQuestionTags(mistake.question.tagsJson);
 
     for (const tag of tags) {
       tagCounts.set(tag, (tagCounts.get(tag) || 0) + mistake.wrongCount);

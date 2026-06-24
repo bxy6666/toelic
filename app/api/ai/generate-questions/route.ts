@@ -1,11 +1,20 @@
-import { NextResponse } from "next/server";
-
-import { AppError, isAppError } from "@/lib/errors";
+import { AppError } from "@/lib/errors";
+import { handleApiError, jsonOk, readJsonBody } from "@/lib/api-response";
+import { requireUserFromRequest } from "@/lib/auth";
+import {
+  assertGenerationAllowed,
+  recordGenerationUsage,
+} from "@/lib/generation-usage";
+import { persistQuestionImages } from "@/lib/image-storage";
 import {
   attachImagesToPictureDescriptionQuestions,
   generateQuestionsWithMaas,
   type QuestionGenerationRequest,
 } from "@/lib/question-generation";
+import {
+  buildQuestionCreateData,
+  serializeQuestion,
+} from "@/lib/question-mapper";
 import { prisma } from "@/lib/prisma";
 import type { PracticeType } from "@/lib/question-validation";
 
@@ -81,70 +90,40 @@ function validateRequestBody(body: unknown): QuestionGenerationRequest {
   };
 }
 
-function jsonError(error: AppError) {
-  return NextResponse.json(
-    {
-      ok: false,
-      error: {
-        code: error.code,
-        message: error.message,
-      },
-    },
-    { status: error.status },
-  );
-}
-
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
+    const user = await requireUserFromRequest(request);
+    const body = await readJsonBody(request);
     const input = validateRequestBody(body);
+    await assertGenerationAllowed(user.id, input.count);
+
     const generatedQuestions = await generateQuestionsWithMaas(input);
-    const questions = await attachImagesToPictureDescriptionQuestions(
+    const questionsWithGeneratedImages = await attachImagesToPictureDescriptionQuestions(
       input,
       generatedQuestions,
+    );
+    const questions = await persistQuestionImages(
+      questionsWithGeneratedImages,
+      user.id,
     );
 
     const savedQuestions = await prisma.$transaction(
       questions.map((question) =>
         prisma.question.create({
-          data: {
-            type: question.type,
-            subtype: question.subtype,
-            difficulty: question.difficulty,
-            prompt: question.prompt,
-            optionsJson: JSON.stringify(question.options),
-            answer: question.answer,
-            explanationZh: question.explanationZh,
-            tagsJson: JSON.stringify(question.tags),
-            listeningScript: question.listeningScript,
-            grammarPoint: question.grammarPoint,
-            imageUrl: question.imageUrl,
-            imagePrompt: question.imagePrompt,
-            source: "maas",
-          },
+          data: buildQuestionCreateData(question, user.id),
         }),
       ),
     );
 
-    return NextResponse.json({
-      ok: true,
-      data: {
-        questions: savedQuestions.map((question) => ({
-          ...question,
-          options: JSON.parse(question.optionsJson) as Record<string, string>,
-          tags: JSON.parse(question.tagsJson) as string[],
-          optionsJson: undefined,
-          tagsJson: undefined,
-        })),
-        source: "maas",
-      },
+    await recordGenerationUsage(user.id, savedQuestions.length);
+
+    return jsonOk({
+      questions: savedQuestions.map(serializeQuestion),
+      source: "maas",
     });
   } catch (error) {
-    if (isAppError(error)) {
-      return jsonError(error);
-    }
-
-    return jsonError(
+    return handleApiError(
+      error,
       new AppError(
         "AI_GENERATION_FAILED",
         "生成题目失败，请稍后重试。",

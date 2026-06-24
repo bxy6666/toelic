@@ -9,6 +9,7 @@ import {
   Headphones,
   Home,
   Settings,
+  LogOut,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,12 @@ const navItems = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
+
+  async function logout() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/login";
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-muted/30 text-foreground">
@@ -41,34 +48,40 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </p>
             <p className="text-xs text-muted-foreground">本机个人版托业练习</p>
           </a>
-          <nav
-            className="flex flex-wrap gap-2 md:flex-nowrap md:overflow-x-auto md:pb-1"
-            aria-label="主导航"
-          >
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const active = pathname === item.href;
+          {!isLoginPage ? (
+            <nav
+              className="flex flex-wrap gap-2 md:flex-nowrap md:overflow-x-auto md:pb-1"
+              aria-label="主导航"
+            >
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const active = pathname === item.href;
 
-              return (
-                <Button
-                  key={item.href}
-                  variant={active ? "secondary" : "ghost"}
-                  size="sm"
-                  asChild
-                  className={cn(
-                    "shrink-0 transition-colors",
-                    active &&
-                      "border border-emerald-200 bg-emerald-50 text-emerald-950 hover:bg-emerald-50",
-                  )}
-                >
-                  <a href={item.href} aria-current={active ? "page" : undefined}>
-                    <Icon className="size-4" />
-                    {item.label}
-                  </a>
-                </Button>
-              );
-            })}
-          </nav>
+                return (
+                  <Button
+                    key={item.href}
+                    variant={active ? "secondary" : "ghost"}
+                    size="sm"
+                    asChild
+                    className={cn(
+                      "shrink-0 transition-colors",
+                      active &&
+                        "border border-emerald-200 bg-emerald-50 text-emerald-950 hover:bg-emerald-50",
+                    )}
+                  >
+                    <a href={item.href} aria-current={active ? "page" : undefined}>
+                      <Icon className="size-4" />
+                      {item.label}
+                    </a>
+                  </Button>
+                );
+              })}
+              <Button variant="ghost" size="sm" onClick={logout}>
+                <LogOut className="size-4" />
+                退出
+              </Button>
+            </nav>
+          ) : null}
         </div>
       </header>
       <main className="relative z-10 mx-auto w-full max-w-6xl px-4 py-8 md:px-6 md:py-10">

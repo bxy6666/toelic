@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { serializeQuestionWithRelations } from "@/lib/question-mapper";
 
 export type MistakeListFilters = {
   type?: string;
@@ -7,11 +8,13 @@ export type MistakeListFilters = {
   grammarPoint?: string;
 };
 
-export async function listMistakes(filters: MistakeListFilters = {}) {
+export async function listMistakes(userId: string, filters: MistakeListFilters = {}) {
   const mistakes = await prisma.mistake.findMany({
     where: {
+      userId,
       status: filters.status || { not: "removed" },
       question: {
+        userId,
         type: filters.type,
         grammarPoint: filters.grammarPoint,
       },
@@ -28,42 +31,22 @@ export async function listMistakes(filters: MistakeListFilters = {}) {
         return true;
       }
 
-      const tags = JSON.parse(mistake.question.tagsJson) as string[];
-      return tags.includes(filters.tag);
+      return serializeQuestionWithRelations(mistake).question.tags.includes(filters.tag);
     })
-    .map((mistake) => ({
-      ...mistake,
-      question: {
-        ...mistake.question,
-        options: JSON.parse(mistake.question.optionsJson) as Record<
-          string,
-          string
-        >,
-        tags: JSON.parse(mistake.question.tagsJson) as string[],
-        optionsJson: undefined,
-        tagsJson: undefined,
-      },
-    }));
+    .map(serializeQuestionWithRelations);
 }
 
-export async function createOrUpdateMistake(questionId: string) {
-  const existing = await prisma.mistake.findUnique({
+export async function createOrUpdateMistake(userId: string, questionId: string) {
+  return prisma.mistake.upsert({
     where: { questionId },
-  });
-
-  if (!existing) {
-    return prisma.mistake.create({
-      data: {
-        questionId,
-        wrongCount: 1,
-        status: "new",
-      },
-    });
-  }
-
-  return prisma.mistake.update({
-    where: { id: existing.id },
-    data: {
+    create: {
+      userId,
+      questionId,
+      wrongCount: 1,
+      status: "new",
+    },
+    update: {
+      userId,
       wrongCount: { increment: 1 },
       lastWrongAt: new Date(),
       status: "reviewing",

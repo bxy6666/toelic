@@ -145,3 +145,31 @@
 | 听力题生成 | PASS | `POST /api/ai/generate-questions`，`practiceType=listening` | 生成 ID `cmowyuaru0001u8iox1rt1l8n`，写入 SQLite，包含 `listeningScript` |
 | MaaS JSON 兼容 | PASS | 真实 MaaS 响应验证 | 若模型返回完整 JSON 代码块，后端剥离外层代码块后继续进行严格字段校验；夹杂额外文本仍拒绝 |
 | 工程验证 | PASS | `npm run lint`、`npm run build`、`node scripts/browser-smoke.mjs` | 全部通过 |
+
+## V1.8 / V2 / V2.1 改进验收记录
+
+| 验收项 | 状态 | 验证方式 | 备注 |
+| --- | --- | --- | --- |
+| 统一 API 响应 | PASS | 代码检查、单测覆盖 | 新增 `lib/api-response.ts`，业务 API 复用统一成功 / 失败结构 |
+| 管理员登录与首次初始化 | PASS | `tests/unit/api/auth-login.route.test.ts` | 首次无用户时由登录接口创建管理员，之后关闭公开注册 |
+| 页面登录保护 | PASS | Proxy 与服务端页面检查 | 未登录页面请求跳转 `/login`，API 返回 JSON 401 |
+| 用户数据隔离 | PASS | Prisma schema 与 service 查询检查 | 题目、记录、错题、设置均加入 `userId` 作用域 |
+| 清空数据服务端确认 | PASS | `tests/unit/api/clear-data.route.test.ts` | 除弹窗外，接口要求 `confirmText: "CLEAR"` |
+| 设置真正生效 | PASS | 代码检查 | 练习页读取默认难度、题量和听力语速 |
+| 答题事务化 | PASS | `tests/unit/lib/practice-service.test.ts` | 练习记录和错题 upsert 在同一事务内完成 |
+| 图片文件化 | PASS | 代码检查 | base64 图片保存到 `output/generated-images/`，数据库保存受保护 API 路径 |
+| AI 生成限额 | PASS | 代码检查 | `GenerationUsage` 按用户和日期记录题量，默认每日 50 题 |
+| CI 与 typecheck | PASS | `.github/workflows/ci.yml` | CI 覆盖安装、Prisma 校验、typecheck、lint、单测和 build |
+
+### 本轮工程验证摘要
+
+| 检查 | 状态 | 结果 |
+| --- | --- | --- |
+| `npm install` | PASS | 使用本地 npm cache 安装成功；npm audit 当前报告 7 个漏洞，未执行自动修复 |
+| `npm run typecheck` | PASS | TypeScript 类型检查通过 |
+| `npm run lint` | PASS | 0 error；`output/presentation/src/build-report-deck.mjs` 保留 4 个既有 unused warnings |
+| `npm run test:run` | PASS | 7 个测试文件、34 个测试全部通过 |
+| `npm run build` | PASS | Next.js 生产构建通过；登录保护已使用 Next 16 `proxy.ts` 约定 |
+| `npx prisma validate` | PASS | 带 `DATABASE_URL=file:./verification.db` 时 schema 校验通过 |
+| `npx prisma migrate deploy` | WARNING | 当前环境仍打印空 `Schema engine error`；已用 `prisma db execute` 在全新 SQLite 文件顺序执行 3 个 migration SQL，全部成功 |
+| `node --check scripts/*.mjs` | PASS | `public-acceptance.mjs` 与 `generation-smoke.mjs` 登录适配后语法检查通过 |

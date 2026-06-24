@@ -8,6 +8,7 @@ import {
   Sparkles,
   Target,
 } from "lucide-react";
+import { redirect } from "next/navigation";
 
 import { CartoonSticker } from "@/components/cartoon-sticker";
 import { MetricCard } from "@/components/metric-card";
@@ -19,6 +20,7 @@ import {
 } from "@/components/motion-ui";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { getCurrentUserFromServer } from "@/lib/auth";
 import { getStats } from "@/lib/stats-service";
 
 export const dynamic = "force-dynamic";
@@ -59,7 +61,13 @@ const planTasks = [
 const weakTags = ["时态", "听力细节", "同义替换"];
 
 export default async function Home() {
-  const stats = await getStats();
+  const user = await getCurrentUserFromServer();
+
+  if (!user) {
+    redirect("/login");
+  }
+
+  const stats = await getStats(user.id);
   const statItems = [
     { label: "今日练习", value: stats.todayCount, hint: "题" },
     { label: "今日正确率", value: stats.todayAccuracy, hint: "%" },

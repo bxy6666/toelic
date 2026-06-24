@@ -34,8 +34,9 @@ export function getMaasConfigStatus() {
   };
 }
 
-export async function getOrCreateUserSetting() {
+export async function getOrCreateUserSetting(userId: string) {
   const existing = await prisma.userSetting.findFirst({
+    where: { userId },
     orderBy: { createdAt: "asc" },
   });
 
@@ -44,12 +45,15 @@ export async function getOrCreateUserSetting() {
   }
 
   return prisma.userSetting.create({
-    data: DEFAULT_USER_SETTING,
+    data: {
+      ...DEFAULT_USER_SETTING,
+      userId,
+    },
   });
 }
 
-export async function getSettings(): Promise<SettingsPayload> {
-  const setting = await getOrCreateUserSetting();
+export async function getSettings(userId: string): Promise<SettingsPayload> {
+  const setting = await getOrCreateUserSetting(userId);
   const maas = getMaasConfigStatus();
   let defaultDifficulty: Difficulty = DEFAULT_USER_SETTING.defaultDifficulty;
 
@@ -96,8 +100,8 @@ export function validateSettingsUpdate(input: SettingsUpdateInput) {
   return errors;
 }
 
-export async function updateSettings(input: SettingsUpdateInput) {
-  const setting = await getOrCreateUserSetting();
+export async function updateSettings(userId: string, input: SettingsUpdateInput) {
+  const setting = await getOrCreateUserSetting(userId);
 
   return prisma.userSetting.update({
     where: { id: setting.id },
@@ -109,10 +113,10 @@ export async function updateSettings(input: SettingsUpdateInput) {
   });
 }
 
-export async function clearStudyData() {
+export async function clearStudyData(userId: string) {
   await prisma.$transaction([
-    prisma.practiceRecord.deleteMany(),
-    prisma.mistake.deleteMany(),
-    prisma.question.deleteMany(),
+    prisma.practiceRecord.deleteMany({ where: { userId } }),
+    prisma.mistake.deleteMany({ where: { userId } }),
+    prisma.question.deleteMany({ where: { userId } }),
   ]);
 }

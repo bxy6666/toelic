@@ -6,8 +6,16 @@ const practiceMocks = vi.hoisted(() => ({
   recordPracticeAnswer: vi.fn(),
 }));
 
+const authMocks = vi.hoisted(() => ({
+  requireUserFromRequest: vi.fn(),
+}));
+
 vi.mock("@/lib/practice-service", () => ({
   recordPracticeAnswer: practiceMocks.recordPracticeAnswer,
+}));
+
+vi.mock("@/lib/auth", () => ({
+  requireUserFromRequest: authMocks.requireUserFromRequest,
 }));
 
 async function post(body: unknown) {
@@ -26,6 +34,10 @@ async function readJson(response: Response) {
 }
 
 beforeEach(() => {
+  authMocks.requireUserFromRequest.mockResolvedValue({
+    id: "user-1",
+    username: "admin",
+  });
   practiceMocks.recordPracticeAnswer.mockResolvedValue({
     result: {
       questionId: "question-1",
@@ -59,6 +71,7 @@ describe("POST /api/practice-records", () => {
     expect(response.status).toBe(200);
     expect(practiceMocks.recordPracticeAnswer).toHaveBeenCalledWith({
       questionId: "question-1",
+      userId: "user-1",
       userAnswer: "a",
       timeSpentSeconds: 9,
     });
@@ -81,5 +94,24 @@ describe("POST /api/practice-records", () => {
       ok: false,
       error: { code: "REQUEST_INVALID" },
     });
+  });
+
+  it("rejects unauthenticated requests", async () => {
+    authMocks.requireUserFromRequest.mockRejectedValue(
+      new AppError("UNAUTHORIZED", "Login required", 401),
+    );
+
+    const response = await post({
+      questionId: "question-1",
+      userAnswer: "A",
+    });
+    const payload = await readJson(response);
+
+    expect(response.status).toBe(401);
+    expect(payload).toMatchObject({
+      ok: false,
+      error: { code: "UNAUTHORIZED" },
+    });
+    expect(practiceMocks.recordPracticeAnswer).not.toHaveBeenCalled();
   });
 });

@@ -47,6 +47,7 @@ type Answer = "A" | "B" | "C" | "D";
 type RetryState = {
   selectedAnswer: Answer | null;
   submitting: boolean;
+  startedAt: number;
   result: {
     isCorrect: boolean;
     correctAnswer: Answer;
@@ -133,6 +134,7 @@ export function MistakesPanel({
       [id]: {
         selectedAnswer: null,
         submitting: false,
+        startedAt: Date.now(),
         result: null,
       },
     }));
@@ -144,6 +146,7 @@ export function MistakesPanel({
       [id]: {
         selectedAnswer,
         submitting: false,
+        startedAt: current[id]?.startedAt ?? Date.now(),
         result: current[id]?.result ?? null,
       },
     }));
@@ -172,7 +175,10 @@ export function MistakesPanel({
         body: JSON.stringify({
           questionId: mistake.question.id,
           userAnswer: retryState.selectedAnswer,
-          timeSpentSeconds: 0,
+          timeSpentSeconds: Math.max(
+            0,
+            Math.round((Date.now() - retryState.startedAt) / 1000),
+          ),
         }),
       });
       const payload = (await response.json()) as ApiResponse<{
@@ -192,6 +198,7 @@ export function MistakesPanel({
         [mistake.id]: {
           selectedAnswer: retryState.selectedAnswer,
           submitting: false,
+          startedAt: retryState.startedAt,
           result: payload.data.result,
         },
       }));

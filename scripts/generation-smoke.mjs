@@ -1,4 +1,7 @@
 const baseUrl = process.env.SMOKE_BASE_URL || "http://127.0.0.1:3000";
+const smokeUsername = process.env.SMOKE_USERNAME || "smoke_admin";
+const smokePassword = process.env.SMOKE_PASSWORD || "SmokePass123";
+let authCookie = "";
 
 const cases = [
   {
@@ -88,11 +91,43 @@ function validateQuestion(question, testcase) {
   return problems;
 }
 
+function authHeaders(headers = {}) {
+  return authCookie ? { ...headers, Cookie: authCookie } : headers;
+}
+
+async function loginOrSetup() {
+  const response = await fetch(`${baseUrl}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: smokeUsername,
+      password: smokePassword,
+    }),
+  });
+  const payload = await response.json().catch(() => null);
+
+  if (!response.ok || !payload?.ok) {
+    const message = payload?.error?.message || response.statusText;
+    throw new Error(
+      `Login failed for ${smokeUsername}: ${message}. Set SMOKE_USERNAME and SMOKE_PASSWORD if an admin already exists.`,
+    );
+  }
+
+  const setCookie = response.headers.get("set-cookie");
+  const sessionCookie = setCookie?.split(";")[0];
+
+  if (!sessionCookie) {
+    throw new Error("Login succeeded but no session cookie was returned.");
+  }
+
+  authCookie = sessionCookie;
+}
+
 async function runCase(testcase) {
   const started = Date.now();
   const response = await fetch(`${baseUrl}/api/ai/generate-questions`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: authHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify({ ...testcase, count: 1 }),
   });
   const seconds = ((Date.now() - started) / 1000).toFixed(1);
@@ -122,7 +157,11 @@ async function runCase(testcase) {
   };
 }
 
-const settingsResponse = await fetch(`${baseUrl}/api/settings`);
+await loginOrSetup();
+
+const settingsResponse = await fetch(`${baseUrl}/api/settings`, {
+  headers: authHeaders(),
+});
 const settings = await settingsResponse.json();
 
 if (!settingsResponse.ok || !settings.ok || !settings.data.hasApiKey) {

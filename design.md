@@ -1062,3 +1062,29 @@ Hero 左侧在 CTA 下方加入一张轻量“学习计划便签”，使用浅�
 - `npm run build`
 - `node scripts/browser-smoke.mjs`
 - Playwright 生成统计页桌面和移动端截图，检查折线图、核心标题、统计卡片、薄弱标签和横向滚动。
+
+## 19. V1.8 / V2 / V2.1 工程与公网安全设计
+
+### 19.1 认证设计
+
+新增 `User` 与 `Session`。首次数据库中没有用户时，`POST /api/auth/login` 使用提交的用户名和密码创建管理员，并把旧的未归属题目、练习记录、错题和设置归属给该管理员。之后不再开放注册。
+
+Session token 使用随机值生成，只把哈希写入数据库；浏览器只保存 HttpOnly Cookie。`GET /api/auth/me` 用于前端读取当前登录状态，`POST /api/auth/logout` 删除服务端 session 并清除 Cookie。
+
+### 19.2 用户数据隔离
+
+`Question`、`PracticeRecord`、`Mistake`、`UserSetting` 增加 `userId`。业务查询默认带当前用户 ID，确保公网分享时不同账号之间数据不可见。旧数据在首个管理员创建后一次性接管。
+
+### 19.3 API 统一错误处理
+
+新增统一响应工具：成功返回 `{ ok: true, data }`，失败返回 `{ ok: false, error: { code, message } }`。Route Handler 只负责读取请求、校验身份和调用 service，异常统一映射为 `AppError`。
+
+### 19.4 图片与成本治理
+
+图片描述题的 base64 结果保存到 `output/generated-images/<userId>/`，数据库只保存 `/api/question-images/<userId>/<filename>`。图片读取接口要求登录且只能访问本人路径。
+
+新增 `GenerationUsage`，按用户和日期记录 AI 生成题量。默认每日上限为 50 题，可通过 `DAILY_AI_GENERATION_LIMIT` 调整。
+
+### 19.5 页面保护
+
+Proxy 在页面层检查 session cookie，未登录跳转 `/login`；服务端页面还会读取真实 session，失效时再次重定向。API 不通过页面重定向处理，而是返回 JSON 401。

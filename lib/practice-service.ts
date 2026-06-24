@@ -1,8 +1,9 @@
 import { AppError } from "@/lib/errors";
-import { createOrUpdateMistake } from "@/lib/mistake-service";
 import { prisma } from "@/lib/prisma";
+import { parseQuestionOptions, parseQuestionTags } from "@/lib/question-mapper";
 
 export type PracticeAnswerInput = {
+  userId: string;
   questionId: string;
   userAnswer: string;
   timeSpentSeconds?: number;
@@ -23,8 +24,8 @@ export async function recordPracticeAnswer(input: PracticeAnswerInput) {
     );
   }
 
-  const question = await prisma.question.findUnique({
-    where: { id: input.questionId },
+  const question = await prisma.question.findFirst({
+    where: { id: input.questionId, userId: input.userId },
   });
 
   if (!question) {
@@ -33,19 +34,38 @@ export async function recordPracticeAnswer(input: PracticeAnswerInput) {
 
   const isCorrect = question.answer === userAnswer;
 
-  const practiceRecord = await prisma.practiceRecord.create({
-    data: {
-      questionId: question.id,
-      practiceType: question.type,
-      userAnswer,
-      isCorrect,
-      timeSpentSeconds: Math.max(0, input.timeSpentSeconds ?? 0),
-    },
-  });
+  const { practiceRecord, mistake } = await prisma.$transaction(async (tx) => {
+    const practiceRecord = await tx.practiceRecord.create({
+      data: {
+        userId: input.userId,
+        questionId: question.id,
+        practiceType: question.type,
+        userAnswer,
+        isCorrect,
+        timeSpentSeconds: Math.max(0, input.timeSpentSeconds ?? 0),
+      },
+    });
+    const mistake = isCorrect
+      ? null
+      : await tx.mistake.upsert({
+          where: { questionId: question.id },
+          create: {
+            userId: input.userId,
+            questionId: question.id,
+            wrongCount: 1,
+            status: "new",
+          },
+          update: {
+            userId: input.userId,
+            wrongCount: { increment: 1 },
+            lastWrongAt: new Date(),
+            status: "reviewing",
+            masteredAt: null,
+          },
+        });
 
-  const mistake = isCorrect
-    ? null
-    : await createOrUpdateMistake(question.id);
+    return { practiceRecord, mistake };
+  });
 
   return {
     practiceRecord,
@@ -56,8 +76,8 @@ export async function recordPracticeAnswer(input: PracticeAnswerInput) {
       correctAnswer: question.answer,
       isCorrect,
       explanationZh: question.explanationZh,
-      options: JSON.parse(question.optionsJson) as Record<string, string>,
-      tags: JSON.parse(question.tagsJson) as string[],
+      options: parseQuestionOptions(question.optionsJson),
+      tags: parseQuestionTags(question.tagsJson),
       listeningScript: question.listeningScript,
       grammarPoint: question.grammarPoint,
     },

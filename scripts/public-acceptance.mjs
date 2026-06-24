@@ -1,6 +1,8 @@
 import { chromium } from "playwright";
 
 const baseUrl = process.env.PUBLIC_BASE_URL || "http://127.0.0.1:3000";
+const smokeUsername = process.env.SMOKE_USERNAME || "smoke_admin";
+const smokePassword = process.env.SMOKE_PASSWORD || "SmokePass123";
 const paths = ["/", "/listening", "/grammar", "/mistakes", "/stats", "/settings"];
 const navTargets = [
   ["/", "TOEIC Practice Studio"],
@@ -50,6 +52,42 @@ async function gotoPage(page, path) {
     await cloudflareVisit.click();
     await page.waitForLoadState("networkidle", { timeout: 90000 }).catch(() => {});
   }
+}
+
+async function ensureLoggedIn(page) {
+  await gotoPage(page, "/login");
+
+  if (!new URL(page.url()).pathname.startsWith("/login")) {
+    pass("登录保护", "已存在有效会话");
+    return;
+  }
+
+  await page.getByLabel("用户名").fill(smokeUsername);
+  await page.getByLabel("密码").fill(smokePassword);
+
+  const loginResponsePromise = page.waitForResponse(
+    (response) =>
+      response.url().includes("/api/auth/login") &&
+      response.request().method() === "POST",
+    { timeout: 60000 },
+  );
+  await page.getByRole("button", { name: /登录/ }).click();
+  const loginResponse = await loginResponsePromise;
+
+  if (loginResponse.status() >= 400) {
+    const text = await loginResponse.text().catch(() => "");
+    fail("登录保护", `${loginResponse.status()} ${text.slice(0, 300)}`);
+    return;
+  }
+
+  await page.waitForLoadState("networkidle", { timeout: 60000 }).catch(() => {});
+
+  if (new URL(page.url()).pathname.startsWith("/login")) {
+    fail("登录保护", "登录后仍停留在登录页，请检查 SMOKE_USERNAME / SMOKE_PASSWORD");
+    return;
+  }
+
+  pass("登录保护", `已使用 ${smokeUsername} 登录`);
 }
 
 async function expectText(page, text, name) {
@@ -320,6 +358,7 @@ async function settingsFlow(page) {
 
   await page.getByRole("button", { name: /清除学习数据/ }).click();
   await expectText(page, "确认清除本地学习数据", "清除数据弹窗打开");
+  await page.getByPlaceholder("CLEAR").fill("CLEAR");
   await page.getByRole("button", { name: /确认清除/ }).click({ trial: true });
   await page.getByRole("button", { name: "取消" }).click();
   pass("清除数据确认按钮可点击但未执行");
@@ -402,6 +441,7 @@ async function run() {
     pageErrors.push(error.message);
   });
 
+  await ensureLoggedIn(page);
   await gotoPage(page, "/");
   await assertApi(page, "/api/settings", "公网 API 连通");
 
