@@ -23,6 +23,7 @@ export default defineConfig({
         "lib/mistake-service.ts",
         "lib/stats-service.ts",
         "app/api/auth/login/route.ts",
+        "app/api/auth/register/route.ts",
         "app/api/ai/generate-questions/route.ts",
         "app/api/practice-records/route.ts",
         "app/api/settings/clear-data/route.ts",

@@ -15,6 +15,10 @@ export type AuthUser = {
   username: string;
 };
 
+export function isPublicRegistrationEnabled() {
+  return process.env.PUBLIC_REGISTRATION_ENABLED !== "false";
+}
+
 function normalizeUsername(username: string) {
   return username.trim().toLowerCase();
 }
@@ -206,6 +210,44 @@ export async function loginOrSetup(username: string, password: string) {
   };
 }
 
+export async function registerUser(username: string, password: string) {
+  const normalizedUsername = validateCredentials(username, password);
+  const userCount = await prisma.user.count();
+
+  if (userCount > 0 && !isPublicRegistrationEnabled()) {
+    throw new AppError("REGISTRATION_DISABLED", "当前未开放新用户注册。", 403);
+  }
+
+  const existingUser = await prisma.user.findUnique({
+    where: { username: normalizedUsername },
+  });
+
+  if (existingUser) {
+    throw new AppError("USER_ALREADY_EXISTS", "该用户名已被注册。", 409);
+  }
+
+  const user = await prisma.user.create({
+    data: {
+      username: normalizedUsername,
+      passwordHash: hashPassword(password),
+    },
+  });
+
+  const setupCreated = userCount === 0;
+
+  if (setupCreated) {
+    await claimLegacyData(user.id);
+  }
+
+  const session = await createSession(user.id);
+
+  return {
+    user: { id: user.id, username: user.username },
+    setupCreated,
+    ...session,
+  };
+}
+
 export async function getCurrentUserFromToken(token: string | null) {
   if (!token) {
     return null;
@@ -274,6 +316,7 @@ export async function getAuthStatus(request: Request) {
   return {
     user,
     setupRequired: userCount === 0,
+    registrationEnabled: userCount === 0 || isPublicRegistrationEnabled(),
   };
 }
 

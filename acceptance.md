@@ -151,7 +151,7 @@
 | 验收项 | 状态 | 验证方式 | 备注 |
 | --- | --- | --- | --- |
 | 统一 API 响应 | PASS | 代码检查、单测覆盖 | 新增 `lib/api-response.ts`，业务 API 复用统一成功 / 失败结构 |
-| 管理员登录与首次初始化 | PASS | `tests/unit/api/auth-login.route.test.ts` | 首次无用户时由登录接口创建管理员，之后关闭公开注册 |
+| 管理员登录、注册与首次初始化 | PASS | `tests/unit/api/auth-login.route.test.ts`、`tests/unit/api/auth-register.route.test.ts` | 首次无用户时创建管理员；登录页支持新用户注册，也可通过 `PUBLIC_REGISTRATION_ENABLED=false` 关闭 |
 | 页面登录保护 | PASS | Proxy 与服务端页面检查 | 未登录页面请求跳转 `/login`，API 返回 JSON 401 |
 | 用户数据隔离 | PASS | Prisma schema 与 service 查询检查 | 题目、记录、错题、设置均加入 `userId` 作用域 |
 | 清空数据服务端确认 | PASS | `tests/unit/api/clear-data.route.test.ts` | 除弹窗外，接口要求 `confirmText: "CLEAR"` |
@@ -168,7 +168,7 @@
 | `npm install` | PASS | 使用本地 npm cache 安装成功；npm audit 当前报告 7 个漏洞，未执行自动修复 |
 | `npm run typecheck` | PASS | TypeScript 类型检查通过 |
 | `npm run lint` | PASS | 0 error；`output/presentation/src/build-report-deck.mjs` 保留 4 个既有 unused warnings |
-| `npm run test:run` | PASS | 7 个测试文件、34 个测试全部通过 |
+| `npm run test:run` | PASS | 8 个测试文件、37 个测试全部通过 |
 | `npm run build` | PASS | Next.js 生产构建通过；登录保护已使用 Next 16 `proxy.ts` 约定 |
 | `npx prisma validate` | PASS | 带 `DATABASE_URL=file:./verification.db` 时 schema 校验通过 |
 | `npx prisma migrate deploy` | WARNING | 当前环境仍打印空 `Schema engine error`；已用 `prisma db execute` 在全新 SQLite 文件顺序执行 3 个 migration SQL，全部成功 |

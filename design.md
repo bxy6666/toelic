@@ -1067,7 +1067,7 @@ Hero 左侧在 CTA 下方加入一张轻量“学习计划便签”，使用浅�
 
 ### 19.1 认证设计
 
-新增 `User` 与 `Session`。首次数据库中没有用户时，`POST /api/auth/login` 使用提交的用户名和密码创建管理员，并把旧的未归属题目、练习记录、错题和设置归属给该管理员。之后不再开放注册。
+新增 `User` 与 `Session`。首次数据库中没有用户时，登录页会创建第一个管理员，并把旧的未归属题目、练习记录、错题和设置归属给该管理员。已有用户后，登录页提供普通用户注册入口；公网演示时可通过 `PUBLIC_REGISTRATION_ENABLED=false` 关闭新用户注册。
 
 Session token 使用随机值生成，只把哈希写入数据库；浏览器只保存 HttpOnly Cookie。`GET /api/auth/me` 用于前端读取当前登录状态，`POST /api/auth/logout` 删除服务端 session 并清除 Cookie。
 

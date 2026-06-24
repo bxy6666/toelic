@@ -788,8 +788,8 @@
 
 ### T26-T28 V2 登录与公网安全
 
-- 新增登录页与 `/api/auth/login`、`/api/auth/logout`、`/api/auth/me`。
-- 首次无用户时创建管理员；后续关闭公开注册。
+- 新增登录页与 `/api/auth/login`、`/api/auth/register`、`/api/auth/logout`、`/api/auth/me`。
+- 首次无用户时创建管理员；后续支持普通用户注册，并可用 `PUBLIC_REGISTRATION_ENABLED=false` 关闭。
 - 受保护 API 未登录返回 `UNAUTHORIZED`。
 - 清空数据接口必须提交 `confirmText: "CLEAR"`。
 
