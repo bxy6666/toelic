@@ -5,6 +5,9 @@
 
 $ErrorActionPreference = "Stop"
 
+$ProjectRoot = Resolve-Path (Join-Path $PSScriptRoot "..\..")
+Set-Location $ProjectRoot
+
 $utf8NoBom = New-Object System.Text.UTF8Encoding $false
 [Console]::InputEncoding = $utf8NoBom
 [Console]::OutputEncoding = $utf8NoBom
