@@ -86,6 +86,48 @@ npm run smoke:public
 node scripts/smoke/browser-smoke.mjs
 ```
 
+## 测试方法
+
+单元测试使用 Vitest，测试文件位于 `tests/unit/`。用例名称采用 `Acceptance:` / `Scenario:` 风格，便于在验收时直接查看每个场景是否通过。
+
+运行全部单元测试：
+
+```powershell
+npm run test:run
+```
+
+开发时监听测试：
+
+```powershell
+npm run test
+```
+
+运行指定测试文件：
+
+```powershell
+npx vitest run tests/unit/api/generate-questions.route.test.ts
+```
+
+生成覆盖率报告：
+
+```powershell
+npm run test:coverage
+```
+
+提交或验收前建议同时执行：
+
+```powershell
+npm run typecheck
+npm run lint
+npm run test:run
+```
+
+如果 Windows PowerShell 提示无法加载 `npm.ps1`，可改用 `npm.cmd`，例如：
+
+```powershell
+npm.cmd run test:run
+```
+
 ## 公网演示
 
 开发模式：

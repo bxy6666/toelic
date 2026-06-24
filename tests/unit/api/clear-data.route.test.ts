@@ -1,6 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { AppError } from "@/lib/errors";
+import {
+  createPostJsonAction,
+  expectErrorResponse,
+  expectOkResponse,
+  setUpAuthenticatedUser,
+  setUpUnauthenticatedUser,
+} from "../test-utils";
 
 const authMocks = vi.hoisted(() => ({
   requireUserFromRequest: vi.fn(),
@@ -18,64 +24,39 @@ vi.mock("@/lib/settings-service", () => ({
   clearStudyData: settingsMocks.clearStudyData,
 }));
 
-async function post(body: unknown) {
-  const { POST } = await import("@/app/api/settings/clear-data/route");
+const post = createPostJsonAction("http://localhost/api/settings/clear-data", () =>
+  import("@/app/api/settings/clear-data/route"),
+);
 
-  return POST(
-    new Request("http://localhost/api/settings/clear-data", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  );
-}
-
-async function readJson(response: Response) {
-  return response.json() as Promise<Record<string, unknown>>;
-}
-
-beforeEach(() => {
-  authMocks.requireUserFromRequest.mockResolvedValue({
-    id: "user-1",
-    username: "admin",
-  });
+function setUp() {
+  setUpAuthenticatedUser(authMocks.requireUserFromRequest);
   settingsMocks.clearStudyData.mockResolvedValue(undefined);
-});
+}
 
-describe("POST /api/settings/clear-data", () => {
-  it("requires the server-side CLEAR confirmation", async () => {
+beforeEach(setUp);
+
+describe("Acceptance: POST /api/settings/clear-data", () => {
+  it("Scenario: confirmation text must be CLEAR before data is deleted", async () => {
     const response = await post({ confirmText: "clear" });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(400);
+    await expectErrorResponse(response, 400, "REQUEST_INVALID");
     expect(settingsMocks.clearStudyData).not.toHaveBeenCalled();
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "REQUEST_INVALID" },
-    });
   });
 
-  it("clears only the current user's study data", async () => {
+  it("Scenario: valid confirmation clears only the current user's data", async () => {
     const response = await post({ confirmText: "CLEAR" });
-    const payload = await readJson(response);
+    const payload = await expectOkResponse(response);
 
-    expect(response.status).toBe(200);
     expect(settingsMocks.clearStudyData).toHaveBeenCalledWith("user-1");
     expect(payload).toMatchObject({ ok: true, data: { cleared: true } });
   });
 
-  it("rejects unauthenticated requests", async () => {
-    authMocks.requireUserFromRequest.mockRejectedValue(
-      new AppError("UNAUTHORIZED", "Login required", 401),
-    );
+  it("Scenario: unauthenticated requests stop before clearing data", async () => {
+    setUpUnauthenticatedUser(authMocks.requireUserFromRequest);
 
     const response = await post({ confirmText: "CLEAR" });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(401);
+    await expectErrorResponse(response, 401, "UNAUTHORIZED");
     expect(settingsMocks.clearStudyData).not.toHaveBeenCalled();
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "UNAUTHORIZED" },
-    });
   });
 });

@@ -30,13 +30,18 @@ const question = {
   grammarPoint: "tense",
 };
 
-beforeEach(() => {
-  prismaMocks.questionFindFirst.mockResolvedValue(question);
-  prismaMocks.practiceRecordCreate.mockResolvedValue({
-    id: "record-1",
+function answerInput(
+  overrides: Partial<Parameters<typeof recordPracticeAnswer>[0]> = {},
+) {
+  return {
+    userId: "user-1",
     questionId: "question-1",
-  });
-  prismaMocks.mistakeUpsert.mockResolvedValue({ id: "mistake-1" });
+    userAnswer: "B",
+    ...overrides,
+  };
+}
+
+function setUpTransactionMock() {
   prismaMocks.transaction.mockImplementation(
     async (
       callback: (tx: {
@@ -49,16 +54,28 @@ beforeEach(() => {
         mistake: { upsert: prismaMocks.mistakeUpsert },
       }),
   );
-});
+}
 
-describe("recordPracticeAnswer", () => {
-  it("normalizes lowercase answers and records a correct answer", async () => {
-    const result = await recordPracticeAnswer({
-      userId: "user-1",
-      questionId: "question-1",
-      userAnswer: " b ",
-      timeSpentSeconds: 12,
-    });
+function setUp() {
+  prismaMocks.questionFindFirst.mockResolvedValue(question);
+  prismaMocks.practiceRecordCreate.mockResolvedValue({
+    id: "record-1",
+    questionId: "question-1",
+  });
+  prismaMocks.mistakeUpsert.mockResolvedValue({ id: "mistake-1" });
+  setUpTransactionMock();
+}
+
+beforeEach(setUp);
+
+describe("Acceptance: recordPracticeAnswer", () => {
+  it("Scenario: lowercase answers are normalized and recorded as correct", async () => {
+    const result = await recordPracticeAnswer(
+      answerInput({
+        userAnswer: " b ",
+        timeSpentSeconds: 12,
+      }),
+    );
 
     expect(prismaMocks.practiceRecordCreate).toHaveBeenCalledWith({
       data: {
@@ -80,35 +97,36 @@ describe("recordPracticeAnswer", () => {
     });
   });
 
-  it("rejects answers outside A-D", async () => {
+  it("Scenario: answers outside A-D are rejected before saving", async () => {
     await expect(
-      recordPracticeAnswer({
-        userId: "user-1",
-        questionId: "question-1",
-        userAnswer: "E",
-      }),
+      recordPracticeAnswer(
+        answerInput({
+          userAnswer: "E",
+        }),
+      ),
     ).rejects.toBeInstanceOf(AppError);
   });
 
-  it("returns a request error when the question does not exist", async () => {
+  it("Scenario: missing questions return a 404 request error", async () => {
     prismaMocks.questionFindFirst.mockResolvedValue(null);
 
     await expect(
-      recordPracticeAnswer({
-        userId: "user-1",
-        questionId: "missing",
-        userAnswer: "A",
-      }),
+      recordPracticeAnswer(
+        answerInput({
+          questionId: "missing",
+          userAnswer: "A",
+        }),
+      ),
     ).rejects.toMatchObject({ code: "REQUEST_INVALID", status: 404 });
   });
 
-  it("creates or updates a mistake for wrong answers", async () => {
-    const result = await recordPracticeAnswer({
-      userId: "user-1",
-      questionId: "question-1",
-      userAnswer: "A",
-      timeSpentSeconds: 5,
-    });
+  it("Scenario: wrong answers create or update the mistake record", async () => {
+    const result = await recordPracticeAnswer(
+      answerInput({
+        userAnswer: "A",
+        timeSpentSeconds: 5,
+      }),
+    );
 
     expect(prismaMocks.mistakeUpsert).toHaveBeenCalledWith({
       where: { questionId: "question-1" },
@@ -126,13 +144,13 @@ describe("recordPracticeAnswer", () => {
     expect(result.result.isCorrect).toBe(false);
   });
 
-  it("clamps negative time spent to zero", async () => {
-    await recordPracticeAnswer({
-      userId: "user-1",
-      questionId: "question-1",
-      userAnswer: "B",
-      timeSpentSeconds: -30,
-    });
+  it("Scenario: negative time spent is clamped to zero", async () => {
+    await recordPracticeAnswer(
+      answerInput({
+        userAnswer: "B",
+        timeSpentSeconds: -30,
+      }),
+    );
 
     expect(prismaMocks.practiceRecordCreate).toHaveBeenCalledWith(
       expect.objectContaining({

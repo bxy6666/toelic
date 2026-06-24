@@ -1,6 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
+import {
+  createPostJsonAction,
+  expectErrorResponse,
+  expectOkResponse,
+  setUpAuthenticatedUser,
+  setUpUnauthenticatedUser,
+} from "../test-utils";
 
 const generationMocks = vi.hoisted(() => ({
   generateQuestionsWithMaas: vi.fn(),
@@ -69,26 +76,27 @@ const generatedQuestion = {
   grammarPoint: "tense",
 };
 
-async function post(body: unknown) {
-  const { POST } = await import("@/app/api/ai/generate-questions/route");
+const defaultGenerationRequest = {
+  practiceType: "grammar",
+  subtype: "sentence-completion",
+  difficulty: "medium",
+  count: 1,
+};
 
-  return POST(
-    new Request("http://localhost/api/ai/generate-questions", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  );
+const post = createPostJsonAction(
+  "http://localhost/api/ai/generate-questions",
+  () => import("@/app/api/ai/generate-questions/route"),
+);
+
+function generationRequest(overrides: Record<string, unknown> = {}) {
+  return {
+    ...defaultGenerationRequest,
+    ...overrides,
+  };
 }
 
-async function readJson(response: Response) {
-  return response.json() as Promise<Record<string, unknown>>;
-}
-
-beforeEach(() => {
-  authMocks.requireUserFromRequest.mockResolvedValue({
-    id: "user-1",
-    username: "admin",
-  });
+function setUp() {
+  setUpAuthenticatedUser(authMocks.requireUserFromRequest);
   usageMocks.assertGenerationAllowed.mockResolvedValue(undefined);
   usageMocks.recordGenerationUsage.mockResolvedValue(undefined);
   generationMocks.generateQuestionsWithMaas.mockResolvedValue([generatedQuestion]);
@@ -108,38 +116,31 @@ beforeEach(() => {
   prismaMocks.transaction.mockImplementation((operations: Promise<unknown>[]) =>
     Promise.all(operations),
   );
-});
+}
 
-describe("POST /api/ai/generate-questions", () => {
-  it("validates request bodies before generating questions", async () => {
-    const response = await post({
-      practiceType: "invalid",
-      subtype: "sentence-completion",
-      difficulty: "medium",
-      count: 1,
-    });
-    const payload = await readJson(response);
+beforeEach(setUp);
 
-    expect(response.status).toBe(400);
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "REQUEST_INVALID" },
-    });
+describe("Acceptance: POST /api/ai/generate-questions", () => {
+  it("Scenario: invalid request bodies are rejected before generation", async () => {
+    const response = await post(
+      generationRequest({
+        practiceType: "invalid",
+      }),
+    );
+
+    await expectErrorResponse(response, 400, "REQUEST_INVALID");
     expect(generationMocks.generateQuestionsWithMaas).not.toHaveBeenCalled();
   });
 
-  it("saves generated questions and returns parsed options and tags", async () => {
-    const response = await post({
-      practiceType: "grammar",
-      subtype: "sentence-completion",
-      difficulty: "medium",
-      count: 1,
-      tags: [" tense ", "", 123, "grammar"],
-      grammarPoint: "tense",
-    });
-    const payload = await readJson(response);
+  it("Scenario: generated questions are saved with normalized tags", async () => {
+    const response = await post(
+      generationRequest({
+        tags: [" tense ", "", 123, "grammar"],
+        grammarPoint: "tense",
+      }),
+    );
+    const payload = await expectOkResponse(response);
 
-    expect(response.status).toBe(200);
     expect(generationMocks.generateQuestionsWithMaas).toHaveBeenCalledWith({
       practiceType: "grammar",
       subtype: "sentence-completion",
@@ -173,44 +174,25 @@ describe("POST /api/ai/generate-questions", () => {
     });
   });
 
-  it("returns AppError responses from the generation layer", async () => {
+  it("Scenario: generation AppError responses keep their status and code", async () => {
     generationMocks.generateQuestionsWithMaas.mockRejectedValue(
       new AppError("QUESTION_VALIDATION_FAILED", "Invalid question", 502),
     );
 
-    const response = await post({
-      practiceType: "grammar",
-      subtype: "sentence-completion",
-      difficulty: "medium",
-      count: 1,
-    });
-    const payload = await readJson(response);
-
-    expect(response.status).toBe(502);
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "QUESTION_VALIDATION_FAILED" },
-    });
+    const response = await post(generationRequest());
+    await expectErrorResponse(
+      response,
+      502,
+      "QUESTION_VALIDATION_FAILED",
+    );
   });
 
-  it("rejects unauthenticated generation requests", async () => {
-    authMocks.requireUserFromRequest.mockRejectedValue(
-      new AppError("UNAUTHORIZED", "Login required", 401),
-    );
+  it("Scenario: unauthenticated requests stop before generation starts", async () => {
+    setUpUnauthenticatedUser(authMocks.requireUserFromRequest);
 
-    const response = await post({
-      practiceType: "grammar",
-      subtype: "sentence-completion",
-      difficulty: "medium",
-      count: 1,
-    });
-    const payload = await readJson(response);
+    const response = await post(generationRequest());
+    await expectErrorResponse(response, 401, "UNAUTHORIZED");
 
-    expect(response.status).toBe(401);
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "UNAUTHORIZED" },
-    });
     expect(generationMocks.generateQuestionsWithMaas).not.toHaveBeenCalled();
   });
 });

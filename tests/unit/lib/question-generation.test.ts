@@ -75,15 +75,29 @@ function setUp() {
 
 beforeEach(setUp);
 
-describe("question-generation", () => {
-  it("builds grammar and listening prompts from the request type", () => {
+function pictureDescriptionQuestion(
+  overrides: Partial<ValidatedQuestion> = {},
+): ValidatedQuestion {
+  return {
+    ...validQuestion,
+    type: "listening",
+    subtype: "picture-description",
+    listeningScript: "Script",
+    grammarPoint: undefined,
+    imagePrompt: "Office worker arranging documents",
+    ...overrides,
+  };
+}
+
+describe("Acceptance: question-generation", () => {
+  it("Scenario: prompts reflect the selected practice type", () => {
     expect(buildQuestionPrompt(grammarRequest)).toContain("sentence-completion");
     expect(buildQuestionPrompt(grammarRequest)).toContain("tense");
     expect(buildQuestionPrompt(listeningRequest)).toContain("picture-description");
     expect(buildQuestionPrompt(listeningRequest)).toContain("imagePrompt");
   });
 
-  it("generates questions through MaaS and validates the strict JSON result", async () => {
+  it("Scenario: MaaS output is validated as strict JSON questions", async () => {
     await expect(generateQuestionsWithMaas(grammarRequest)).resolves.toEqual([
       validQuestion,
     ]);
@@ -98,7 +112,7 @@ describe("question-generation", () => {
     );
   });
 
-  it("retries once when the model returns a mismatched subtype", async () => {
+  it("Scenario: mismatched subtype responses are retried once", async () => {
     validationMocks.parseAndValidateQuestions
       .mockImplementationOnce(() => {
         throw new AppError("QUESTION_SUBTYPE_MISMATCH", "Mismatch", 502);
@@ -111,7 +125,7 @@ describe("question-generation", () => {
     expect(maasMocks.generateTextWithMaas).toHaveBeenCalledTimes(2);
   });
 
-  it("does not retry ordinary validation errors", async () => {
+  it("Scenario: ordinary validation errors are not retried", async () => {
     validationMocks.parseAndValidateQuestions.mockImplementation(() => {
       throw new AppError("QUESTION_VALIDATION_FAILED", "Invalid", 502);
     });
@@ -122,16 +136,8 @@ describe("question-generation", () => {
     expect(maasMocks.generateTextWithMaas).toHaveBeenCalledTimes(1);
   });
 
-  it("attaches generated images only for picture-description listening questions", async () => {
-    const questionWithPrompt: ValidatedQuestion = {
-      ...validQuestion,
-      type: "listening",
-      subtype: "picture-description",
-      listeningScript: "Script",
-      grammarPoint: undefined,
-      imagePrompt: "Office worker arranging documents",
-    };
-
+  it("Scenario: picture-description listening questions receive images", async () => {
+    const questionWithPrompt = pictureDescriptionQuestion();
     const questions = await attachImagesToPictureDescriptionQuestions(
       listeningRequest,
       [questionWithPrompt],
@@ -147,16 +153,10 @@ describe("question-generation", () => {
     ).resolves.toEqual([validQuestion]);
   });
 
-  it("fails picture-description image attachment when imagePrompt is missing", async () => {
+  it("Scenario: picture-description questions require an image prompt", async () => {
     await expect(
       attachImagesToPictureDescriptionQuestions(listeningRequest, [
-        {
-          ...validQuestion,
-          type: "listening",
-          subtype: "picture-description",
-          listeningScript: "Script",
-          grammarPoint: undefined,
-        },
+        pictureDescriptionQuestion({ imagePrompt: undefined }),
       ]),
     ).rejects.toMatchObject({ code: "QUESTION_VALIDATION_FAILED" });
   });

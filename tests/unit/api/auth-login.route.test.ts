@@ -1,6 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
+import {
+  createPostJsonAction,
+  expectErrorResponse,
+  expectOkResponse,
+} from "../test-utils";
 
 const authMocks = vi.hoisted(() => ({
   loginOrSetup: vi.fn(),
@@ -12,36 +17,26 @@ vi.mock("@/lib/auth", () => ({
   setAuthCookie: authMocks.setAuthCookie,
 }));
 
-async function post(body: unknown) {
-  const { POST } = await import("@/app/api/auth/login/route");
+const post = createPostJsonAction("http://localhost/api/auth/login", () =>
+  import("@/app/api/auth/login/route"),
+);
 
-  return POST(
-    new Request("http://localhost/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  );
-}
-
-async function readJson(response: Response) {
-  return response.json() as Promise<Record<string, unknown>>;
-}
-
-beforeEach(() => {
+function setUp() {
   authMocks.loginOrSetup.mockResolvedValue({
     user: { id: "user-1", username: "admin" },
     setupCreated: true,
     token: "session-token",
     expiresAt: new Date("2030-01-01T00:00:00.000Z"),
   });
-});
+}
 
-describe("POST /api/auth/login", () => {
-  it("logs in or creates the first admin and sets an auth cookie", async () => {
+beforeEach(setUp);
+
+describe("Acceptance: POST /api/auth/login", () => {
+  it("Scenario: valid credentials start a session and set the cookie", async () => {
     const response = await post({ username: "Admin", password: "password123" });
-    const payload = await readJson(response);
+    const payload = await expectOkResponse(response);
 
-    expect(response.status).toBe(200);
     expect(authMocks.loginOrSetup).toHaveBeenCalledWith("Admin", "password123");
     expect(authMocks.setAuthCookie).toHaveBeenCalledWith(
       response,
@@ -57,19 +52,14 @@ describe("POST /api/auth/login", () => {
     });
   });
 
-  it("returns authentication errors without setting a cookie", async () => {
+  it("Scenario: authentication errors return 401 without a cookie", async () => {
     authMocks.loginOrSetup.mockRejectedValue(
       new AppError("AUTH_FAILED", "Invalid", 401),
     );
 
     const response = await post({ username: "admin", password: "wrongpass" });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(401);
+    await expectErrorResponse(response, 401, "AUTH_FAILED");
     expect(authMocks.setAuthCookie).not.toHaveBeenCalled();
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "AUTH_FAILED" },
-    });
   });
 });

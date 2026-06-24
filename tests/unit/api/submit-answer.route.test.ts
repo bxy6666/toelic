@@ -1,6 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AppError } from "@/lib/errors";
+import {
+  createPostJsonAction,
+  expectErrorResponse,
+  expectOkResponse,
+  setUpAuthenticatedUser,
+  setUpUnauthenticatedUser,
+} from "../test-utils";
 
 const practiceMocks = vi.hoisted(() => ({
   recordPracticeAnswer: vi.fn(),
@@ -18,26 +25,12 @@ vi.mock("@/lib/auth", () => ({
   requireUserFromRequest: authMocks.requireUserFromRequest,
 }));
 
-async function post(body: unknown) {
-  const { POST } = await import("@/app/api/practice-records/route");
+const post = createPostJsonAction("http://localhost/api/practice-records", () =>
+  import("@/app/api/practice-records/route"),
+);
 
-  return POST(
-    new Request("http://localhost/api/practice-records", {
-      method: "POST",
-      body: JSON.stringify(body),
-    }),
-  );
-}
-
-async function readJson(response: Response) {
-  return response.json() as Promise<Record<string, unknown>>;
-}
-
-beforeEach(() => {
-  authMocks.requireUserFromRequest.mockResolvedValue({
-    id: "user-1",
-    username: "admin",
-  });
+function setUp() {
+  setUpAuthenticatedUser(authMocks.requireUserFromRequest);
   practiceMocks.recordPracticeAnswer.mockResolvedValue({
     result: {
       questionId: "question-1",
@@ -45,40 +38,35 @@ beforeEach(() => {
       isCorrect: true,
     },
   });
-});
+}
 
-describe("POST /api/practice-records", () => {
-  it("rejects missing questionId or userAnswer", async () => {
+beforeEach(setUp);
+
+describe("Acceptance: POST /api/practice-records", () => {
+  it("Scenario: missing answer fields are rejected before service work", async () => {
     const response = await post({ questionId: "", userAnswer: "A" });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(400);
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "REQUEST_INVALID" },
-    });
+    await expectErrorResponse(response, 400, "REQUEST_INVALID");
     expect(practiceMocks.recordPracticeAnswer).not.toHaveBeenCalled();
   });
 
-  it("submits answer data to the practice service", async () => {
+  it("Scenario: valid answers are trimmed and submitted to the service", async () => {
     const response = await post({
       questionId: " question-1 ",
       userAnswer: " a ",
       timeSpentSeconds: 9,
     });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(200);
+    await expectOkResponse(response);
     expect(practiceMocks.recordPracticeAnswer).toHaveBeenCalledWith({
       questionId: "question-1",
       userId: "user-1",
       userAnswer: "a",
       timeSpentSeconds: 9,
     });
-    expect(payload).toMatchObject({ ok: true });
   });
 
-  it("returns service AppError responses", async () => {
+  it("Scenario: service AppError responses keep their status and code", async () => {
     practiceMocks.recordPracticeAnswer.mockRejectedValue(
       new AppError("REQUEST_INVALID", "Question missing", 404),
     );
@@ -87,31 +75,19 @@ describe("POST /api/practice-records", () => {
       questionId: "missing",
       userAnswer: "A",
     });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(404);
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "REQUEST_INVALID" },
-    });
+    await expectErrorResponse(response, 404, "REQUEST_INVALID");
   });
 
-  it("rejects unauthenticated requests", async () => {
-    authMocks.requireUserFromRequest.mockRejectedValue(
-      new AppError("UNAUTHORIZED", "Login required", 401),
-    );
+  it("Scenario: unauthenticated requests stop before recording answers", async () => {
+    setUpUnauthenticatedUser(authMocks.requireUserFromRequest);
 
     const response = await post({
       questionId: "question-1",
       userAnswer: "A",
     });
-    const payload = await readJson(response);
 
-    expect(response.status).toBe(401);
-    expect(payload).toMatchObject({
-      ok: false,
-      error: { code: "UNAUTHORIZED" },
-    });
+    await expectErrorResponse(response, 401, "UNAUTHORIZED");
     expect(practiceMocks.recordPracticeAnswer).not.toHaveBeenCalled();
   });
 });
