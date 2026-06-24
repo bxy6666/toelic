@@ -66,11 +66,14 @@ const validQuestion: ValidatedQuestion = {
   grammarPoint: "tense",
 };
 
-beforeEach(() => {
+// Equivalent to JUnit @Before: prepare shared service mocks.
+function setUp() {
   maasMocks.generateTextWithMaas.mockResolvedValue("{\"questions\":[]}");
   validationMocks.parseAndValidateQuestions.mockReturnValue([validQuestion]);
   imageMocks.generateImageDataUrl.mockResolvedValue("data:image/png;base64,abc");
-});
+}
+
+beforeEach(setUp);
 
 describe("question-generation", () => {
   it("builds grammar and listening prompts from the request type", () => {

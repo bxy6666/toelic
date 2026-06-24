@@ -4,8 +4,9 @@
 
 - 按 TypeScript + Next.js 项目现状接入 Vitest 单元测试体系，新增 `vitest.config.ts`、`tests/setup.ts` 和 `tests/unit/` 用例目录；测试环境固定为 Node，不引入 JUnit、jsdom 或 React Testing Library。
 - 新增开发依赖 `vitest`、`@vitest/coverage-v8`、`vite-tsconfig-paths`，并补充 `test`、`test:run`、`test:coverage` 脚本；覆盖率只纳入核心生题与答题链路文件，避免把设置、统计、错题列表等外围模块纳入首版单测口径。
-- 仅保留最关键功能测试：`question-validation`、`question-generation`、`practice-service` 以及生成题/答题记录 API Route 薄层；删除设置、统计、MaaS 客户端、错题服务等较不重要测试。Prisma、MaaS、OpenAI、fetch 均使用 mock，不访问真实网络或数据库。
-- 验证结果：Node v24.14.0 满足 Vitest 最新版要求；`npm run test:run` 5 个文件 / 27 个核心用例全部通过；`npm run test:coverage` 通过，核心文件 statements 覆盖率 89.93%；`npm run lint` 无错误但保留既有 `output/presentation/src/build-report-deck.mjs` 4 个 warning；`npm run build` 通过。
+- 仅保留最关键功能测试：`question-generation`、`practice-service` 以及生成题/答题记录 API Route 薄层；删除 `question-validation`、设置、统计、MaaS 客户端、错题服务等较不重要测试。Prisma、MaaS、OpenAI、fetch 均使用 mock，不访问真实网络或数据库。
+- 将每个测试文件的公共准备逻辑整理为显式 `setUp()`，再通过 Vitest `beforeEach(setUp)` 调用；新增 `tests/unit/test-utils.ts` 复用 API 测试的 JSON 请求与响应解析，整体结构对应课堂 xUnit/JUnit 的 `@Before` / `@After` 思路。
+- 验证结果：Node v24.14.0 满足 Vitest 最新版要求；`npm run test:run` 4 个文件 / 17 个核心用例全部通过；`npm run test:coverage` 通过，核心文件 statements 覆盖率 91.46%；`npm run lint` 无错误但保留既有 `output/presentation/src/build-report-deck.mjs` warning；`npm run build` 通过。
 
 ## 2026-05-15 / Markdown 文档复制打包归档
 
