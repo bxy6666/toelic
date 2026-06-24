@@ -32,12 +32,15 @@ tests/                  Vitest 单元测试
 
 ## 快速启动
 
+请先进入项目根目录；如果项目不在 `D:\toelic`，把第一行替换为你的实际路径。
+
 ```powershell
-Copy-Item .env.example .env
-npm install
-npm run prisma:generate
-npx prisma migrate deploy
-npm run dev
+Set-Location D:\toelic
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+npm.cmd install
+npm.cmd run prisma:generate
+npx.cmd prisma migrate deploy
+npm.cmd run dev
 ```
 
 打开：
