@@ -17,6 +17,7 @@
     "smoke:public": "node scripts/smoke/public-acceptance.mjs",
     "smoke:generation": "node scripts/smoke/generation-smoke.mjs",
     "smoke:papers": "node scripts/smoke/paper-domain-smoke.mjs",
+    "smoke:paper-import": "node scripts/smoke/paper-import-smoke.mjs",
     "seed:papers": "tsx scripts/seed/seed-papers.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
@@ -26,8 +27,10 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.14.0",
+    "mammoth": "^1.12.0",
     "motion": "^12.38.0",
     "next": "^16.0.0",
+    "pdf-parse": "^2.4.5",
     "radix-ui": "^1.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

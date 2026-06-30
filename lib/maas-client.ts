@@ -39,6 +39,10 @@ function buildChatCompletionsUrl(baseUrl: string) {
   return `${baseUrl.replace(/\/+$/, "")}/chat/completions`;
 }
 
+function buildAuthorizationHeader(apiKey: string) {
+  return apiKey.toLowerCase().startsWith("bearer ") ? apiKey : `Bearer ${apiKey}`;
+}
+
 export async function generateTextWithMaas(messages: MaasChatMessage[]) {
   const { apiKey, baseUrl, model } = getMaasConfig();
   const controller = new AbortController();
@@ -48,7 +52,7 @@ export async function generateTextWithMaas(messages: MaasChatMessage[]) {
     const response = await fetch(buildChatCompletionsUrl(baseUrl), {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: buildAuthorizationHeader(apiKey),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -59,6 +63,14 @@ export async function generateTextWithMaas(messages: MaasChatMessage[]) {
       }),
       signal: controller.signal,
     });
+
+    if (response.status === 401 || response.status === 403) {
+      throw new AppError(
+        "AI_GENERATION_FAILED",
+        "MaaS 授权失败，请检查 MAAS_API_KEY 是否有效、是否带有多余空格，或在控制台重新生成 Key。",
+        502,
+      );
+    }
 
     if (!response.ok) {
       throw new AppError(

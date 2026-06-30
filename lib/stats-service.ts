@@ -21,6 +21,37 @@ function formatDateKey(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+export function summarizeDailyRecords(
+  records: { practicedAt: Date; isCorrect: boolean }[],
+  startDate: Date,
+  dayCount: number,
+) {
+  const countsByDate = new Map<string, { count: number; correct: number }>();
+
+  for (const record of records) {
+    const key = formatDateKey(record.practicedAt);
+    const current = countsByDate.get(key) ?? { count: 0, correct: 0 };
+    current.count += 1;
+    if (record.isCorrect) {
+      current.correct += 1;
+    }
+    countsByDate.set(key, current);
+  }
+
+  return Array.from({ length: dayCount }, (_, index) => {
+    const day = new Date(startDate);
+    day.setDate(startDate.getDate() + index);
+    const date = formatDateKey(day);
+    const summary = countsByDate.get(date);
+
+    return {
+      date,
+      count: summary?.count ?? 0,
+      correct: summary?.correct ?? 0,
+    };
+  });
+}
+
 export async function getStats(userId: string) {
   const now = new Date();
   const todayStart = startOfLocalDay(now);
@@ -69,20 +100,7 @@ export async function getStats(userId: string) {
     }),
   ]);
 
-  const last7Days = Array.from({ length: 7 }, (_, index) => {
-    const day = new Date(sevenDaysAgo);
-    day.setDate(sevenDaysAgo.getDate() + index);
-    const key = formatDateKey(day);
-    const records = recentRecords.filter(
-      (record) => formatDateKey(record.practicedAt) === key,
-    );
-
-    return {
-      date: key,
-      count: records.length,
-      correct: records.filter((record) => record.isCorrect).length,
-    };
-  });
+  const last7Days = summarizeDailyRecords(recentRecords, sevenDaysAgo, 7);
 
   const tagCounts = new Map<string, number>();
 

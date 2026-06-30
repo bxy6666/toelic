@@ -174,7 +174,9 @@ async function run() {
       `Seed paper ${seedSourceKey} was not visible. Run npm run seed:papers first, using the same smoke user.`,
     );
 
-    const detailHref = await paperCard.locator("a[href^='/papers/']").first().getAttribute("href");
+    const detailHref = await page
+      .getByTestId(`paper-detail-link-${seedSourceKey}`)
+      .getAttribute("href");
     if (!detailHref) {
       fail(`Seed paper ${seedSourceKey} did not expose a detail link.`);
     }

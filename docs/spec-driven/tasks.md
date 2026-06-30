@@ -846,3 +846,17 @@ Status: DONE
 - Added stable `data-testid` hooks for papers list, seed card, published version, attempt start, autosave status, submit, report summary, and per-item report states.
 - Verified published version edit page is read-only and direct edit API returns `VERSION_NOT_EDITABLE`.
 - Kept OCR, Redis, Qdrant, FastAPI, and old single-question flows out of scope.
+
+### T39 paper document import and AI answer completion
+
+Status: DONE
+
+- Added text PDF / DOCX upload entry at `/papers/import`.
+- Added `POST /api/paper-imports`, `GET /api/paper-imports/{jobId}`, `POST /api/paper-imports/{jobId}/complete-answers`, and `POST /api/paper-imports/{jobId}/apply`.
+- Extended `UploadedFile`, `ImportJob`, and `ParseJob` with import metadata and result fields.
+- Added rule-based single-choice parser, MaaS parser fallback, and MaaS answer completion helper.
+- Applying import creates a draft PaperVersion for review; publishing still uses existing validation.
+- Added parser, AI helper, and import route tests.
+- Added recent import listing and resume support on `/papers/import`.
+- Added repeatable DOCX import smoke `npm run smoke:paper-import`.
+- Kept OCR, Redis, Qdrant, FastAPI, and old single-question flows out of scope.

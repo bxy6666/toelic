@@ -213,3 +213,22 @@
 | Published read-only UI | PASS |
 | Direct published edit API | PASS, returned `VERSION_NOT_EDITABLE` |
 | Scope guard | PASS, no OCR / Redis / Qdrant / FastAPI and no rewrite of old Question / PracticeRecord / Mistake flows |
+
+## V4 paper document import acceptance
+
+| Item | Result |
+| --- | --- |
+| `npm run typecheck` | PASS |
+| `npm run test:run` | PASS, 13 files / 46 tests |
+| `npx prisma validate` | PASS |
+| `npm run lint` | PASS, existing presentation warnings only |
+| `npm run build` | PASS |
+| `npx prisma migrate deploy` | PASS, applied `20260625012000_add_paper_import_fields` |
+| `npm run smoke:papers` | PASS, attemptId `cmqsutaub002vu8asd4i2x9k9`, report `total=3 correct=1 wrong=1 unanswered=1` |
+| `npm run smoke:paper-import` | PASS, uploaded generated DOCX, parsed 3 questions, missing answers 0, created draft PaperVersion `cmqsuqubp001vu8as7mm6ag4r`, import history visible |
+| Import resume UI/API | PASS, `/api/paper-imports` returned recent jobs for smoke user; `/papers/import` rendered upload, history, and Import lab UI |
+| AI answer completion unit test | PASS, MaaS helper mock fills missing answer and marks `answerSource=ai` |
+| Real MaaS smoke | FAIL, direct MaaS call returns 401 `Invalid authorization header`; current local `MAAS_API_KEY` must be replaced before true AI generation can pass |
+| MaaS diagnostics | PASS, settings page includes a protected server-side connection check endpoint and UI button; failures preserve `AI_GENERATION_FAILED` |
+| MaaS config required | `MAAS_API_KEY`, `MAAS_BASE_URL=https://api.modelarts-maas.com/v1/`, `MAAS_MODEL=<Huawei Cloud model id>` |
+| Scope guard | PASS, no OCR / Redis / Qdrant / FastAPI and no rewrite of old Question / PracticeRecord / Mistake flows |

@@ -23,6 +23,7 @@ build/
 
 # generated local media
 output/generated-images/
+output/uploads/
 
 # logs
 *.log

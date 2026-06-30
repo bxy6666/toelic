@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-06-29T15:32:53.687Z",
+  "scenario": "stats-service last7Days aggregation",
+  "baseline": {
+    "name": "baseline-filter-per-day",
+    "iterations": 120,
+    "recordCount": 50000,
+    "totalMs": 2725.5468999999994,
+    "avgMs": 22.71289083333333,
+    "minMs": 20.637399999999843,
+    "maxMs": 26.05250000000001,
+    "p95Ms": 24.83510000000024,
+    "checksum": 9999960
+  },
+  "optimized": {
+    "name": "optimized-single-pass-map",
+    "iterations": 120,
+    "recordCount": 50000,
+    "totalMs": 593.6767999999975,
+    "avgMs": 4.947306666666646,
+    "minMs": 4.220599999999649,
+    "maxMs": 7.549799999999777,
+    "p95Ms": 5.570799999999963,
+    "checksum": 9999960
+  },
+  "improvementPercent": 78.21806698684959
+}

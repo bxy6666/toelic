@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { generateTextWithMaas } from "@/lib/maas-client";
 import {
   DEFAULT_MAAS_BASE_URL,
   DEFAULT_MAAS_MODEL,
@@ -31,6 +32,30 @@ export function getMaasConfigStatus() {
     hasApiKey: Boolean(process.env.MAAS_API_KEY?.trim()),
     maasBaseUrl: process.env.MAAS_BASE_URL || DEFAULT_MAAS_BASE_URL,
     maasModel: process.env.MAAS_MODEL || DEFAULT_MAAS_MODEL,
+  };
+}
+
+export async function checkMaasConnection() {
+  const config = getMaasConfigStatus();
+  const startedAt = Date.now();
+
+  await generateTextWithMaas([
+    {
+      role: "system",
+      content: "Return strict JSON only.",
+    },
+    {
+      role: "user",
+      content: 'Return {"ok":true} to confirm connectivity.',
+    },
+  ]);
+
+  return {
+    status: "ok" as const,
+    message: "MaaS connection is healthy.",
+    latencyMs: Date.now() - startedAt,
+    checkedAt: new Date().toISOString(),
+    ...config,
   };
 }
 

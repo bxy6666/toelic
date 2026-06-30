@@ -435,3 +435,29 @@
 - 鍐呭瑕嗙洊椤圭洰鑳屾櫙銆佸涔犵棝鐐广€乻pec-driven 娴佺▼銆佹妧鏈灦鏋勩€佹暟鎹ā鍨嬨€丄I 鐢熸垚閾捐矾銆佸惉鍔?璇硶/閿欓/缁熻鎴愭灉銆侀獙鏀剁粨鏋滃拰鎬荤粨鍙嶆€濄€?
 - 鏈浠呮柊澧炴眹鎶ユ枃绋垮拰鍙樻洿璁板綍锛屾湭淇敼涓氬姟浠ｇ爜锛屾湭鏂板渚濊禆銆?
 - 鍚庣画琛ュ厖 spec-driven 寮€鍙戞€荤粨銆佹敹鑾蜂笌涓汉浣撲細锛屽己璋冭竟鐣屾剰璇嗐€佷换鍔℃媶鍒嗐€侀獙鏀惰瘉鎹拰 AI 杈呭姪寮€鍙戜腑鐨勮鏍肩害鏉熶环鍊笺€?
+
+## 2026-06-25 / V4 paper document import
+
+- Added runtime upload storage for paper imports under `output/uploads/papers/<userId>/` and ignored it from git.
+- Added `mammoth` and `pdf-parse` for DOCX and text-layer PDF extraction.
+- Extended `UploadedFile`, `ImportJob`, and `ParseJob` with import metadata, result JSON, confidence, and completion timestamps.
+- Added paper import APIs: upload, job read, AI answer completion, and apply-to-draft.
+- Added `/papers/import` upload/review workspace and a `/papers` import entry while keeping existing manual paper creation and paper-domain take/report flows.
+- Added recent import history and resume support so users can recover prior import jobs after refresh.
+- Added `npm run smoke:paper-import` for repeatable generated-DOCX upload, parse, apply-to-draft, and history verification.
+- Added rule parser, MaaS parser fallback, MaaS answer completion helper, and focused unit/API tests.
+- Added a protected MaaS connection check endpoint and settings-page button; current local key reports 502 with an actionable authorization failure message.
+- Sanitized `.env.local.example` so MaaS credentials are documented as placeholders only.
+- Applied migration `20260625012000_add_paper_import_fields`.
+- Verification: `typecheck`, `test:run`, `prisma validate`, `lint`, `build`, `smoke:papers`, and `smoke:paper-import` passed.
+- Real MaaS generation smoke currently fails because the configured local MaaS credential returns 401 `Invalid authorization header`; no key value was printed or written.
+
+## 2026-06-29 / Lab 6 static review and performance optimization
+
+- Added a focused stats aggregation optimization in `lib/stats-service.ts`: recent 7-day practice records now use a single-pass `Map` summary instead of repeated per-day filtering.
+- Added `tests/unit/lib/stats-service.test.ts` to verify day-key formatting, empty-day preservation, count aggregation, and correct-answer aggregation.
+- Added `scripts/perf/stats-benchmark.ts` to compare the previous filter-per-day algorithm against the optimized single-pass algorithm on the same 50,000-record data set.
+- Generated Lab 6 evidence under `output/lab6/`, including ESLint, TypeScript, Semgrep, Vitest, Next.js build, benchmark logs, terminal-style screenshots, and a Node.js CPU profile.
+- Generated the report artifacts `output/lab6/实验六-代码评审与程序性能优化报告.md` and `output/lab6/实验六-代码评审与程序性能优化报告.docx`.
+- Verification: `npm.cmd run lint` passed with 4 pre-existing presentation-script warnings; `npm.cmd run typecheck`, `npm.cmd run test:run`, `npm.cmd run build`, Semgrep scan, and the benchmark passed.
+- Benchmark result from the Chinese benchmark run: baseline avg 22.713 ms, optimized avg 4.947 ms, about 78.22% faster, with equal checksums.

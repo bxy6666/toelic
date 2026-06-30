@@ -1,0 +1,29 @@
+﻿实验六性能测试关联结果
+测试场景：统计页最近 7 天练习记录聚合（stats-service last7Days aggregation）
+测试数据：50000 条练习记录，120 次正式迭代，20 次预热
+
+优化前结果：
+- 算法：逐日 filter 过滤 recentRecords
+- 平均耗时：22.713 ms
+- P95 耗时：24.835 ms
+- 总耗时：2725.547 ms
+
+优化后结果：
+- 算法：单次遍历 Map 聚合
+- 平均耗时：4.947 ms
+- P95 耗时：5.571 ms
+- 总耗时：593.677 ms
+
+对比结论：
+- 平均耗时提升：78.22%
+- 结果一致性校验：通过
+- 优化前 checksum：9999960
+- 优化后 checksum：9999960
+
+关联产物：
+- 性能 JSON：output/lab6/perf-benchmark.json
+- 性能文本：output/lab6/perf-benchmark.txt
+- CPU Profile 目录：output/lab6/profiles
+- Benchmark 截图：output/lab6/screenshots/04-benchmark.png
+- Markdown 报告：output/lab6/实验六-代码评审与程序性能优化报告.md
+- Word 报告：output/lab6/实验六-代码评审与程序性能优化报告.docx

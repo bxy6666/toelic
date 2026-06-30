@@ -1,7 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CheckCircle2, Clock, FilePlus2, Loader2, Trash2 } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock,
+  FilePlus2,
+  Loader2,
+  Trash2,
+  UploadCloud,
+} from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -59,6 +66,41 @@ type AttemptView = {
   id: string;
   expiresAt: string;
   status: string;
+};
+
+type ImportedItemView = {
+  questionNo: string;
+  stem: string;
+  answerChoice?: string;
+  answerSource: "document" | "ai" | "missing";
+  options: { optionKey: string; optionText: string }[];
+};
+
+type PaperImportJobView = {
+  id: string;
+  status: string;
+  progress: number;
+  error: { code: string; message: string } | null;
+  result: {
+    title: string;
+    versionLabel: string;
+    missingAnswerCount: number;
+    parserName: string;
+    confidence: number;
+    items: ImportedItemView[];
+  } | null;
+  paperId: string | null;
+  paperVersionId: string | null;
+  completedAt: string | null;
+  appliedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  uploadedFile: {
+    originalName: string;
+    extension: string;
+    sizeBytes: number;
+    status: string;
+  } | null;
 };
 
 async function requestJson<T>(
@@ -131,6 +173,305 @@ export function PaperCreateForm() {
         创建 Paper
       </Button>
     </form>
+  );
+}
+
+export function PaperImportWorkspace({
+  initialJobs = [],
+}: {
+  initialJobs?: PaperImportJobView[];
+}) {
+  const [job, setJob] = useState<PaperImportJobView | null>(null);
+  const [jobs, setJobs] = useState<PaperImportJobView[]>(initialJobs);
+  const [error, setError] = useState("");
+  const [pending, setPending] = useState<"upload" | "answers" | "apply" | "">("");
+
+  function rememberJob(nextJob: PaperImportJobView) {
+    setJob(nextJob);
+    setJobs((current) => [
+      nextJob,
+      ...current.filter((item) => item.id !== nextJob.id),
+    ]);
+  }
+
+  async function selectJob(jobId: string) {
+    setError("");
+    try {
+      const selected = await requestJson<PaperImportJobView>(
+        `/api/paper-imports/${jobId}`,
+      );
+      rememberJob(selected);
+    } catch (selectError) {
+      setError(selectError instanceof Error ? selectError.message : "Import load failed");
+    }
+  }
+
+  async function upload(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setPending("upload");
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      const response = await fetch("/api/paper-imports", {
+        method: "POST",
+        body: formData,
+      });
+      const payload = (await response.json()) as ApiPayload<PaperImportJobView>;
+      if (!payload.ok) {
+        throw new Error(payload.error.message || payload.error.code);
+      }
+      rememberJob(payload.data);
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : "Upload failed");
+    } finally {
+      setPending("");
+    }
+  }
+
+  async function completeAnswers() {
+    if (!job) {
+      return;
+    }
+
+    setError("");
+    setPending("answers");
+    try {
+      const updated = await requestJson<PaperImportJobView>(
+        `/api/paper-imports/${job.id}/complete-answers`,
+        { method: "POST" },
+      );
+      rememberJob(updated);
+    } catch (completionError) {
+      setError(
+        completionError instanceof Error
+          ? completionError.message
+          : "AI answer completion failed",
+      );
+    } finally {
+      setPending("");
+    }
+  }
+
+  async function applyImport() {
+    if (!job) {
+      return;
+    }
+
+    setError("");
+    setPending("apply");
+    try {
+      const applied = await requestJson<{ editUrl: string }>(
+        `/api/paper-imports/${job.id}/apply`,
+        { method: "POST" },
+      );
+      window.location.href = applied.editUrl;
+    } catch (applyError) {
+      setError(applyError instanceof Error ? applyError.message : "Apply failed");
+      setPending("");
+    }
+  }
+
+  const missingAnswerCount = job?.result?.missingAnswerCount ?? 0;
+  const canApply = job?.status === "ready" && missingAnswerCount === 0;
+
+  return (
+    <div className="grid gap-6">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.8fr)]">
+        <div className="grid gap-4 rounded-lg border border-cyan-200 bg-cyan-50/40 p-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="text-lg font-semibold tracking-normal">Import lab</h2>
+              <p className="text-sm text-muted-foreground">
+                Upload, parse, review answers, then create a draft version.
+              </p>
+            </div>
+            <Badge variant="secondary">PDF / DOCX</Badge>
+          </div>
+          <div className="grid gap-2 text-sm md:grid-cols-3">
+            {["1 Upload", "2 Review", "3 Draft"].map((step) => (
+              <div
+                key={step}
+                className="rounded-lg border bg-background px-3 py-2 font-medium"
+              >
+                {step}
+              </div>
+            ))}
+          </div>
+          <form
+            onSubmit={upload}
+            className="grid gap-3"
+            data-testid="paper-import-upload"
+          >
+            <Input name="file" type="file" accept=".pdf,.docx" required />
+            <div className="grid gap-3 md:grid-cols-3">
+              <Input name="title" placeholder="Paper title" />
+              <Input name="sourceKey" placeholder="source-key" />
+              <Input name="versionLabel" placeholder="v1" />
+            </div>
+            <Button type="submit" disabled={pending === "upload"}>
+              {pending === "upload" ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <UploadCloud />
+              )}
+              Upload and parse
+            </Button>
+          </form>
+        </div>
+
+        <Card data-testid="paper-import-history">
+          <CardHeader>
+            <CardTitle>Recent imports</CardTitle>
+            <CardDescription>Resume a previous import without re-uploading.</CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-2">
+            {jobs.length === 0 ? (
+              <p className="text-sm text-muted-foreground">No imports yet.</p>
+            ) : null}
+            {jobs.map((item) => (
+              <div
+                key={item.id}
+                className={`grid gap-2 rounded-lg border px-3 py-2 text-sm ${
+                  job?.id === item.id ? "border-primary bg-secondary" : "bg-background"
+                }`}
+              >
+                <span className="flex items-center justify-between gap-2 font-medium">
+                  <span className="truncate">
+                    {item.uploadedFile?.originalName ?? item.id}
+                  </span>
+                  <Badge variant={item.status === "ready" ? "default" : "secondary"}>
+                    {item.status}
+                  </Badge>
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {item.result?.items.length ?? 0} questions - updated{" "}
+                  {new Date(item.updatedAt).toLocaleString()}
+                </span>
+                <span className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    onClick={() => selectJob(item.id)}
+                  >
+                    Load
+                  </Button>
+                  {item.paperVersionId ? (
+                    <a
+                      href={`/paper-versions/${item.paperVersionId}/edit`}
+                      className="inline-flex h-8 items-center rounded-lg px-2.5 text-xs font-medium text-primary hover:underline"
+                    >
+                      Open draft
+                    </a>
+                  ) : null}
+                </span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
+
+      {job ? (
+        <Card data-testid="paper-import-result">
+          <CardHeader>
+            <CardTitle className="flex flex-wrap items-center gap-2">
+              Import job
+              <Badge variant={job.status === "ready" ? "default" : "secondary"}>
+                {job.status}
+              </Badge>
+            </CardTitle>
+            <CardDescription>
+              {job.uploadedFile?.originalName ?? "Uploaded file"} · {job.progress}%
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            {job.error ? (
+              <p className="text-sm text-destructive">
+                {job.error.code}: {job.error.message}
+              </p>
+            ) : null}
+
+            {job.result ? (
+              <>
+                <div
+                  className="grid gap-2 rounded-lg border bg-background p-3 text-sm"
+                  data-testid="paper-import-summary"
+                  data-missing={missingAnswerCount}
+                >
+                  <div className="font-medium">{job.result.title}</div>
+                  <div className="text-muted-foreground">
+                    {job.result.items.length} questions · {missingAnswerCount} missing
+                    answers · {job.result.parserName}
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={pending === "answers" || missingAnswerCount === 0}
+                    onClick={completeAnswers}
+                  >
+                    {pending === "answers" ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <CheckCircle2 />
+                    )}
+                    AI complete answers
+                  </Button>
+                  <Button
+                    type="button"
+                    disabled={!canApply || pending === "apply"}
+                    onClick={applyImport}
+                  >
+                    {pending === "apply" ? (
+                      <Loader2 className="size-4 animate-spin" />
+                    ) : (
+                      <FilePlus2 />
+                    )}
+                    Create draft version
+                  </Button>
+                </div>
+
+                <div className="grid gap-3">
+                  {job.result.items.map((item) => (
+                    <div
+                      key={item.questionNo}
+                      className="grid gap-2 rounded-lg border bg-background p-3 text-sm"
+                    >
+                      <div className="flex flex-wrap items-center gap-2 font-medium">
+                        {item.questionNo}. {item.stem}
+                        <Badge
+                          variant={
+                            item.answerSource === "missing"
+                              ? "destructive"
+                              : "secondary"
+                          }
+                        >
+                          {item.answerChoice
+                            ? `${item.answerChoice} · ${item.answerSource}`
+                            : "missing answer"}
+                        </Badge>
+                      </div>
+                      <div className="grid gap-1 text-muted-foreground">
+                        {item.options.map((option) => (
+                          <div key={option.optionKey}>
+                            {option.optionKey}. {option.optionText}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : null}
+          </CardContent>
+        </Card>
+      ) : null}
+    </div>
   );
 }
 

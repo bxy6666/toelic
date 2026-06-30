@@ -5,6 +5,7 @@ import {
   CheckCircle2,
   Database,
   KeyRound,
+  Loader2,
   RefreshCw,
   Save,
   ShieldCheck,
@@ -54,6 +55,16 @@ type ApiResponse<T> =
   | { ok: true; data: T }
   | { ok: false; error: { code: string; message: string } };
 
+type MaasCheckData = {
+  status: "ok";
+  message: string;
+  latencyMs: number;
+  checkedAt: string;
+  hasApiKey: boolean;
+  maasBaseUrl: string;
+  maasModel: string;
+};
+
 const difficultyLabels = {
   easy: "简单",
   medium: "中等",
@@ -77,6 +88,8 @@ export function SettingsPanel({
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [clearing, setClearing] = useState(false);
+  const [maasChecking, setMaasChecking] = useState(false);
+  const [maasCheck, setMaasCheck] = useState<MaasCheckData | null>(null);
   const [clearConfirmText, setClearConfirmText] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -174,6 +187,35 @@ export function SettingsPanel({
     }
   }
 
+  async function checkMaas() {
+    setMaasChecking(true);
+    setMessage(null);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/settings/maas-check", {
+        method: "POST",
+      });
+      const payload = (await response.json()) as ApiResponse<MaasCheckData>;
+
+      if (!payload.ok) {
+        throw new Error(`${payload.error.code}: ${payload.error.message}`);
+      }
+
+      setMaasCheck(payload.data);
+      setMessage("MaaS connection check passed.");
+    } catch (checkError) {
+      setMaasCheck(null);
+      setError(
+        checkError instanceof Error
+          ? checkError.message
+          : "MaaS connection check failed.",
+      );
+    } finally {
+      setMaasChecking(false);
+    }
+  }
+
   return (
     <div className="space-y-6">
       <section className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -241,6 +283,41 @@ export function SettingsPanel({
               <p className="rounded-lg border bg-muted/40 p-3 text-sm">
                 {settings.maasModel}
               </p>
+            </div>
+            <div className="grid gap-3 rounded-lg border bg-background p-3">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-medium">Connection check</p>
+                  <p className="text-xs text-muted-foreground">
+                    Verifies the server-side key without exposing it to the browser.
+                  </p>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={checkMaas}
+                  disabled={maasChecking || !settings.hasApiKey}
+                  data-testid="maas-check-button"
+                >
+                  {maasChecking ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    <RefreshCw className="size-4" />
+                  )}
+                  Check MaaS
+                </Button>
+              </div>
+              {maasCheck ? (
+                <div
+                  className="rounded-lg border border-emerald-200 bg-emerald-50/50 p-3 text-sm"
+                  data-testid="maas-check-result"
+                >
+                  <span className="font-medium">{maasCheck.message}</span>
+                  <span className="ml-2 text-muted-foreground">
+                    {maasCheck.latencyMs}ms
+                  </span>
+                </div>
+              ) : null}
             </div>
           </CardContent>
         </Card>

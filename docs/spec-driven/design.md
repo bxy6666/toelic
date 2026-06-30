@@ -1134,3 +1134,13 @@ Proxy 在页面层检查 session cookie，未登录跳转 `/login`；服务端�
 ### 20.4 Seed 设计
 
 `data/papers/*.json` 使用固定结构。`npm run seed:papers` 默认导入 `toeic-sample-001.json`，按 `userId + sourceKey + versionLabel` 幂等导入；无用户时失败并提示先创建用户。
+## 21. V4 paper document import design
+
+- `UploadedFile`, `ImportJob`, and `ParseJob` now carry enough metadata for user-uploaded text PDF / DOCX import while keeping OCR reserved for later.
+- Import APIs are thin route handlers over `lib/paper-import-service.ts`; parser and AI helpers do not write Prisma directly.
+- Uploaded files live under `output/uploads/papers/<userId>/`; `.gitignore` excludes runtime uploads.
+- DOCX text extraction uses `mammoth.extractRawText`; PDF extraction uses `pdf-parse` text-layer extraction.
+- Rule parser runs first for question numbers, A-D options, sections, and answer key blocks. MaaS parsing is a fallback for structured JSON extraction.
+- Missing answers can be completed by MaaS through `complete-answers`, and AI-filled answers are marked in `answerKeyJson` / `explanationJson` metadata.
+- `apply` creates `Paper`, `PaperVersion`, `PaperSection`, `QuestionItem`, and `QuestionOption` as a draft version. Existing publish validation remains the final gate.
+- `/papers/import` is a distinct upload/review workspace and then hands off to the existing `/paper-versions/{versionId}/edit` draft editor.

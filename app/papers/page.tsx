@@ -1,4 +1,4 @@
-import { FilePlus2 } from "lucide-react";
+import { FilePlus2, UploadCloud } from "lucide-react";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -27,12 +27,20 @@ export default async function PapersPage() {
             管理整卷、版本和发布状态；本阶段通过手工录入或 seed 形成演示数据。
           </p>
         </div>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" asChild>
+            <Link href="/papers/import">
+              <UploadCloud />
+              Upload import
+            </Link>
+          </Button>
         <Button asChild>
           <Link href="/papers/new">
             <FilePlus2 />
             创建 Paper
           </Link>
         </Button>
+        </div>
       </div>
 
       <Card>

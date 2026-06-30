@@ -844,3 +844,19 @@ MVP 完成必须满足：
 - `/paper-versions/{versionId}/edit`
 - `/paper-versions/{versionId}/take`
 - `/attempts/{attemptId}/report`
+
+## 16. V4 paper document import spec
+
+Status: Approved
+
+- Add a paper import entry for user-uploaded text PDF and DOCX files.
+- Do not add OCR, Redis, Qdrant, or FastAPI in this phase.
+- Do not rewrite legacy `Question / PracticeRecord / Mistake` models or old `ai/generate-questions`, `practice-records`, `mistakes`, `stats` flows.
+- Uploaded files are stored under `output/uploads/papers/<userId>/`; database rows keep metadata and local paths only.
+- Import APIs must keep `{ ok, data/error }`, `AppError`, `handleApiError`, and `requireUserFromRequest`.
+- Import creates `UploadedFile`, `ImportJob`, and `ParseJob`, extracts text, parses `single_choice` items, and stores a reviewable import result.
+- Missing answers can be completed through existing MaaS / DeepSeek service and must be marked as AI sourced.
+- Applying an import creates a `draft` PaperVersion only; users must review before publishing.
+- Scanned PDFs without extractable text return `UNSUPPORTED_SCANNED_DOCUMENT`.
+- AI parsing and answer completion use the same Huawei Cloud MaaS OpenAI-compatible chat configuration as legacy generation: `MAAS_API_KEY`, `MAAS_BASE_URL`, and `MAAS_MODEL`.
+- `MAAS_MODEL` may point to any enabled Huawei MaaS chat model, such as GLM or DeepSeek variants, but the value must exactly match the model id exposed by the Huawei Cloud console.
