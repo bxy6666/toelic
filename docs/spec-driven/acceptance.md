@@ -232,3 +232,44 @@
 | MaaS diagnostics | PASS, settings page includes a protected server-side connection check endpoint and UI button; failures preserve `AI_GENERATION_FAILED` |
 | MaaS config required | `MAAS_API_KEY`, `MAAS_BASE_URL=https://api.modelarts-maas.com/v1/`, `MAAS_MODEL=<Huawei Cloud model id>` |
 | Scope guard | PASS, no OCR / Redis / Qdrant / FastAPI and no rewrite of old Question / PracticeRecord / Mistake flows |
+
+## Lab 6 static review and performance optimization acceptance
+
+| Item | Result |
+| --- | --- |
+| Project language fit | PASS, experiment uses TypeScript / TSX / Node.js / Next.js tools instead of Java-only tools |
+| Static review tool 1 | PASS, `npm.cmd run lint` completed; only pre-existing `output/presentation/src/build-report-deck.mjs` unused warnings remain |
+| Static review tool 2 | PASS, `npm.cmd run typecheck` completed |
+| Static review tool 3 | PASS, Semgrep TypeScript / JavaScript / OWASP scan completed with 0 findings |
+| Optimization target | PASS, `lib/stats-service.ts` recent 7-day stats aggregation optimized from repeated filtering to single-pass Map summary |
+| Functional test | PASS, `tests/unit/lib/stats-service.test.ts` covers daily aggregation behavior |
+| Full test suite | PASS, `npm.cmd run test:run` passed 14 files / 48 tests |
+| Production build | PASS, `npm.cmd run build` completed |
+| Benchmark command | PASS, `npx.cmd tsx scripts/perf/stats-benchmark.ts` completed |
+| Benchmark Chinese output | PASS, terminal and `output/lab6/perf-benchmark.txt` show readable Chinese associated results |
+| Benchmark metrics | PASS, baseline avg 22.713 ms, optimized avg 4.947 ms, improvement about 78.22%, checksums equal |
+| Report artifacts | PASS, `output/lab6/实验六-代码评审与程序性能优化报告.md` and `.docx` generated |
+| Screenshot evidence | PASS, static review screenshots and benchmark/profiler screenshots stored under `output/lab6/screenshots/` |
+| CPU profile evidence | PASS, Node.js CPU Profile stored under `output/lab6/profiles/` |
+| Standalone documentation | PASS, `docs/lab6-code-review-performance.md` added |
+
+## Lab 7 system test and performance pressure test acceptance
+
+| Item | Result |
+| --- | --- |
+| Project selected for system test | PASS, TOEIC Practice Studio local Next.js web app |
+| Course concept mapping | PASS, report covers concurrent users, response time, throughput, error rate, load testing, and pressure testing |
+| JMeter test plan | PASS, `output/lab7/jmeter-toeic-system-test.jmx` generated |
+| CSV parameterization | PASS, `output/lab7/jmeter-users.csv` generated |
+| Local pressure script | PASS, `scripts/perf/system-load-test.mjs` added and exposed as `npm run perf:system` |
+| Pressure test result | PASS, 20 users x 5 loops, 800 requests, 800 success, 0 failures |
+| Throughput | PASS, 12.00 requests/s in local dev-server test |
+| Response time metrics | PASS, avg 1618.41 ms, p95 3822.37 ms |
+| TypeScript check | PASS, `npm.cmd run typecheck` |
+| Unit/API tests | PASS, `npm.cmd run test:run`, 14 files / 48 tests |
+| Lint | PASS, `npm.cmd run lint`, only pre-existing presentation script warnings |
+| Production build | PASS, `npm.cmd run build` |
+| Paper-domain system smoke | PASS, `npm.cmd run smoke:papers`, autosave reload, submit idempotency, and published read-only verified |
+| Report artifacts | PASS, `output/lab7/实验七-系统测试与性能压力测试报告.md` and `.docx` generated |
+| Documentation | PASS, `docs/lab7-system-test.md`, `docs/README.md`, root `readme.md`, and spec-driven docs updated |
+| Scope guard | PASS, no unrelated UI redesign, no runtime dependency installation, no rewrite of business flows |

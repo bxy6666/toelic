@@ -1,0 +1,27 @@
+﻿实验七系统测试压测结果
+被测地址: http://127.0.0.1:3000
+虚拟用户数: 20
+每用户循环次数: 5
+总请求数: 800
+成功请求数: 800
+失败请求数: 0
+成功率: 100.00%
+总耗时: 66.66 s
+吞吐量: 12.00 requests/s
+平均响应时间: 1618.41 ms
+P50: 1752.86 ms
+P90: 3413.27 ms
+P95: 3822.37 ms
+最大响应时间: 4064.84 ms
+
+分接口结果:
+- login-page: total=100, success=100, fail=0, avg=3695.05 ms, p95=4049.23 ms, max=4064.84 ms
+- home-page: total=100, success=100, fail=0, avg=2262.13 ms, p95=2388.93 ms, max=2664.59 ms
+- papers-page: total=100, success=100, fail=0, avg=1887.17 ms, p95=2362.22 ms, max=2728.43 ms
+- stats-page: total=100, success=100, fail=0, avg=2334.45 ms, p95=3194.68 ms, max=3235.83 ms
+- settings-page: total=100, success=100, fail=0, avg=1794.72 ms, p95=3373.15 ms, max=3422.20 ms
+- settings-api: total=100, success=100, fail=0, avg=281.11 ms, p95=524.51 ms, max=533.64 ms
+- stats-api: total=100, success=100, fail=0, avg=362.53 ms, p95=509.84 ms, max=541.71 ms
+- papers-api: total=100, success=100, fail=0, avg=330.12 ms, p95=528.57 ms, max=859.16 ms
+
+结论: 本次负载条件下所有请求均达到预期状态码，系统基本稳定。

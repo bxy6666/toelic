@@ -1,0 +1,14 @@
+
+> toeic-practice-studio@0.1.0 test:run
+> vitest run
+
+[33mThe plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the [1mresolve.tsconfigPaths[22m option. You can remove the plugin and set [1mresolve.tsconfigPaths: true[22m in your Vite config instead.[39m
+
+ RUN  v4.1.8 E:/toelic/toelic
+
+
+ Test Files  14 passed (14)
+      Tests  48 passed (48)
+   Start at  18:20:25
+   Duration  879ms (transform 2.64s, setup 679ms, import 2.37s, tests 1.80s, environment 2ms)
+

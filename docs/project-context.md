@@ -67,3 +67,47 @@
 3. 可执行任务同步更新 `docs/spec-driven/tasks.md`。
 4. 实现完成后更新 `docs/spec-driven/acceptance.md`。
 5. 不移动 Next.js / Prisma / Tailwind 等框架要求留在根目录的配置文件。
+
+## 实验六新增上下文
+
+- 实验主题：代码评审与程序性能优化。
+- 项目语言：TypeScript / TSX，运行环境为 Node.js / Next.js。
+- 静态评审工具：ESLint、TypeScript `tsc`、Semgrep。
+- 性能优化对象：`lib/stats-service.ts` 中 `getStats` 最近 7 天统计聚合逻辑。
+- 优化方式：将重复 `filter` 和重复日期格式化改为单次遍历 `Map` 聚合。
+- 新增测试：`tests/unit/lib/stats-service.test.ts`。
+- 新增性能脚本：`scripts/perf/stats-benchmark.ts`，终端与文本文件均输出中文结果。
+- 实验产物目录：`output/lab6/`。
+- 独立说明文档：`docs/lab6-code-review-performance.md`。
+
+当前实验六验证结果：
+
+- `npm.cmd run lint`：通过，保留既有 presentation 脚本 unused warnings。
+- `npm.cmd run typecheck`：通过。
+- Semgrep：通过，0 findings。
+- `npm.cmd run test:run`：通过，14 个测试文件 / 48 个测试。
+- `npm.cmd run build`：通过。
+- 性能基准：优化前平均 22.713 ms，优化后平均 4.947 ms，提升约 78.22%，校验值一致。
+
+## 实验七新增上下文
+
+- 实验主题：系统测试与性能压力测试。
+- 课程材料来源：`E:\BaiduNetdiskDownload\实验七：系统测试_6924121865883509877.pdf`。
+- 测试对象：TOEIC Practice Studio 本地 Next.js Web 应用。
+- 系统测试覆盖：登录、试卷列表、整卷作答、自动保存、交卷幂等、报告、设置、统计与核心 API。
+- 新增压测脚本：`scripts/perf/system-load-test.mjs`。
+- 新增命令：`npm run perf:system`。
+- JMeter 计划：`output/lab7/jmeter-toeic-system-test.jmx`。
+- JMeter 参数文件：`output/lab7/jmeter-users.csv`。
+- 实验产物目录：`output/lab7/`。
+- 独立说明文档：`docs/lab7-system-test.md`。
+
+当前实验七验证结果：
+
+- `npm.cmd run perf:system`：通过，20 个虚拟用户、每用户 5 轮、800 次请求全部成功。
+- 压测指标：成功率 100.00%，吞吐量 12.00 requests/s，平均响应时间 1618.41 ms，P95 3822.37 ms。
+- `npm.cmd run typecheck`：通过。
+- `npm.cmd run test:run`：通过，14 个测试文件 / 48 个测试。
+- `npm.cmd run lint`：通过，保留既有 presentation 脚本 unused warnings。
+- `npm.cmd run build`：通过。
+- `npm.cmd run smoke:papers`：通过，自动保存、重复交卷幂等、发布版本只读均通过。

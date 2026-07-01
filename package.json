@@ -18,6 +18,7 @@
     "smoke:generation": "node scripts/smoke/generation-smoke.mjs",
     "smoke:papers": "node scripts/smoke/paper-domain-smoke.mjs",
     "smoke:paper-import": "node scripts/smoke/paper-import-smoke.mjs",
+    "perf:system": "node scripts/perf/system-load-test.mjs",
     "seed:papers": "tsx scripts/seed/seed-papers.ts",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"

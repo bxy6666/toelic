@@ -461,3 +461,22 @@
 - Generated the report artifacts `output/lab6/实验六-代码评审与程序性能优化报告.md` and `output/lab6/实验六-代码评审与程序性能优化报告.docx`.
 - Verification: `npm.cmd run lint` passed with 4 pre-existing presentation-script warnings; `npm.cmd run typecheck`, `npm.cmd run test:run`, `npm.cmd run build`, Semgrep scan, and the benchmark passed.
 - Benchmark result from the Chinese benchmark run: baseline avg 22.713 ms, optimized avg 4.947 ms, about 78.22% faster, with equal checksums.
+
+## 2026-06-30 / Lab 6 documentation synchronization
+
+- Added `docs/lab6-code-review-performance.md` as the standalone Chinese explanation for Lab 6 static review, performance optimization, benchmark output, and report artifacts.
+- Updated `docs/README.md` and root `readme.md` with Lab 6 entry points, commands, output paths, and current benchmark metrics.
+- Updated `docs/project-context.md` with the Lab 6 TypeScript / Next.js context, changed files, verification status, and performance result.
+- Updated `docs/spec-driven/spec.md`, `docs/spec-driven/design.md`, `docs/spec-driven/tasks.md`, and `docs/spec-driven/acceptance.md` with Lab 6 requirements, design, task record, and acceptance evidence.
+- Documented that `scripts/perf/stats-benchmark.ts` prints Chinese associated results and writes UTF-8 benchmark output to `output/lab6/perf-benchmark.txt`.
+
+## 2026-07-01 / Lab 7 system testing and performance pressure test
+
+- Read the provided system-testing PDF and mapped its performance-testing requirements to the TOEIC Practice Studio project.
+- Added `scripts/perf/system-load-test.mjs` and `npm run perf:system` for repeatable authenticated concurrent load testing.
+- Generated JMeter artifacts under `output/lab7/`: `jmeter-toeic-system-test.jmx` and `jmeter-users.csv`.
+- Ran local pressure testing against `http://127.0.0.1:3000`: 20 virtual users, 5 loops, 800 requests, 800 successes, 0 failures, 12.00 requests/s, avg 1618.41 ms, p95 3822.37 ms.
+- Saved Lab 7 evidence under `output/lab7/`, including pressure JSON/text, typecheck/test/lint/build logs, dev-server logs, and paper-domain smoke output.
+- Generated `output/lab7/实验七-系统测试与性能压力测试报告.md` and `.docx`.
+- Added `docs/lab7-system-test.md` and updated README, project context, spec, design, tasks, and acceptance records.
+- Verification: `typecheck`, `test:run`, `lint`, `build`, `seed:papers`, `smoke:papers`, and `perf:system` passed; lint retains the pre-existing presentation-script warnings.

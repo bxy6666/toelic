@@ -860,3 +860,45 @@ Status: DONE
 - Added recent import listing and resume support on `/papers/import`.
 - Added repeatable DOCX import smoke `npm run smoke:paper-import`.
 - Kept OCR, Redis, Qdrant, FastAPI, and old single-question flows out of scope.
+
+### T40 Lab 6 static review and performance optimization
+
+Status: DONE
+
+- Added `summarizeDailyRecords` in `lib/stats-service.ts` and switched recent 7-day stats aggregation to a single-pass `Map` summary.
+- Added `tests/unit/lib/stats-service.test.ts` for empty days, day ordering, count aggregation, and correct-answer aggregation.
+- Added `scripts/perf/stats-benchmark.ts` to compare the previous repeated-filter algorithm with the optimized algorithm.
+- Updated the performance script to output correct Chinese text and associated artifact paths.
+- Generated Lab 6 artifacts under `output/lab6/`, including static review logs, screenshots, benchmark results, CPU Profile, Markdown report, and Word report.
+- Added `docs/lab6-code-review-performance.md` as the standalone explanation document for this experiment.
+
+Verification:
+
+- `npm.cmd run lint`: PASS, only pre-existing presentation script warnings.
+- `npm.cmd run typecheck`: PASS.
+- Semgrep scan: PASS, 0 findings.
+- `npm.cmd run test:run`: PASS, 14 files / 48 tests.
+- `npm.cmd run build`: PASS.
+- `npx.cmd tsx scripts/perf/stats-benchmark.ts`: PASS, Chinese result output and benchmark files generated.
+
+### T41 Lab 7 system test and performance pressure test
+
+Status: DONE
+
+- Added `scripts/perf/system-load-test.mjs` to run authenticated concurrent system pressure testing against the local web app.
+- Added `npm run perf:system`.
+- Generated JMeter-compatible artifacts under `output/lab7/`: `jmeter-toeic-system-test.jmx` and `jmeter-users.csv`.
+- Generated pressure test evidence: `system-load-test.txt` and `system-load-test.json`.
+- Generated full experiment report: `output/lab7/实验七-系统测试与性能压力测试报告.md`.
+- Added standalone documentation entry: `docs/lab7-system-test.md`.
+- Generated command evidence for typecheck, test, lint, build, and paper-domain smoke.
+
+Verification:
+
+- `npm.cmd run perf:system`: PASS, 800 / 800 requests succeeded.
+- `npm.cmd run typecheck`: PASS.
+- `npm.cmd run test:run`: PASS, 14 files / 48 tests.
+- `npm.cmd run lint`: PASS, only pre-existing presentation script warnings.
+- `npm.cmd run build`: PASS.
+- `npm.cmd run seed:papers`: PASS / SKIP because sample paper already existed.
+- `npm.cmd run smoke:papers`: PASS.

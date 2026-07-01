@@ -1144,3 +1144,97 @@ Proxy 在页面层检查 session cookie，未登录跳转 `/login`；服务端�
 - Missing answers can be completed by MaaS through `complete-answers`, and AI-filled answers are marked in `answerKeyJson` / `explanationJson` metadata.
 - `apply` creates `Paper`, `PaperVersion`, `PaperSection`, `QuestionItem`, and `QuestionOption` as a draft version. Existing publish validation remains the final gate.
 - `/papers/import` is a distinct upload/review workspace and then hands off to the existing `/paper-versions/{versionId}/edit` draft editor.
+
+## 22. Lab 6 static review and performance optimization design
+
+### 22.1 Static Review Design
+
+Lab 6 uses the project-native TypeScript review chain:
+
+- ESLint checks Next.js, React, TypeScript, import, and style rules.
+- TypeScript typecheck verifies compile-time type safety.
+- Semgrep scans TypeScript / JavaScript and OWASP Top 10 patterns without adding a project runtime dependency.
+
+Each tool result is saved as terminal text and terminal-style screenshot evidence under `output/lab6/`.
+
+### 22.2 Stats Optimization Design
+
+The optimization target is `getStats` in `lib/stats-service.ts`.
+
+Previous aggregation shape:
+
+- Build recent record set.
+- For each of the last 7 days, filter the whole recent record list.
+- Reformat date strings repeatedly.
+
+Optimized aggregation shape:
+
+- `summarizeDailyRecords(records, startDate, dayCount)` initializes the ordered day buckets.
+- A single loop formats each record date once and updates the matching `Map` bucket.
+- The final result reads the ordered buckets back as the chart array.
+
+This keeps the public `getStats` return shape unchanged while reducing repeated traversal and repeated string work.
+
+### 22.3 Benchmark Design
+
+`scripts/perf/stats-benchmark.ts` runs the previous filter-per-day algorithm and the optimized Map algorithm against the same synthetic 50,000-record data set.
+
+The script reports:
+
+- average duration
+- p95 duration
+- total duration
+- improvement percentage
+- checksum consistency
+- associated artifact paths
+
+It writes Chinese output to `output/lab6/perf-benchmark.txt` with UTF-8 BOM so Windows tools display Chinese correctly, and writes structured data to `output/lab6/perf-benchmark.json`.
+
+### 22.4 Verification Design
+
+- Static review: `lint`, `typecheck`, Semgrep.
+- Functional safety: Vitest unit test for daily aggregation.
+- Build safety: Next.js production build.
+- Performance evidence: benchmark text, benchmark JSON, screenshots, and CPU Profile.
+
+## 23. Lab 7 system test and performance pressure test design
+
+### 23.1 System Test Design
+
+Lab 7 treats the current Next.js application as the tested system and verifies both engineering gates and business flows:
+
+- TypeScript typecheck for compile-time safety.
+- Vitest unit/API tests for service and route behavior.
+- ESLint for code quality.
+- Next.js production build for deployability.
+- `npm run smoke:papers` for browser-level paper-domain system flow.
+
+The smoke flow verifies login, published paper read-only protection, attempt creation, autosave after answer selection, answer persistence after reload, idempotent submit, and report summary.
+
+### 23.2 Pressure Test Design
+
+`scripts/perf/system-load-test.mjs` simulates concurrent authenticated users with Node.js built-in `fetch`.
+
+Default scenario:
+
+- 20 virtual users.
+- 5 loops per user.
+- 8 requests per loop.
+- 800 total requests.
+- Target paths: `/login`, `/`, `/papers`, `/stats`, `/settings`, `/api/settings`, `/api/stats`, `/api/papers`.
+
+Each virtual user logs in first and reuses the returned session cookie. The script records duration, status, expected-status success, average response time, p50, p90, p95, max response time, throughput, and per-endpoint summaries.
+
+### 23.3 JMeter Design
+
+`output/lab7/jmeter-toeic-system-test.jmx` mirrors the course slide workflow:
+
+- `CSV Data Set Config` reads `output/lab7/jmeter-users.csv`.
+- `Thread Group` controls users, ramp-up, and loop count.
+- `HTTP Cookie Manager` keeps login cookies.
+- `HTTP Request` samplers cover login and key pages/APIs.
+- `Summary Report` writes `output/lab7/jmeter-summary.jtl`.
+
+### 23.4 Artifact Design
+
+All Lab 7 generated evidence is stored under `output/lab7/`, while the reusable script is stored in `scripts/perf/` and exposed through `npm run perf:system`.

@@ -860,3 +860,67 @@ Status: Approved
 - Scanned PDFs without extractable text return `UNSUPPORTED_SCANNED_DOCUMENT`.
 - AI parsing and answer completion use the same Huawei Cloud MaaS OpenAI-compatible chat configuration as legacy generation: `MAAS_API_KEY`, `MAAS_BASE_URL`, and `MAAS_MODEL`.
 - `MAAS_MODEL` may point to any enabled Huawei MaaS chat model, such as GLM or DeepSeek variants, but the value must exactly match the model id exposed by the Huawei Cloud console.
+
+## 17. Lab 6 static review and performance optimization spec
+
+Status: Approved
+
+Trigger: course experiment requires static code review results and performance optimization evidence for the current project language.
+
+### 17.1 Scope
+
+- Use the project language and stack: TypeScript / TSX / Node.js / Next.js.
+- Do not use Java-only tools such as Checkstyle, SpotBugs, or PMD.
+- Use ESLint, TypeScript typecheck, and Semgrep for static code review.
+- Optimize one real project code path instead of adding an isolated demo.
+- Use `lib/stats-service.ts` recent 7-day aggregation as the performance target.
+- Keep UI, authentication, paper-domain, import, and MaaS business flows unchanged.
+- Generate reproducible evidence under `output/lab6/`.
+
+### 17.2 Requirements
+
+- Static review must include command, screenshot evidence, result summary, and manual analysis for each tool.
+- Performance optimization must include before/after algorithm comparison, benchmark result, CPU Profile evidence, and code comparison.
+- The benchmark script must output readable Chinese text in the terminal and in `output/lab6/perf-benchmark.txt`.
+- The optimized statistics logic must preserve empty days, per-day counts, correct-answer counts, and date order.
+- Unit tests must verify the aggregation behavior.
+- Report artifacts must be available as Markdown and Word documents.
+
+### 17.3 Acceptance Criteria
+
+- `npm.cmd run lint` passes.
+- `npm.cmd run typecheck` passes.
+- Semgrep scan completes with no blocking findings.
+- `npm.cmd run test:run` passes.
+- `npm.cmd run build` passes.
+- `npx.cmd tsx scripts/perf/stats-benchmark.ts` prints Chinese associated results and writes benchmark files.
+- `output/lab6/实验六-代码评审与程序性能优化报告.docx` and `.md` are generated.
+
+## 18. Lab 7 system test and performance pressure test spec
+
+Status: Approved
+
+Trigger: course experiment requires system testing and JMeter-style performance pressure testing for an existing website.
+
+### 18.1 Scope
+
+- Use TOEIC Practice Studio as the tested website.
+- Cover system-level functional verification for login, paper list, paper attempt, autosave, submit, report, settings, stats, and core APIs.
+- Provide a JMeter test plan with CSV Data Set Config, Thread Group, HTTP Request samplers, Cookie Manager, and Summary Report.
+- Provide a runnable local pressure test script so the experiment can be repeated even when JMeter is not installed.
+- Save evidence under `output/lab7/`.
+
+### 18.2 Requirements
+
+- The load scenario must record virtual users, loop count, response time, throughput, success rate, and failures.
+- The pressure test must authenticate users and reuse session cookies for protected routes.
+- The report must explain load testing and pressure testing concepts from the course slides.
+- The report must include detailed completion steps and repeatable testing methods.
+- The experiment must not change product business behavior.
+
+### 18.3 Acceptance Criteria
+
+- `npm.cmd run perf:system` completes and writes `output/lab7/system-load-test.txt` and `.json`.
+- `output/lab7/jmeter-toeic-system-test.jmx` and `output/lab7/jmeter-users.csv` are generated.
+- `npm.cmd run typecheck`, `npm.cmd run test:run`, `npm.cmd run lint`, `npm.cmd run build`, and `npm.cmd run smoke:papers` pass.
+- `output/lab7/实验七-系统测试与性能压力测试报告.md` and `.docx` are generated.
